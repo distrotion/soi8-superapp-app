@@ -12,22 +12,24 @@ class Page0 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Page102();
+    // return Page0Body();
+    return Page101();
   }
 }
 
-// class Page0Body extends StatelessWidget {
-//   const Page0Body({Key? key}) : super(key: key);
+class Page0Body extends StatelessWidget {
+  const Page0Body({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Container(
-//           height: 100,
-//           width: 200,
-//           color: Colors.orange,
-//           child: const Center(
-//               child: Text("initial Page \nor do something wrong"))),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+          height: 100,
+          width: 200,
+          color: Colors.orange,
+          child: const Center(
+            child: Text("WELCOME TO SOI8"),
+          )),
+    );
+  }
+}

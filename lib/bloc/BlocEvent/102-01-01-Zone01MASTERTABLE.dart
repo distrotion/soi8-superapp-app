@@ -29,7 +29,7 @@ class Zone01MASTERTABLE_Bloc
     List<TABLECOLUNMNMASTER> output = [];
     final response = await Dio().post(
       server + "INVSYSTEM/GETMASTER",
-      data: {},
+      data: {"ZONE": " WHERE [ZONE]= 1 "},
     );
     if (response.statusCode == 200) {
       var databuff = response.data;

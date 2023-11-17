@@ -17,3 +17,8 @@ class Zone01NEWITEMVAR {
   static bool iscontrol = false;
   static String SEARCH = '';
 }
+
+class Zone01MAINVAR {
+  static bool iscontrol = false;
+  static int page = 1;
+}
