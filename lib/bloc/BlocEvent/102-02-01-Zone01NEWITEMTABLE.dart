@@ -37,7 +37,7 @@ class Zone01NEWITEMTABLE_Bloc
     );
     if (response.statusCode == 200) {
       var databuff = response.data;
-      print(databuff);
+      // print(databuff);
 
       for (var i = 0; i < databuff.length; i++) {
         output.add(TABLECOLUNMNNEWTABLET(
