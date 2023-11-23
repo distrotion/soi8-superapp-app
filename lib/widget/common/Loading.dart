@@ -64,3 +64,25 @@ void onLoadingType01_long5(
     newValue2;
   });
 }
+
+void FreeLoading(BuildContext contextin) {
+  showDialog(
+    context: contextin,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return Dialog(
+        child: SizedBox(
+            height: 75,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                SizedBox(width: 30),
+                CircularProgressIndicator(),
+                SizedBox(width: 20),
+                Text("Loading"),
+              ],
+            )),
+      );
+    },
+  );
+}

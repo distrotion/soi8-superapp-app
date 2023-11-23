@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../data/global.dart';
 import '../widget/common/Checkbox.dart';
 import 'TEST.dart';
+import 'page1.dart';
 import 'page101.dart';
 import 'page102.dart';
 
@@ -13,7 +15,7 @@ class Page0 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return Page0Body();
-    return Page101();
+    return Page1();
   }
 }
 
@@ -25,9 +27,9 @@ class Page0Body extends StatelessWidget {
     return Center(
       child: Container(
           height: 100,
-          width: 200,
+          width: 400,
           color: Colors.orange,
-          child: const Center(
+          child: Center(
             child: Text("WELCOME TO SOI8"),
           )),
     );

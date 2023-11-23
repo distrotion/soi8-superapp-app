@@ -53,7 +53,7 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
       var databuff = response.data;
       if (databuff['return'] == 'OK') {
         token =
-            '{"ID":"${databuff['ID'].toString()}","NAME":"${databuff['NAME'].toString()}","LV":"${databuff['LV'].toString()}","Section":"${databuff['Section'].toString()}","Def":"${databuff['Def'].toString()}"  ,"PD":"${databuff['PD'].toString()}","QC":"${databuff['QC'].toString()}","MFT":"${databuff['MFT'].toString()}","RM":"${databuff['RM'].toString()}","DL":"${databuff['DL'].toString()}"}';
+            '{"ID":"${databuff['ID'].toString()}","NAME":"${databuff['NAME'].toString()}","LV":"${databuff['LV'].toString()}","Section":"${databuff['Section'].toString()}","Def":"${databuff['Def'].toString()}"  ,"PD":"${databuff['PD'].toString()}","QC":"${databuff['QC'].toString()}","QA":"${databuff['QA'].toString()}","MFT":"${databuff['MFT'].toString()}","RM":"${databuff['RM'].toString()}","DL":"${databuff['DL'].toString()}"}';
         USERDATA.ID = databuff['ID'].toString();
         USERDATA.NAME = databuff['NAME'].toString();
         USERDATA.UserLV = int.parse(databuff['LV'].toString());
@@ -62,6 +62,7 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
 
         USERDATA.PD = databuff['PD'].toString();
         USERDATA.QC = databuff['QC'].toString();
+        USERDATA.QA = databuff['QA'].toString();
         USERDATA.MFT = databuff['MFT'].toString();
         USERDATA.RM = databuff['RM'].toString();
         USERDATA.DL = databuff['DL'].toString();
@@ -106,6 +107,7 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
 
       USERDATA.PD = databuff['PD'].toString();
       USERDATA.QC = databuff['QC'].toString();
+      USERDATA.QA = databuff['QA'].toString();
       USERDATA.MFT = databuff['MFT'].toString();
       USERDATA.RM = databuff['RM'].toString();
       USERDATA.DL = databuff['DL'].toString();

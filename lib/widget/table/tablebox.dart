@@ -4,8 +4,10 @@ class rowbox_type0 extends StatelessWidget {
   rowbox_type0({
     Key? key,
     this.Head,
+    this.Colorss,
   }) : super(key: key);
   String? Head;
+  Color? Colorss;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class rowbox_type0 extends StatelessWidget {
             Expanded(
               child: oneunitbox(
                 textin: Head ?? '',
+                Colorss: Colorss,
               ),
             ),
           ],
@@ -26,9 +29,15 @@ class rowbox_type0 extends StatelessWidget {
 }
 
 class oneunitbox extends StatelessWidget {
-  oneunitbox({Key? key, this.textin, this.textsize}) : super(key: key);
+  oneunitbox({
+    Key? key,
+    this.textin,
+    this.textsize,
+    this.Colorss,
+  }) : super(key: key);
   String? textin;
   double? textsize;
+  Color? Colorss;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +51,7 @@ class oneunitbox extends StatelessWidget {
         ),
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colorss ?? Colors.white,
         border: Border.all(color: Colors.black, width: 2),
       ),
     );

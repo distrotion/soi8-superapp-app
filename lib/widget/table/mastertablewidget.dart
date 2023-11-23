@@ -14,36 +14,42 @@ class MASTERTABLE extends StatelessWidget {
           flex: 2,
           child: rowbox_type0(
             Head: "CREATE DATE",
+            Colorss: Colors.grey,
           ),
         ),
         Expanded(
           flex: 2,
           child: rowbox_type0(
             Head: "MAT ID",
+            Colorss: Colors.grey,
           ),
         ),
         Expanded(
           flex: 1,
           child: rowbox_type0(
             Head: "MAT NAME",
+            Colorss: Colors.grey,
           ),
         ),
         Expanded(
           flex: 1,
           child: rowbox_type0(
             Head: "USER",
+            Colorss: Colors.grey,
           ),
         ),
         Expanded(
           flex: 1,
           child: rowbox_type0(
             Head: "USER UPDATE",
+            Colorss: Colors.grey,
           ),
         ),
         Expanded(
           flex: 1,
           child: rowbox_type0(
             Head: "ACTION",
+            Colorss: Colors.grey,
           ),
         ),
       ],

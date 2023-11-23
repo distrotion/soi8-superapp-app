@@ -15,6 +15,7 @@ class USERDATA {
 
   static String PD = '';
   static String QC = '';
+  static String QA = '';
   static String MFT = '';
   static String RM = '';
   static String DL = '';
@@ -59,5 +60,7 @@ class GETONE {
   static bool isbool = false;
 }
 
-// String serverGB = 'http://172.23.10.34:18000/';
-String serverGB = 'http://127.0.0.1:18000/';
+String serverGB = 'http://172.23.10.34:18000/';
+// String serverGB = 'http://127.0.0.1:18000/';
+String serverQC = 'http://172.23.10.34:15000/';
+//120008341010216885

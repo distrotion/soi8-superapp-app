@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'P10BTTANKHIS/P10BTTANKHISmain.dart';
+
 class Page10 extends StatelessWidget {
   const Page10({Key? key}) : super(key: key);
 
@@ -14,12 +16,6 @@ class Page10Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 100,
-        width: 100,
-        color: Colors.green,
-      ),
-    );
+    return P10BTTANKHISmain();
   }
 }

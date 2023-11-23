@@ -5,17 +5,24 @@ import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../data/global.dart';
 import '../../mainBody.dart';
 import '../../page/page1.dart';
+import '../../page/page10.dart';
 import '../../page/page101.dart';
 import '../../page/page2.dart';
+import '../../page/page20.dart';
+import '../../page/page21.dart';
 import '../../page/page3.dart';
+import '../../page/page31.dart';
+import '../../page/page32.dart';
 import '../../page/page4.dart';
 import '../../page/page5.dart';
 import 'sub_widget.dart';
 
 late BuildContext MenuContext;
 
+bool menu_SCADA = false;
 bool menu_PD = false;
 bool menu_QC = false;
+bool menu_QA = false;
 bool menu_MFT = false;
 bool menu_RM = false;
 bool menu_DL = false;
@@ -60,8 +67,10 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    menu_SCADA = false;
     menu_PD = false;
     menu_QC = false;
+    menu_QA = false;
     menu_MFT = false;
     menu_RM = false;
     menu_DL = false;
@@ -123,6 +132,75 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
         //   page: Page5(),
         //   Lv: 5,
         // ),
+
+        InkWell(
+          onTap: () {
+            setState(() {
+              if (menu_SCADA) {
+                menu_SCADA = false;
+              } else {
+                menu_SCADA = true;
+              }
+            });
+          },
+          child: SizedBox(
+            height: 50,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 6.0, left: 6, top: 4.0, bottom: 4.0),
+                    child: Container(
+                      height: 24,
+                      width: 24,
+                      child: Icon(
+                        menu_SCADA
+                            ? Icons.arrow_drop_up_outlined
+                            : Icons.arrow_drop_down_outlined,
+                        color: Colors.white,
+                      ),
+                      // decoration: BoxDecoration(
+                      //     image: DecorationImage(
+                      //         image: AssetImage(getShowHidePassword_ImgPath()),
+                      //         fit: BoxFit.fitHeight))
+                    ),
+                  ),
+                  const Text(
+                    "SCADA",
+                    style: TextStyle(
+                      fontFamily: 'Mitr',
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (menu_SCADA) ...[
+          SizedBox(
+            height: 40,
+            child: Column(
+              children: [
+                menu_sub(
+                  tapcolor: Colors.green,
+                  name: "BT TANK HISTORY",
+                  page: Page10(),
+                  Lv: 1,
+                ),
+              ],
+            ),
+          )
+        ] else ...[
+          const SizedBox(),
+        ],
+
         if (USERDATA.PD == 'true') ...[
           InkWell(
             onTap: () {
@@ -176,14 +254,27 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 40,
+              height: 80,
               child: Column(
                 children: [
                   menu_sub(
-                    name: "test",
-                    page: Page1(),
+                    tapcolor: Colors.green,
+                    name: "QC WEIGTH Approve",
+                    page: Page20(),
                     Lv: 1,
                   ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "QC WEIGTH History",
+                    page: Page21(),
+                    Lv: 1,
+                  ),
+
+                  // menu_sub(
+                  //   name: "SACADA WEIGTH History",
+                  //   page: Page1(),
+                  //   Lv: 1,
+                  // ),
                 ],
               ),
             )
@@ -244,12 +335,105 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_QC) ...[
             SizedBox(
-              height: 40,
+              height: 120,
               child: Column(
                 children: [
                   menu_sub(
-                    name: "test",
+                    name: "QC MONITOR",
                     page: Page1(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "MASTER To SAP",
+                    page: Page31(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "TO SAP History",
+                    page: Page32(),
+                    Lv: 1,
+                  ),
+                ],
+              ),
+            )
+          ] else ...[
+            const SizedBox(),
+          ],
+        ],
+        if (USERDATA.QA == 'true') ...[
+          InkWell(
+            onTap: () {
+              setState(() {
+                if (menu_QA) {
+                  menu_QA = false;
+                } else {
+                  menu_QA = true;
+                }
+              });
+            },
+            child: SizedBox(
+              height: 50,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 6.0, left: 6, top: 4.0, bottom: 4.0),
+                      child: Container(
+                        height: 24,
+                        width: 24,
+                        child: Icon(
+                          menu_QA
+                              ? Icons.arrow_drop_up_outlined
+                              : Icons.arrow_drop_down_outlined,
+                          color: Colors.white,
+                        ),
+                        // decoration: BoxDecoration(
+                        //     image: DecorationImage(
+                        //         image: AssetImage(getShowHidePassword_ImgPath()),
+                        //         fit: BoxFit.fitHeight))
+                      ),
+                    ),
+                    const Text(
+                      "Quality Assurance",
+                      style: TextStyle(
+                        fontFamily: 'Mitr',
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w300,
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          if (menu_QA) ...[
+            SizedBox(
+              height: 120,
+              child: Column(
+                children: [
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "QC WEIGTH History",
+                    page: Page21(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "MASTER To SAP",
+                    page: Page31(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "TO SAP History",
+                    page: Page32(),
                     Lv: 1,
                   ),
                 ],
@@ -380,12 +564,17 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_RM) ...[
             SizedBox(
-              height: 40,
+              height: 80,
               child: Column(
                 children: [
                   menu_sub(
                     name: "STORE",
                     page: Page101(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "Divide Remainder",
+                    page: Page1(),
                     Lv: 1,
                   ),
                 ],

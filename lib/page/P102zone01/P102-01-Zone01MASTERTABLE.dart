@@ -87,7 +87,10 @@ class _MASTER_TABLEState extends State<MASTER_TABLE> {
             Padding(
               padding: const EdgeInsets.only(left: 40),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Zone01MASTERVAR.MODE = 'NEW';
+                  _GETDATAMASTERpop(context);
+                },
                 child: Container(
                   height: 50,
                   width: 150,

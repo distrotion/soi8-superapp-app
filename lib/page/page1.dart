@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../data/global.dart';
+
 //---------------------------------------------------------
 
 class Page1 extends StatelessWidget {
@@ -19,9 +21,12 @@ class Page1Body extends StatelessWidget {
     return Center(
       child: Container(
         height: 100,
-        width: 100,
+        width: 300,
         color: Colors.blue,
-        child: const Text("WELCOME TO SOI 8"),
+        child: Center(
+            child: Text(
+          " WELCOME TO SOI 8  ${USERDATA.NAME}",
+        )),
       ),
     );
   }
