@@ -10,6 +10,7 @@ import '../../page/page101.dart';
 import '../../page/page2.dart';
 import '../../page/page20.dart';
 import '../../page/page21.dart';
+import '../../page/page22.dart';
 import '../../page/page3.dart';
 import '../../page/page31.dart';
 import '../../page/page32.dart';
@@ -254,7 +255,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 80,
+              height: 120,
               child: Column(
                 children: [
                   menu_sub(
@@ -267,6 +268,12 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                     tapcolor: Colors.green,
                     name: "QC WEIGTH History",
                     page: Page21(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "EXPORT WEIGTH",
+                    page: Page22(),
                     Lv: 1,
                   ),
 
@@ -341,6 +348,12 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                   menu_sub(
                     name: "QC MONITOR",
                     page: Page1(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "QC WEIGTH History",
+                    page: Page21(),
                     Lv: 1,
                   ),
                   menu_sub(

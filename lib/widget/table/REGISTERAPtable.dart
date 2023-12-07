@@ -51,6 +51,13 @@ class REGISTERAPtable extends StatelessWidget {
             Colorss: Colors.grey,
           ),
         ),
+        Expanded(
+          flex: 1,
+          child: rowbox_type0(
+            Head: "ACTION",
+            Colorss: Colors.grey,
+          ),
+        ),
       ],
     );
   }
@@ -68,6 +75,7 @@ class REGISTERAPitem extends StatelessWidget {
     this.text07,
     this.text08,
     this.text09,
+    this.RETURNFN,
   });
 
   String? text01;
@@ -79,6 +87,7 @@ class REGISTERAPitem extends StatelessWidget {
   String? text07;
   String? text08;
   String? text09;
+  Function(String)? RETURNFN;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +128,21 @@ class REGISTERAPitem extends StatelessWidget {
           child: rowbox_type0(
             Head: text06,
           ),
+        ),
+        Expanded(
+          flex: 1,
+          child: InkWell(
+            onTap: () {
+              if (RETURNFN != null) {
+                RETURNFN!(text02!);
+              }
+            },
+            child: rowbox_type2(),
+          ),
+
+          // rowbox_type0(
+          //   Head: text06,
+          // ),
         ),
       ],
     );

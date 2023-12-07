@@ -247,7 +247,18 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
                       //----------
 
                       for (int i = 0; i < _datas.length; i++) ...[
-                        _datas[i],
+                        // _datas[i],
+                        REGISTERAPitem(
+                          text01: _datas[i].text01,
+                          text02: _datas[i].text02,
+                          text03: _datas[i].text03,
+                          text04: _datas[i].text04,
+                          text05: _datas[i].text05,
+                          text06: _datas[i].text06,
+                          RETURNFN: (v) {
+                            print(v);
+                          },
+                        )
                       ]
                     ],
                   ),

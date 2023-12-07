@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../../data/global.dart';
 import '../../page/P10BTTANKHIS/P10BTTANKHISmain.dart';
+import '../../page/P10BTTANKHIS/P10BTTANKHISvar.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 
@@ -41,7 +42,7 @@ class P10BTTANKHIS_Bloc extends Bloc<P10BTTANKHIS_Event, List<BTTANKHISitem>> {
       server + "PRODUCTIONHISTORY/FREEQUERY6",
       data: {
         "query":
-            "SELECT TOP (1000) * FROM [Measurement].[dbo].[BT_TANK_DATA] order by [date] desc"
+            "SELECT TOP (${P10BTTANKHISvar.MAX}) * FROM [Measurement].[dbo].[BT_TANK_DATA] order by [date] desc"
       },
     );
     if (response.statusCode == 200) {

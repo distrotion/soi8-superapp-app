@@ -64,6 +64,11 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
     // TODO: implement initState
     super.initState();
     //REGISTERHIS_GET
+    P10BTTANKHISvar.FPint = 0;
+    P10BTTANKHISvar.LPint = 0;
+    P10BTTANKHISvar.MAX = '1000';
+    P10BTTANKHISvar.pagelist = 0;
+    P10BTTANKHISvar.pageselect = 0;
     context.read<P10BTTANKHIS_Bloc>().add(P10BTTANKHIS_GET());
   }
 
@@ -71,12 +76,39 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
   Widget build(BuildContext context) {
     P10BTTANKHISmaincontext = context;
     List<BTTANKHISitem> _data = widget.data ?? [];
+
+    if (_data.length != 0) {
+      if (_data.length <= 500) {
+        P10BTTANKHISvar.FPint = 0;
+        P10BTTANKHISvar.LPint = _data.length;
+      } else {
+        if (_data.length > 0) {
+          P10BTTANKHISvar.pagelist = (_data.length ~/ 500);
+
+          if (500 * P10BTTANKHISvar.pagelist > _data.length) {
+            P10BTTANKHISvar.pagelist = P10BTTANKHISvar.pagelist - 1;
+          } else {
+            P10BTTANKHISvar.pagelist = P10BTTANKHISvar.pagelist;
+          }
+          P10BTTANKHISvar.FPint = 500 * P10BTTANKHISvar.pageselect;
+          if (P10BTTANKHISvar.pageselect == P10BTTANKHISvar.pagelist) {
+            // LPint = FPint + (_data.length - 500 * pagelist);
+            P10BTTANKHISvar.LPint = _data.length;
+          } else {
+            P10BTTANKHISvar.LPint = 500 * P10BTTANKHISvar.pageselect + 500;
+            // LPint = _data.length;
+          }
+        }
+      }
+    }
     return Center(
       child: SingleChildScrollView(
         child: SizedBox(
-          height: 720,
+          // height: 4000,
           // width: 1280,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Row(
               //   mainAxisSize: MainAxisSize.min,
@@ -119,7 +151,7 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               //               ),
               //             ),
               //             height: 40,
-              //             width: 200,
+              //             width: 5000,
               //             child: Center(
               //               child: Text(P10BTTANKHISvar.startDATE),
               //             ),
@@ -165,7 +197,7 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               //               ),
               //             ),
               //             height: 40,
-              //             width: 200,
+              //             width: 5000,
               //             child: Center(
               //               child: Text(P10BTTANKHISvar.endDATE),
               //             ),
@@ -181,7 +213,7 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               //         Padding(
               //           padding: const EdgeInsets.only(left: 16),
               //           child: Container(
-              //             width: 200,
+              //             width: 5000,
               //             height: 40,
               //             color: Colors.blue,
               //             child: Center(
@@ -196,22 +228,108 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               // const SizedBox(
               //   height: 16,
               // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ComInputText(
-              //     sPlaceholder: "search",
-              //     height: 40,
-              //     width: 400,
-              //     isContr: P10BTTANKHISvar.iscontrol,
-              //     fnContr: (input) {
-              //       P10BTTANKHISvar.iscontrol = input;
-              //     },
-              //     sValue: P10BTTANKHISvar.SEARCH,
-              //     returnfunc: (String s) {
-              //       P10BTTANKHISvar.SEARCH = s;
-              //     },
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ComInputText(
+                      sPlaceholder: "MAX",
+                      height: 40,
+                      width: 400,
+                      isNumberOnly: true,
+                      isContr: P10BTTANKHISvar.iscontrol,
+                      fnContr: (input) {
+                        P10BTTANKHISvar.iscontrol = input;
+                      },
+                      sValue: P10BTTANKHISvar.MAX,
+                      returnfunc: (String s) {
+                        P10BTTANKHISvar.MAX = s;
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: InkWell(
+                        onTap: () {
+                          P10BTTANKHISvar.FPint = 0;
+                          P10BTTANKHISvar.LPint = 0;
+                          P10BTTANKHISvar.pagelist = 0;
+                          P10BTTANKHISvar.pageselect = 0;
+                          context
+                              .read<P10BTTANKHIS_Bloc>()
+                              .add(P10BTTANKHIS_GET());
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 100,
+                          color: Colors.yellow,
+                          child: Center(
+                            child: Text("search"),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: InkWell(
+                              onTap: () {
+                                //
+                                if (P10BTTANKHISvar.pageselect > 0) {
+                                  setState(() {
+                                    P10BTTANKHISvar.pageselect--;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/icon-L@3x.png'))),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: Text(P10BTTANKHISvar.pageselect.toString() +
+                                " / " +
+                                P10BTTANKHISvar.pagelist.toString()),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30),
+                            child: InkWell(
+                              onTap: () {
+                                //
+                                if (P10BTTANKHISvar.pageselect <
+                                    P10BTTANKHISvar.pagelist) {
+                                  setState(() {
+                                    P10BTTANKHISvar.pageselect++;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/icon-R@3x.png'))),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 580,
                 width: 780,
@@ -221,7 +339,12 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
                       BTTANKHIStable(),
                       //----------
 
-                      for (int i = 0; i < _data.length; i++) ...[
+                      // for (int i = 0; i < _data.length; i++) ...[
+                      //   _data[i],
+                      // ]
+                      for (int i = P10BTTANKHISvar.FPint;
+                          i < P10BTTANKHISvar.LPint;
+                          i++) ...[
                         _data[i],
                       ]
                     ],

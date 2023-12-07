@@ -105,3 +105,51 @@ class oneunitbox01 extends StatelessWidget {
     );
   }
 }
+
+class rowbox_type2 extends StatelessWidget {
+  rowbox_type2({
+    Key? key,
+    this.Head,
+  }) : super(key: key);
+  String? Head;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: oneunitbox02(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class oneunitbox02 extends StatelessWidget {
+  oneunitbox02({Key? key, this.textin, this.textsize}) : super(key: key);
+  String? textin;
+  double? textsize;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      child: Center(
+        child: SizedBox(
+          child: Center(
+            child: Icon(
+              Icons.dashboard,
+            ),
+          ),
+        ),
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black, width: 2),
+      ),
+    );
+  }
+}
