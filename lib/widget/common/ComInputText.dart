@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/cubit/Rebuild.dart';
 import '../../styles/TextStyle.dart';
 import 'ComSpace.dart';
 import 'LayoutAlignWithFullWidth.dart';
@@ -42,7 +40,15 @@ class ComInputText extends StatefulWidget {
     this.width,
     this.iconheight,
     this.iconwidth,
+    this.isSideIcon,
+    //
+    this.borderR,
+    this.BgCO,
+    this.sLabelCO,
+    this.sLabelFS,
     required this.returnfunc,
+    this.maxline,
+    this.keyboardtype,
   }) : super(key: key);
 
   final String sValue; // value inside text
@@ -66,11 +72,20 @@ class ComInputText extends StatefulWidget {
   final Function? fnContr;
   Function returnfunc;
 
+  final bool? isSideIcon;
   final bool? isContr;
   final double? height;
   final double? width;
   final double? iconheight;
   final double? iconwidth;
+
+  int? maxline;
+  double? borderR;
+  Color? BgCO;
+  Color? sLabelCO;
+  double? sLabelFS;
+
+  TextInputType? keyboardtype;
 
   //state
   final enumInputTextStateList InputTextState;
@@ -118,33 +133,16 @@ class _ComInputTextState extends State<ComInputText> {
     //focus ev for validation
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        // setState(() {
-
         _isError = !ValidationCurrentText(_controller.value.text);
         widget.fnContr!(false);
-        BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
-        //GlobalVar.isShowErrorOnAllInputTextField = false;//nothing diff but bug for dropdown
-        // GlobalVar.isForceShowErrorOnAllInputTextField_EvenValid = false;
+        setState(() {});
         _isHideIconOnFocus = false;
-        // });
       } else {
-        // setState(() {
         _isError = false; //clear when input again
         widget.fnContr!(false);
-        BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
-        //GlobalVar.isShowErrorOnAllInputTextField = false;//nothing diff but bug for dropdown
-        /*if (widget.isEmail) {
-            _isHideIconOnFocus = true;
-          }*/
-        // });
+        setState(() {});
       }
     });
-    //print("init " + widget.isShowError.toString());
-    /*if (widget.isShowError) {
-      _isError = true;
-      _isEmailShowIcon = true;
-    }*/
-    //show hide pass logic for password type
     if (!widget.isPassword) {
       _isHidePassword = false;
     }
@@ -152,7 +150,6 @@ class _ComInputTextState extends State<ComInputText> {
 
   @override
   void dispose() {
-    //print("dispose scrollController");
     _focusNode.dispose();
     _controller.dispose();
     super.dispose();
@@ -161,35 +158,18 @@ class _ComInputTextState extends State<ComInputText> {
   @override
   Widget build(BuildContext context) {
     if (widget.isForceShowError) {
-      // setState(() {
       if (widget.InputTextState == enumInputTextStateList.inputText) {
         _isError = !ValidationCurrentText(_controller.value.text);
-        BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
+        setState(() {});
       } else if (widget.InputTextState == enumInputTextStateList.readOnly) {
         _isError = !ValidationCurrentText(widget.sValue);
-        BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
+        setState(() {});
       }
-      //print(_isError);
-      // });
     }
-    /*if (widget.isForceShowError && GlobalVar.isShowErrorOnAllInputTextField) {
-      setState(() {
-        print("build " + widget.sValue);
-        if (widget.InputTextState == enumInputTextStateList.inputText) {
-          _isError = !ValidationCurrentText(_controller.value.text);
-        } else if (widget.InputTextState == enumInputTextStateList.readOnly) {
-          _isError = !ValidationCurrentText(widget.sValue);
-        }
-      });
-    }*/
-
-    //--------------------------------------------------------------------------------------------------------
 
     void showHidePassowrd() {
-      // setState(() {
       _isHidePassword = !_isHidePassword;
-      BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
-      // });
+      setState(() {});
     }
 
     String getCorrectIconEmail_ImgPath() {
@@ -215,21 +195,34 @@ class _ComInputTextState extends State<ComInputText> {
           child: Padding(
             padding: const EdgeInsets.only(
                 right: 12.0, left: 12, top: 8.0, bottom: 8.0),
-            child: Container(
+            child: SizedBox(
               height: widget.iconheight ?? 24,
               width: widget.iconwidth ?? 24,
-              // decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         image: AssetImage(getShowHidePassword_ImgPath()),
-              //         fit: BoxFit.fitHeight)),
+              child: _isHidePassword == false
+                  ? const Icon(
+                      Icons.visibility,
+                      color: Colors.black,
+                    )
+                  : const Icon(
+                      Icons.visibility_off,
+                      color: Colors.black,
+                    ),
             ),
           ),
         );
-        /*} else if (widget.isEmail && !_isHideIconOnFocus) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 12.0, left: 12, top: 8.0, bottom: 8.0),
-          child: Container(height: 24, width: 24, decoration: BoxDecoration(image: DecorationImage(image: AssetImage(getCorrectIconEmail_ImgPath()), fit: BoxFit.fitHeight))),
-        );*/
+      } else if (widget.isSideIcon ?? false) {
+        return InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.only(
+                right: 12.0, left: 12, top: 8.0, bottom: 8.0),
+            child: Container(
+              height: widget.iconheight ?? 24,
+              width: widget.iconwidth ?? 24,
+              child: const Icon(Icons.search),
+            ),
+          ),
+        );
       } else {
         return null;
       }
@@ -262,42 +255,38 @@ class _ComInputTextState extends State<ComInputText> {
       bool _isEnabled = widget.isEnabled ?? true;
 
       return Container(
-        color: _isEnabled ? Colors.white : Colors.grey.shade200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(widget.borderR ?? 0)),
+          color: _isEnabled ? widget.BgCO ?? Colors.white : Color(0xffededed),
+        ),
         height: widget.height ?? 32,
         width: widget.width ?? 100,
         child: TextFormField(
+          keyboardType: widget.keyboardtype ?? TextInputType.multiline,
+          maxLines: widget.maxline ?? 1,
           controller: _controller,
-          // onChanged:
-          //     (widget.funcOnChange == null ? true : false) ? null : _onChange,
           onChanged: (s) {
             widget.returnfunc(s);
-            // BlocProvider.of<BlocPageRebuild>(context).rebuildPage();
-            // print(s);
           },
-          // onSaved: (s) {
-          //   widget.returnfunc(s);
-          // },
           focusNode: _focusNode,
           cursorColor: CustomTheme.colorGrey,
           obscureText: _isHidePassword,
           enabled: _isEnabled,
-          //keyboardType: TextInputType.emailAddress,
-
-          //autofillHints: [AutofillHints.username],//!app crash
           style: TxtStyle(fontSize: widget.nFontSize),
           inputFormatters: [
             LengthLimitingTextInputFormatter(widget.nLimitedChar),
             if (widget.isNumberOnly == true)
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}')),
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}')),
           ],
           decoration: InputDecoration(
             hintText: widget.sPlaceholder,
             hintStyle: TxtStyle(
-                fontSize: widget.nFontSize,
-                color: CustomTheme.colorGreyDisable),
+              fontSize: widget.nFontSize,
+              color: CustomTheme.colorGreyDisable,
+            ),
             border: const OutlineInputBorder(
                 // borderRadius:
-                //     const BorderRadius.all(const Radius.circular(8.0))
+                //     const BorderRadius.all(const Radius.circular(8.0)),
                 ),
             contentPadding:
                 const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0),
@@ -308,7 +297,7 @@ class _ComInputTextState extends State<ComInputText> {
             focusedBorder: OutlineInputBorder(
               borderSide:
                   BorderSide(width: 1, color: CustomTheme.colorGreyDisable),
-              // borderRadius: BorderRadius.circular(8)
+              // borderRadius: BorderRadius.circular(8),
             ),
             suffixIcon: wIconRightSide(),
           ),
@@ -380,7 +369,9 @@ class _ComInputTextState extends State<ComInputText> {
       if (widget.sLabel.isNotEmpty) const ComSpaceHeight(nHeight: 8),
       if (widget.sLabel.isNotEmpty)
         Text(widget.sLabel,
-            style: TxtStyle(color: CustomTheme.colorGrey, fontSize: 10)),
+            style: TxtStyle(
+                color: widget.sLabelCO ?? CustomTheme.colorGrey,
+                fontSize: widget.sLabelFS ?? 10)),
       if (widget.sLabel.isNotEmpty) const ComSpaceHeight(nHeight: 4),
       if (widget.InputTextState == enumInputTextStateList.inputText)
         wInputText(), //inputText, can show error

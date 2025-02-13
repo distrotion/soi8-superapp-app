@@ -4,7 +4,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/BlocEvent/10-1-01-P10BTTANKHIS.dart';
-import '../../bloc/BlocEvent/102-02-01-Zone01NEWITEMTABLE.dart';
 import '../../bloc/BlocEvent/21-1-01-REGISTERHIS.dart';
 import '../../widget/common/Calendarwid.dart';
 import '../../widget/common/ComInputText.dart';
@@ -159,52 +158,52 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               //         ),
               //       ],
               //     ),
-              //     Column(
-              //       children: [
-              //         Text("end"),
-              //         InkWell(
-              //           onTap: () {
-              //             CalendaSelectDate(context, DateTime.now(), (v) {
-              //               P10BTTANKHISvar.endDATE = v;
-              //               P10BTTANKHISvar.endDATElist = v.split('-');
+              // Column(
+              //   children: [
+              //     Text("end"),
+              //     InkWell(
+              //       onTap: () {
+              //         CalendaSelectDate(context, DateTime.now(), (v) {
+              //           P10BTTANKHISvar.endDATE = v;
+              //           P10BTTANKHISvar.endDATElist = v.split('-');
 
-              //               if (P10BTTANKHISvar.endDATElist.isNotEmpty) {
-              //                 P10BTTANKHISvar.endDATEout.year =
-              //                     P10BTTANKHISvar.endDATElist[0];
-              //                 P10BTTANKHISvar.endDATEout.month =
-              //                     P10BTTANKHISvar.endDATElist[1];
-              //                 P10BTTANKHISvar.endDATEout.day =
-              //                     P10BTTANKHISvar.endDATElist[2];
-              //               }
-              //               setState(() {});
-              //             });
-              //           },
-              //           child: Container(
-              //             decoration: BoxDecoration(
-              //               // color: Color(0x00b23127),
-              //               // color: LOGOorCLOSE ? Colors.transparent : Colors.transparent,
+              //           if (P10BTTANKHISvar.endDATElist.isNotEmpty) {
+              //             P10BTTANKHISvar.endDATEout.year =
+              //                 P10BTTANKHISvar.endDATElist[0];
+              //             P10BTTANKHISvar.endDATEout.month =
+              //                 P10BTTANKHISvar.endDATElist[1];
+              //             P10BTTANKHISvar.endDATEout.day =
+              //                 P10BTTANKHISvar.endDATElist[2];
+              //           }
+              //           setState(() {});
+              //         });
+              //       },
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //           // color: Color(0x00b23127),
+              //           // color: LOGOorCLOSE ? Colors.transparent : Colors.transparent,
 
-              //               // image: DecorationImage(
-              //               //   image: AssetImage("assets/icons/groupNEW@3x.png"),
-              //               //   fit: BoxFit.fitWidth,
-              //               // ),
-              //               border: Border.all(color: Colors.black),
-              //               borderRadius: const BorderRadius.only(
-              //                 topLeft: Radius.circular(8.0),
-              //                 topRight: Radius.circular(8.0),
-              //                 bottomLeft: Radius.circular(8.0),
-              //                 bottomRight: Radius.circular(8.0),
-              //               ),
-              //             ),
-              //             height: 40,
-              //             width: 5000,
-              //             child: Center(
-              //               child: Text(P10BTTANKHISvar.endDATE),
-              //             ),
+              //           // image: DecorationImage(
+              //           //   image: AssetImage("assets/icons/groupNEW@3x.png"),
+              //           //   fit: BoxFit.fitWidth,
+              //           // ),
+              //           border: Border.all(color: Colors.black),
+              //           borderRadius: const BorderRadius.only(
+              //             topLeft: Radius.circular(8.0),
+              //             topRight: Radius.circular(8.0),
+              //             bottomLeft: Radius.circular(8.0),
+              //             bottomRight: Radius.circular(8.0),
               //           ),
               //         ),
-              //       ],
+              //         height: 40,
+              //         width: 5000,
+              //         child: Center(
+              //           child: Text(P10BTTANKHISvar.endDATE),
+              //         ),
+              //       ),
               //     ),
+              //   ],
+              // ),
               //     Column(
               //       children: [
               //         SizedBox(
@@ -330,6 +329,7 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
                   ],
                 ),
               ),
+
               SizedBox(
                 height: 580,
                 width: 780,

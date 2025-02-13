@@ -3,10 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/BlocEvent/102-02-01-Zone01NEWITEMTABLE.dart';
 import '../../bloc/BlocEvent/21-1-01-REGISTERHIS.dart';
 import '../../bloc/BlocEvent/31-1-01-P31QCSAPMASTER.dart';
 
+import '../../widget/common/Advancedropdown.dart';
 import '../../widget/common/Calendarwid.dart';
 import '../../widget/common/ComInputText.dart';
 import '../../widget/table/QCSAPMASTERtable.dart';
@@ -75,6 +75,7 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
     P31QCSAPMASTERmaincontext = context;
     List<QCSAPMASTERitem> _data = widget.data ?? [];
     List<QCSAPMASTERitem> _datas = _data;
+
     if (P31QCSAPMASTERvar.SEARCH != '') {
       _datas = [];
       for (var i = 0; i < _data.length; i++) {
@@ -99,6 +100,31 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
                 .toUpperCase()
                 .contains(P31QCSAPMASTERvar.SEARCH.toUpperCase())) {
           _datas.add(_data[i]);
+        }
+      }
+    }
+
+    if (_datas.length != 0) {
+      if (_datas.length <= 100) {
+        P31QCSAPMASTERvar.FPint = 0;
+        P31QCSAPMASTERvar.LPint = _datas.length;
+      } else {
+        if (_datas.length > 0) {
+          P31QCSAPMASTERvar.pagelist = (_datas.length ~/ 100);
+
+          if (100 * P31QCSAPMASTERvar.pagelist > _datas.length) {
+            P31QCSAPMASTERvar.pagelist = P31QCSAPMASTERvar.pagelist - 1;
+          } else {
+            P31QCSAPMASTERvar.pagelist = P31QCSAPMASTERvar.pagelist;
+          }
+          P31QCSAPMASTERvar.FPint = 100 * P31QCSAPMASTERvar.pageselect;
+          if (P31QCSAPMASTERvar.pageselect == P31QCSAPMASTERvar.pagelist) {
+            // LPint = FPint + (_datas.length - 100 * pagelist);
+            P31QCSAPMASTERvar.LPint = _datas.length;
+          } else {
+            P31QCSAPMASTERvar.LPint = 100 * P31QCSAPMASTERvar.pageselect + 100;
+            // LPint = _datas.length;
+          }
         }
       }
     }
@@ -229,22 +255,86 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
               // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ComInputText(
-                  sPlaceholder: "search",
-                  height: 40,
-                  width: 400,
-                  isContr: P31QCSAPMASTERvar.iscontrol,
-                  fnContr: (input) {
-                    P31QCSAPMASTERvar.iscontrol = input;
-                  },
-                  sValue: P31QCSAPMASTERvar.SEARCH,
-                  returnfunc: (String s) {
-                    setState(() {
-                      P31QCSAPMASTERvar.SEARCH = s;
-                    });
-                  },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ComInputText(
+                      sPlaceholder: "search",
+                      height: 40,
+                      width: 400,
+                      isContr: P31QCSAPMASTERvar.iscontrol,
+                      fnContr: (input) {
+                        P31QCSAPMASTERvar.iscontrol = input;
+                      },
+                      sValue: P31QCSAPMASTERvar.SEARCH,
+                      returnfunc: (String s) {
+                        setState(() {
+                          P31QCSAPMASTERvar.SEARCH = s;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: InkWell(
+                              onTap: () {
+                                //
+                                if (P31QCSAPMASTERvar.pageselect > 0) {
+                                  setState(() {
+                                    P31QCSAPMASTERvar.pageselect--;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/icon-L@3x.png'))),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: Text(
+                                P31QCSAPMASTERvar.pageselect.toString() +
+                                    " / " +
+                                    P31QCSAPMASTERvar.pagelist.toString()),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30),
+                            child: InkWell(
+                              onTap: () {
+                                //
+                                if (P31QCSAPMASTERvar.pageselect <
+                                    P31QCSAPMASTERvar.pagelist) {
+                                  setState(() {
+                                    P31QCSAPMASTERvar.pageselect++;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 24,
+                                width: 24,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icons/icon-R@3x.png'))),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(
                 height: 580,
                 width: 780,
@@ -254,10 +344,187 @@ class _NEW_ITEMState extends State<NEW_ITEM> {
                       QCSAPMASTERtable(),
                       //----------
 
-                      for (int i = 0; i < _datas.length; i++) ...[
-                        _datas[i],
-                      ]
+                      // for (int i = 0; i < _datas.length; i++) ...[
+                      //   _datas[i],
+                      // ]
+                      for (int i = P31QCSAPMASTERvar.FPint;
+                          i < P31QCSAPMASTERvar.LPint;
+                          i++) ...[
+                        // _data[i],
+
+                        if (_datas.length > 0) ...[
+                          QCSAPMASTERitem(
+                            text01: _datas[i].text01,
+                            text02: _datas[i].text02,
+                            text03: _datas[i].text03,
+                            text04: _datas[i].text04,
+                            text05: _datas[i].text05,
+                            text06: _datas[i].text06,
+                            text07: _datas[i].text07,
+                            text08: _datas[i].text08,
+                            text09: _datas[i].text09,
+                            setupreturn: ((v) {
+                              // print(v);
+                              _GETDATASAPpop(context, _datas[i].text01 ?? '',
+                                  _datas[i].text02 ?? '');
+                            }),
+                          ),
+                        ],
+                      ],
                     ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void _GETDATASAPpop(
+  BuildContext contextin,
+  String MKMNR,
+  String Material,
+) {
+  showDialog(
+    context: contextin,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return _SETDATASAP(
+        contextin: context,
+        MKMNR: MKMNR,
+        Material: Material,
+      );
+    },
+  );
+}
+
+class _SETDATASAP extends StatefulWidget {
+  _SETDATASAP({
+    super.key,
+    this.contextin,
+    this.MKMNR,
+    this.Material,
+  });
+  BuildContext? contextin;
+  String? MKMNR;
+  String? Material;
+
+  @override
+  State<_SETDATASAP> createState() => __SETDATASAPState();
+}
+
+class __SETDATASAPState extends State<_SETDATASAP> {
+  @override
+  Widget build(BuildContext context) {
+    P31QCSAPMASTERvar.MKMNR = widget.MKMNR ?? '';
+    return Dialog(
+      child: Container(
+        height: 300,
+        width: 400,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Container(
+                  height: 40,
+                  width: 350,
+                  // color: Colors.blue,
+                  child: Center(
+                    child: Text('MKMNR : ' + (widget.MKMNR ?? '')),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Container(
+                  height: 40,
+                  width: 350,
+                  // color: Colors.blue,
+                  child: Center(
+                    child: Text("Material :" + (widget.Material ?? '')),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: SizedBox(
+                  height: 40,
+                  child: AdvanceDropDown(
+                    //isEnabled: true,
+                    listdropdown: const [
+                      MapEntry("-", "-"),
+                      MapEntry("APPEARANCE", "APPEARANCE"),
+                      MapEntry("COLOR", "COLOR"),
+                      MapEntry("AV", "AV"),
+                      MapEntry("AL", "AL"),
+                      MapEntry("EC", "EC"),
+                      MapEntry("CE", "CE"),
+                      MapEntry("PH", "PH"),
+                      MapEntry("FA", "FA"),
+                      MapEntry("FT", "FT"),
+                      MapEntry("FP", "FP"),
+                      MapEntry("TA", "TA"),
+                      MapEntry("TC", "TC"),
+                      MapEntry("SG", "SG"),
+                      MapEntry("SV", "SV"),
+                      MapEntry("MN", "MN"),
+                      MapEntry("NI", "NI"),
+                      MapEntry("ZR", "ZR"),
+                      MapEntry("ZN", "ZN"),
+                      MapEntry("CR3", "CR3"),
+                      MapEntry("MOI", "MOI"),
+                      MapEntry("NVC", "NVC"),
+                      MapEntry("TAV", "TAV"),
+                      MapEntry("TCr", "TCr"),
+                      MapEntry("F_Al", "F_Al"),
+                      MapEntry("T_Al", "T_Al"),
+                      MapEntry("ACO", "ACO"),
+                      MapEntry("Starch", "Starch"),
+                      MapEntry("BABCOCK", "BABCOCK"),
+                      MapEntry("PURITY", "PURITY"),
+                      MapEntry("FACTOR", "FACTOR"),
+                      MapEntry("Brix", "Brix"),
+                      MapEntry("PaticleSize", "PaticleSize"),
+                      MapEntry("SOLID", "SOLID"),
+                      MapEntry("THOP", "THOP"),
+                      MapEntry("FHOP", "FHOP"),
+                      MapEntry("Viscosity", "Viscosity"),
+                      MapEntry("DENSITY", "DENSITY"),
+                    ],
+
+                    //SOLID Starch
+                    onChangeinside: (d) {
+                      setState(() {
+                        P31QCSAPMASTERvar.SETTOSAP = d;
+                      });
+                    },
+                    value: P31QCSAPMASTERvar.SETTOSAP,
+                    height: 40,
+                    width: 350,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: InkWell(
+                  onTap: () {
+                    P31QCSAPMASTERmaincontext.read<QCSAPMASTER_Bloc>()
+                        .add(QCSAPMASTER_SET());
+                    // Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 350,
+                    color: Colors.blue,
+                    child: Center(
+                      child: Text("SET"),
+                    ),
                   ),
                 ),
               ),

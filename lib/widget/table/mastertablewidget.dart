@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../bloc/BlocEvent/102-01-01-Zone01MASTERTABLE.dart';
+import '../../bloc/BlocEvent/102-01-01-Zone00MASTERTABLE.dart';
 import 'tablebox.dart';
 
 class MASTERTABLE extends StatelessWidget {

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'tablebox.dart';
 
 class QCSAPMASTERtable extends StatelessWidget {
-  const QCSAPMASTERtable({super.key});
+  QCSAPMASTERtable({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class QCSAPMASTERitem extends StatelessWidget {
     this.text07,
     this.text08,
     this.text09,
+    this.setupreturn,
   });
 
   String? text01;
@@ -67,6 +70,7 @@ class QCSAPMASTERitem extends StatelessWidget {
   String? text07;
   String? text08;
   String? text09;
+  Function(String)? setupreturn;
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +102,15 @@ class QCSAPMASTERitem extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child: rowbox_type0(
-            Head: text05,
+          child: InkWell(
+            onTap: () {
+              if (setupreturn != null) {
+                setupreturn!(text01 ?? '');
+              }
+            },
+            child: rowbox_type0(
+              Head: text05,
+            ),
           ),
         ),
       ],

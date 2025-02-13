@@ -5,7 +5,8 @@ import 'package:tpk_login_v2/widget/common/ComInputText.dart';
 
 import '../../widget/table/getitemtablewidget.dart';
 import '../../widget/table/mastertablewidget.dart';
-import 'Zone01VAR.dart';
+import 'P102-05-layout.dart';
+import 'Zone00VAR.dart';
 
 class GET_ITEM extends StatefulWidget {
   const GET_ITEM({super.key});
@@ -17,23 +18,24 @@ class GET_ITEM extends StatefulWidget {
 class _GET_ITEMState extends State<GET_ITEM> {
   @override
   Widget build(BuildContext context) {
+    double resp = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
         child: SizedBox(
-      height: 680,
-      width: 780,
+      height: 1000,
+      width: resp > 800 ? 780 : 430,
       child: Column(
         children: [
           ComInputText(
             sPlaceholder: "BARCODE",
             height: 40,
             width: 400,
-            isContr: Zone01GETITEMVAR.iscontrol,
+            isContr: ZONE00GETITEMVAR.iscontrol,
             fnContr: (input) {
-              Zone01GETITEMVAR.iscontrol = input;
+              ZONE00GETITEMVAR.iscontrol = input;
             },
-            sValue: Zone01GETITEMVAR.BARCODEGETITEM,
+            sValue: ZONE00GETITEMVAR.BARCODEGETITEM,
             returnfunc: (String s) {
-              Zone01GETITEMVAR.BARCODEGETITEM = s;
+              ZONE00GETITEMVAR.BARCODEGETITEM = s;
             },
           ),
           Padding(
@@ -52,6 +54,10 @@ class _GET_ITEMState extends State<GET_ITEM> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          laooutRM2(),
         ],
       ),
     ));

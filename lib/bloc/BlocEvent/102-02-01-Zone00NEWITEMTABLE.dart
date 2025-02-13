@@ -10,30 +10,30 @@ import '../../widget/common/Safty.dart';
 import '../../widget/table/newitemtablewidget.dart';
 
 //-------------------------------------------------
-String server = serverGB;
+String server = serverINV;
 
-abstract class Zone01NEWITEMTABLE_Event {}
+abstract class ZONE00NEWITEMTABLE_Event {}
 
-class Zone01NEWITEMTABLE_GET extends Zone01NEWITEMTABLE_Event {}
+class ZONE00NEWITEMTABLE_GET extends ZONE00NEWITEMTABLE_Event {}
 
-class Zone01NEWITEMTABLE_flush extends Zone01NEWITEMTABLE_Event {}
+class ZONE00NEWITEMTABLE_flush extends ZONE00NEWITEMTABLE_Event {}
 
-class Zone01NEWITEMTABLE_Bloc
-    extends Bloc<Zone01NEWITEMTABLE_Event, List<TABLECOLUNMNNEWTABLET>> {
-  Zone01NEWITEMTABLE_Bloc() : super([]) {
-    on<Zone01NEWITEMTABLE_GET>((event, emit) {
-      return _Zone01NEWITEMTABLE_GET([], emit);
+class ZONE00NEWITEMTABLE_Bloc
+    extends Bloc<ZONE00NEWITEMTABLE_Event, List<TABLECOLUNMNNEWTABLET>> {
+  ZONE00NEWITEMTABLE_Bloc() : super([]) {
+    on<ZONE00NEWITEMTABLE_GET>((event, emit) {
+      return _ZONE00NEWITEMTABLE_GET([], emit);
     });
-    on<Zone01NEWITEMTABLE_flush>((event, emit) {
-      return _Zone01NEWITEMTABLE_flush([], emit);
+    on<ZONE00NEWITEMTABLE_flush>((event, emit) {
+      return _ZONE00NEWITEMTABLE_flush([], emit);
     });
   }
-  Future<void> _Zone01NEWITEMTABLE_GET(List<TABLECOLUNMNNEWTABLET> toAdd,
+  Future<void> _ZONE00NEWITEMTABLE_GET(List<TABLECOLUNMNNEWTABLET> toAdd,
       Emitter<List<TABLECOLUNMNNEWTABLET>> emit) async {
     List<TABLECOLUNMNNEWTABLET> output = [];
     final response = await Dio().post(
       server + "INVSYSTEM/GETITEM",
-      data: {"ZONE": "ZONE01"},
+      data: {"ZONE": "TEST-0"},
     );
     if (response.statusCode == 200) {
       var databuff = response.data;
@@ -57,7 +57,7 @@ class Zone01NEWITEMTABLE_Bloc
     emit(output);
   }
 
-  Future<void> _Zone01NEWITEMTABLE_flush(List<TABLECOLUNMNNEWTABLET> toAdd,
+  Future<void> _ZONE00NEWITEMTABLE_flush(List<TABLECOLUNMNNEWTABLET> toAdd,
       Emitter<List<TABLECOLUNMNNEWTABLET>> emit) async {
     List<TABLECOLUNMNNEWTABLET> output = [];
     emit(output);

@@ -7,6 +7,14 @@ class P31QCSAPMASTERvar {
   static String endDATE = '';
   static List<String> endDATElist = [];
   static dateout endDATEout = dateout();
+
+  static int FPint = 0;
+  static int LPint = 0;
+  static int pagelist = 0;
+  static int pageselect = 0;
+
+  static String MKMNR = '';
+  static String SETTOSAP = '-';
 }
 
 class dateout {

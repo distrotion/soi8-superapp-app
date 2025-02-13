@@ -7,14 +7,19 @@ import '../../mainBody.dart';
 import '../../page/page1.dart';
 import '../../page/page10.dart';
 import '../../page/page101.dart';
+import '../../page/page11.dart';
 import '../../page/page2.dart';
 import '../../page/page20.dart';
 import '../../page/page21.dart';
 import '../../page/page22.dart';
+import '../../page/page23.dart';
 import '../../page/page3.dart';
 import '../../page/page31.dart';
 import '../../page/page32.dart';
 import '../../page/page4.dart';
+import '../../page/page40.dart';
+import '../../page/page41.dart';
+import '../../page/page42.dart';
 import '../../page/page5.dart';
 import 'sub_widget.dart';
 
@@ -197,6 +202,19 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 40,
+            child: Column(
+              children: [
+                menu_sub(
+                  tapcolor: Colors.green,
+                  name: "BT TANK HISTORY EXPORT",
+                  page: Page11(),
+                  Lv: 1,
+                ),
+              ],
+            ),
           )
         ] else ...[
           const SizedBox(),
@@ -255,7 +273,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 120,
+              height: 160,
               child: Column(
                 children: [
                   menu_sub(
@@ -276,12 +294,11 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                     page: Page22(),
                     Lv: 1,
                   ),
-
-                  // menu_sub(
-                  //   name: "SACADA WEIGTH History",
-                  //   page: Page1(),
-                  //   Lv: 1,
-                  // ),
+                  menu_sub(
+                    name: "EXPORT WEIGTH BY TANK",
+                    page: Page23(),
+                    Lv: 1,
+                  ),
                 ],
               ),
             )
@@ -342,7 +359,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_QC) ...[
             SizedBox(
-              height: 120,
+              height: 150,
               child: Column(
                 children: [
                   menu_sub(
@@ -512,11 +529,11 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
               height: 40,
               child: Column(
                 children: [
-                  menu_sub(
-                    name: "test",
-                    page: Page1(),
-                    Lv: 1,
-                  ),
+                  // menu_sub(
+                  //   name: "test",
+                  //   page: Page1(),
+                  //   Lv: 1,
+                  // ),
                 ],
               ),
             )
@@ -580,16 +597,16 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
               height: 80,
               child: Column(
                 children: [
-                  menu_sub(
-                    name: "STORE",
-                    page: Page101(),
-                    Lv: 1,
-                  ),
-                  menu_sub(
-                    name: "Divide Remainder",
-                    page: Page1(),
-                    Lv: 1,
-                  ),
+                  // menu_sub(
+                  //   name: "STORE",
+                  //   page: Page101(),
+                  //   Lv: 1,
+                  // ),
+                  // menu_sub(
+                  //   name: "Divide Remainder",
+                  //   page: Page1(),
+                  //   Lv: 1,
+                  // ),
                 ],
               ),
             )
@@ -650,12 +667,22 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_DL) ...[
             SizedBox(
-              height: 40,
+              height: 150,
               child: Column(
                 children: [
                   menu_sub(
-                    name: "STORE",
-                    page: Page101(),
+                    name: "MASTER",
+                    page: Page40(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "PATTERN",
+                    page: Page41(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "INCOMING OP",
+                    page: Page42(),
                     Lv: 1,
                   ),
                 ],

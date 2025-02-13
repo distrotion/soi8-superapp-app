@@ -5,7 +5,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import '../../widget/common/ComInputText.dart';
 import '../../widget/table/mastertablewidget.dart';
 import '../../widget/table/returntabletablewidget.dart';
-import 'Zone01VAR.dart';
+import 'P102-05-layout.dart';
+import 'Zone00VAR.dart';
 
 class RETURN_ITEM extends StatefulWidget {
   const RETURN_ITEM({super.key});
@@ -17,23 +18,24 @@ class RETURN_ITEM extends StatefulWidget {
 class _RETURN_ITEMState extends State<RETURN_ITEM> {
   @override
   Widget build(BuildContext context) {
+    double resp = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
         child: SizedBox(
       height: 680,
-      width: 780,
+      width: resp > 800 ? 780 : 430,
       child: Column(
         children: [
           ComInputText(
             sPlaceholder: "BARCODE",
             height: 40,
             width: 400,
-            isContr: Zone01RETURNITEMVAR.iscontrol,
+            isContr: ZONE00RETURNITEMVAR.iscontrol,
             fnContr: (input) {
-              Zone01RETURNITEMVAR.iscontrol = input;
+              ZONE00RETURNITEMVAR.iscontrol = input;
             },
-            sValue: Zone01RETURNITEMVAR.BARCODERETRUNITEM,
+            sValue: ZONE00RETURNITEMVAR.BARCODERETRUNITEM,
             returnfunc: (String s) {
-              Zone01RETURNITEMVAR.BARCODERETRUNITEM = s;
+              ZONE00RETURNITEMVAR.BARCODERETRUNITEM = s;
             },
           ),
           Padding(
@@ -52,6 +54,10 @@ class _RETURN_ITEMState extends State<RETURN_ITEM> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          laooutRM2(),
         ],
       ),
     ));
