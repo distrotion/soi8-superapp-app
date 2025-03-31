@@ -12,7 +12,10 @@ import '../../page/page2.dart';
 import '../../page/page20.dart';
 import '../../page/page21.dart';
 import '../../page/page22.dart';
+import '../../page/page221.dart';
+import '../../page/page222.dart';
 import '../../page/page23.dart';
+import '../../page/page231.dart';
 import '../../page/page3.dart';
 import '../../page/page31.dart';
 import '../../page/page32.dart';
@@ -21,6 +24,7 @@ import '../../page/page40.dart';
 import '../../page/page41.dart';
 import '../../page/page42.dart';
 import '../../page/page5.dart';
+import '../../page/page60.dart';
 import 'sub_widget.dart';
 
 late BuildContext MenuContext;
@@ -273,7 +277,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 160,
+              height: 240,
               child: Column(
                 children: [
                   menu_sub(
@@ -296,7 +300,17 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                   ),
                   menu_sub(
                     name: "EXPORT WEIGTH BY TANK",
-                    page: Page23(),
+                    page: Page221(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "PRODUCTION SM",
+                    page: Page222(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "NO SCADA DATA",
+                    page: Page60(),
                     Lv: 1,
                   ),
                 ],
@@ -359,7 +373,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_QC) ...[
             SizedBox(
-              height: 150,
+              height: 180,
               child: Column(
                 children: [
                   menu_sub(
@@ -671,20 +685,25 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
               child: Column(
                 children: [
                   menu_sub(
-                    name: "MASTER",
-                    page: Page40(),
+                    name: "Good Receive",
+                    page: Page231(),
                     Lv: 1,
                   ),
-                  menu_sub(
-                    name: "PATTERN",
-                    page: Page41(),
-                    Lv: 1,
-                  ),
-                  menu_sub(
-                    name: "INCOMING OP",
-                    page: Page42(),
-                    Lv: 1,
-                  ),
+                  // menu_sub(
+                  //   name: "MASTER",
+                  //   page: Page40(),
+                  //   Lv: 1,
+                  // ),
+                  // menu_sub(
+                  //   name: "PATTERN",
+                  //   page: Page41(),
+                  //   Lv: 1,
+                  // ),
+                  // menu_sub(
+                  //   name: "INCOMING OP",
+                  //   page: Page42(),
+                  //   Lv: 1,
+                  // ),
                 ],
               ),
             )

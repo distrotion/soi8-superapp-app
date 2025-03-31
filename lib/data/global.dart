@@ -62,11 +62,12 @@ class GETONE {
 
 // String serverINV = 'http://127.0.0.1:18010/';
 // String serverQC = 'http://127.0.0.1:15000/';
-String serverGB = 'http://127.0.0.1:18000/';
+// String serverGB = 'http://127.0.0.1:18000/';
 // String server2 = 'http://127.0.0.1:14090/';
 //
-// String serverGB = 'http://172.23.10.34:18000/';
+String serverGB = 'http://172.23.10.34:18000/';
 String serverQC = 'http://172.23.10.34:15000/';
 String serverINV = 'http://172.23.10.34:18010/';
+String server2 = 'http://172.23.10.168:14094/';
 
 //120008341010216885
