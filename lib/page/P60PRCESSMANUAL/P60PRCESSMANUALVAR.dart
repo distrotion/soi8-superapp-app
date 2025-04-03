@@ -17,4 +17,13 @@ class P60PRCESSMANUALVAR {
   static String CHEMSET = '';
   static String WeightSET = '';
   static String LOTNOSET = '';
+
+  // static String NumOrder = '';
+  static String NumPackSize1 = '';
+  static String NumPackSize2 = '';
+  static String NumPackSize3 = '';
+  static String NumQuantity1 = '';
+  static String NumQuantity2 = '';
+  static String NumQuantity3 = '';
+  static String NumWeight = '';
 }

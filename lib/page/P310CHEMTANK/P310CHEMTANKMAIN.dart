@@ -15,12 +15,16 @@ import '../../data/global.dart';
 import '../../mainBody.dart';
 import '../../widget/common/ComInputText.dart';
 
+import '../../widget/common/ErrorPopup.dart';
+import '../../widget/common/Error_NO_Popup.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 
 import '../P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSM.dart';
 import '../P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSMVAR.dart';
 
+import '../P60PRCESSMANUAL/P60PRCESSMANUALVAR.dart';
+import '../page60.dart';
 import 'P310CHEMTANKVAR.dart';
 
 late BuildContext P310CHEMTANKMAINcontext;
@@ -89,23 +93,49 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                Center(
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => LinearGradient(
-                      colors: const [Colors.blueAccent, Colors.lightBlueAccent],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(bounds),
-                    child: Text(
-                      // '${USERDATA.PLANTNAME} : ${USERDATA.TANK} : ${USERDATA.ORDER}',
-                      "",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                Row(
+                  children: [
+                    Center(
+                      child: ShaderMask(
+                        shaderCallback: (bounds) => LinearGradient(
+                          colors: const [
+                            Colors.blueAccent,
+                            Colors.lightBlueAccent
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ).createShader(bounds),
+                        child: Text(
+                          // '${USERDATA.PLANTNAME} : ${USERDATA.TANK} : ${USERDATA.ORDER}',
+                          "",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        P60PRCESSMANUALVAR.ORDER =
+                            P310CHEMTANKVAR.MATERIAL + P310CHEMTANKVAR.ORDER;
+                        CuPage = Page60();
+                        MainBodyContext.read<ChangePage_Bloc>()
+                            .add(ChangePage_nodrower());
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 150,
+                        color: Colors.green,
+                        child: Center(
+                          child: Text("Manual Data"),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 SizedBox(height: 10),
                 Expanded(
@@ -1488,6 +1518,21 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                       Navigator.pop(context);
                                       Navigator.pop(
                                           P221PRODUCTIONCONFIRMATIONSMcontext);
+
+                                      if (v.data.length > 0) {
+                                        if (v.data[0]['TYPE'] != null) {
+                                          if (v.data[0]['TYPE'].toString() ==
+                                              'E') {
+                                            showErrorPopup(
+                                                P221PRODUCTIONCONFIRMATIONSMcontext,
+                                                v.data.toString());
+                                          } else {
+                                            showGoodPopup(
+                                                P221PRODUCTIONCONFIRMATIONSMcontext,
+                                                v.data.toString());
+                                          }
+                                        }
+                                      }
                                       // });
                                     });
                                   },

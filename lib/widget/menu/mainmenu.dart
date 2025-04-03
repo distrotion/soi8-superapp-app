@@ -11,6 +11,7 @@ import '../../page/page11.dart';
 import '../../page/page2.dart';
 import '../../page/page20.dart';
 import '../../page/page21.dart';
+import '../../page/page211.dart';
 import '../../page/page22.dart';
 import '../../page/page221.dart';
 import '../../page/page222.dart';
@@ -277,18 +278,18 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 240,
+              height: 280,
               child: Column(
                 children: [
                   menu_sub(
                     tapcolor: Colors.green,
-                    name: "QC WEIGTH Approve",
+                    name: "WEIGTH APPROVAL",
                     page: Page20(),
                     Lv: 1,
                   ),
                   menu_sub(
                     tapcolor: Colors.green,
-                    name: "QC WEIGTH History",
+                    name: "WEIGTH HISTORY",
                     page: Page21(),
                     Lv: 1,
                   ),
@@ -299,17 +300,22 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                     Lv: 1,
                   ),
                   menu_sub(
-                    name: "EXPORT WEIGTH BY TANK",
-                    page: Page221(),
+                    name: "PLANNING",
+                    page: Page211(),
                     Lv: 1,
                   ),
                   menu_sub(
                     name: "PRODUCTION SM",
+                    page: Page221(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "PRODUCTION FG",
                     page: Page222(),
                     Lv: 1,
                   ),
                   menu_sub(
-                    name: "NO SCADA DATA",
+                    name: "NON-SCADA",
                     page: Page60(),
                     Lv: 1,
                   ),

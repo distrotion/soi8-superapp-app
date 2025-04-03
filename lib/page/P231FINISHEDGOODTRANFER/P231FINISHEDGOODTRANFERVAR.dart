@@ -14,6 +14,10 @@ class P231FINISHEDGOODTRANFERVAR {
   static String month_next = '';
   static String year_next = '';
 
+  static String day_send = '';
+  static String month_send = '';
+  static String year_send = '';
+
   static int holding = 999;
 
   static String PROCESS_ORDERselect = '';

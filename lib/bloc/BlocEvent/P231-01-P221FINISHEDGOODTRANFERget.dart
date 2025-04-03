@@ -151,12 +151,24 @@ class P231FINISHEDGOODTRANFERget_Bloc extends Bloc<
                 var databuff = response3.data;
                 // input = databuff;
                 if (databuff.length > 0) {
+                  List<String> MATERIAL_TEXT = buffer.MATERIAL_TEXT.split("|");
+                  // String PAcksize = '';
+
+                  if (MATERIAL_TEXT.length == 2) {
+                    print(MATERIAL_TEXT[1]);
+                    // PAcksize =
+                    //     (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+                    buffer.sizep =
+                        (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+
+                    print(buffer.sizep);
+                  }
                   buffer.NumOrder = savenull(databuff[0]['NumOrder']);
-                  buffer.NumPackSize1 = savenull(databuff[0]['NumPackSize1']);
+                  buffer.NumPackSize1 = (savenull(databuff[0]['NumPackSize1']));
                   buffer.NumQuantity1 = savenull(databuff[0]['NumQuantity1']);
-                  buffer.NumPackSize2 = savenull(databuff[0]['NumPackSize2']);
+                  buffer.NumPackSize2 = (savenull(databuff[0]['NumPackSize2']));
                   buffer.NumQuantity2 = savenull(databuff[0]['NumQuantity2']);
-                  buffer.NumPackSize3 = savenull(databuff[0]['NumPackSize3']);
+                  buffer.NumPackSize3 = (savenull(databuff[0]['NumPackSize3']));
                   buffer.NumQuantity3 = savenull(databuff[0]['NumQuantity3']);
                 }
 
@@ -242,6 +254,7 @@ class P231FINISHEDGOODTRANFERgetclass {
     this.NumPackSize3 = '',
     this.NumQuantity3 = '',
     this.check = false,
+    this.sizep = '',
   });
 
   String PROCESS_ORDER;
@@ -278,6 +291,8 @@ class P231FINISHEDGOODTRANFERgetclass {
   String NumQuantity3;
 
   bool check;
+
+  String sizep;
 }
 
 String savenull(input) {

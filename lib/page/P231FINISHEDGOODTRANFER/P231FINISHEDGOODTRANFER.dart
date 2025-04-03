@@ -15,6 +15,8 @@ import '../../widget/common/Calendarwid.dart';
 import '../../widget/common/CheckboxC.dart';
 import '../../widget/common/ComInputText.dart';
 
+import '../../widget/common/ErrorPopup.dart';
+import '../../widget/common/Error_NO_Popup.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 
@@ -71,6 +73,25 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
     P231FINISHEDGOODTRANFERcontext = context;
     List<P231FINISHEDGOODTRANFERgetclass> _datain = widget.data ?? [];
     List<P231FINISHEDGOODTRANFERgetclass> _datasearch = [];
+
+    List<P231FINISHEDGOODTRANFERgetclass> _data_exp = [];
+
+    for (int i = 0; i < _datain.length; i++) {
+      if (_datain[i]
+              .PROCESS_ORDER
+              .contains(P231FINISHEDGOODTRANFERVAR.SEARCH) ||
+          _datain[i].MATERIAL.contains(P231FINISHEDGOODTRANFERVAR.SEARCH) ||
+          _datain[i]
+              .MATERIAL_TEXT
+              .contains(P231FINISHEDGOODTRANFERVAR.SEARCH) ||
+          _datain[i]
+              .PROD_SUP_DESC
+              .contains(P231FINISHEDGOODTRANFERVAR.SEARCH) ||
+          _datain[i].PROD_SUP.contains(P231FINISHEDGOODTRANFERVAR.SEARCH) ||
+          _datain[i].BATCH.contains(P231FINISHEDGOODTRANFERVAR.SEARCH)) {
+        _data_exp.add(_datain[i]);
+      }
+    }
 
     return SingleChildScrollView(
       child: Padding(
@@ -202,6 +223,10 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                         P231FINISHEDGOODTRANFERVAR.month = month;
                         P231FINISHEDGOODTRANFERVAR.year = year;
 
+                        context
+                            .read<P231FINISHEDGOODTRANFERget_Bloc>()
+                            .add(P231FINISHEDGOODTRANFERget_GET());
+
                         setState(() {});
                       });
                     },
@@ -236,6 +261,10 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                         P231FINISHEDGOODTRANFERVAR.month_next = month;
                         P231FINISHEDGOODTRANFERVAR.year_next = year;
 
+                        context
+                            .read<P231FINISHEDGOODTRANFERget_Bloc>()
+                            .add(P231FINISHEDGOODTRANFERget_GET());
+
                         setState(() {});
                       });
                     },
@@ -259,6 +288,40 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                       ),
                     ),
                   ),
+                  Container(
+                    height: 60,
+                    // width: 900,
+                    decoration: BoxDecoration(
+                      // color: Colors.blue.shade900,
+                      border: Border(
+                        top: BorderSide(),
+                        left: BorderSide(),
+                        right: BorderSide(),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: ComInputText(
+                          height: 40,
+                          width: 500,
+                          isContr: P231FINISHEDGOODTRANFERVAR.iscontrol,
+                          fnContr: (input) {
+                            setState(() {
+                              P231FINISHEDGOODTRANFERVAR.iscontrol = input;
+                            });
+                          },
+                          sPlaceholder: "search",
+                          sValue: P231FINISHEDGOODTRANFERVAR.SEARCH,
+                          returnfunc: (String s) {
+                            setState(() {
+                              P231FINISHEDGOODTRANFERVAR.SEARCH = s;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   FINISHEDGOODTRANFERtable(),
                   // if (_datasearch
                   //     .any((item) => item.PLANT == 'noxrust'))
@@ -269,7 +332,7 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                         // width: 1100,
                         child: Column(
                           children: [
-                            for (int i = 0; i < _datain.length; i++) ...[
+                            for (int i = 0; i < _data_exp.length; i++) ...[
                               // for (int i = 0; i < 10; i++) ...[
                               InkWell(
                                 onTap: () {
@@ -278,23 +341,63 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                                   //         .PROCESS_ORDERselect =
                                   //     _datain[i].PROCESS_ORDER;
                                   //-----------------------------------------------
-                                  P231FINISHEDGOODTRANFERVAR
-                                      .FINALSEND = (double.parse(ConverstStr(
-                                                  _datain[i].NumPackSize1)) *
-                                              double.parse(ConverstStr(
-                                                  _datain[i].NumQuantity1)) +
-                                          double.parse(ConverstStr(_datain[i].NumPackSize2)) *
-                                              double.parse(ConverstStr(
-                                                  _datain[i].NumQuantity2)) +
-                                          double.parse(ConverstStr(
-                                                  _datain[i].NumPackSize3)) *
-                                              double.parse(
-                                                  ConverstStr(_datain[i].NumQuantity3)))
-                                      .toString();
+
+                                  // print(_data_exp[i].MATERIAL_TEXT);
+                                  List<String> MATERIAL_TEXT =
+                                      _data_exp[i].MATERIAL_TEXT.split("|");
+
+                                  String PAcksize = '0';
+                                  String FINALSEND = '0';
+
+                                  //
+                                  if (MATERIAL_TEXT.length == 2) {
+                                    //
+                                    PAcksize = (MATERIAL_TEXT[1])
+                                        .replaceAll(RegExp(r'[^0-9]'), '');
+
+                                    print(PAcksize);
+
+                                    if ((PAcksize) ==
+                                        _data_exp[i].NumPackSize1) {
+                                      FINALSEND = (double.parse(ConverstStr(
+                                                  _data_exp[i].NumPackSize1)) *
+                                              (double.parse(ConverstStr(
+                                                  _data_exp[i].NumQuantity1))))
+                                          .toString();
+                                    } else if ((PAcksize) ==
+                                        _data_exp[i].NumPackSize2) {
+                                      FINALSEND = (double.parse(ConverstStr(
+                                                  _data_exp[i].NumPackSize2)) *
+                                              (double.parse(ConverstStr(
+                                                  _data_exp[i].NumQuantity2))))
+                                          .toString();
+                                    } else if ((PAcksize) ==
+                                        _data_exp[i].NumPackSize3) {
+                                      FINALSEND = (double.parse(ConverstStr(
+                                                  _data_exp[i].NumPackSize3)) *
+                                              (double.parse(ConverstStr(
+                                                  _data_exp[i].NumQuantity3))))
+                                          .toString();
+                                    }
+                                  }
+                                  // P231FINISHEDGOODTRANFERVAR
+                                  //     .FINALSEND = (double.parse(ConverstStr(
+                                  //                 _data_exp[i].NumPackSize1)) *
+                                  //             double.parse(ConverstStr(
+                                  //                 _data_exp[i].NumQuantity1)) +
+                                  //         double.parse(ConverstStr(_data_exp[i].NumPackSize2)) *
+                                  //             double.parse(ConverstStr(
+                                  //                 _data_exp[i].NumQuantity2)) +
+                                  //         double.parse(ConverstStr(_data_exp[i].NumPackSize3)) *
+                                  //             double.parse(ConverstStr(
+                                  //                 _data_exp[i].NumQuantity3)))
+                                  //     .toString();
+                                  P231FINISHEDGOODTRANFERVAR.FINALSEND =
+                                      FINALSEND;
                                   P231FINISHEDGOODTRANFERVAR.UNIT =
-                                      _datain[i].UOM;
+                                      _data_exp[i].UOM;
                                   P231FINISHEDGOODTRANFERVAR.FGPOSTDATA =
-                                      _datain[i];
+                                      _data_exp[i];
                                   _POPUPCREATEUSERSW(context);
                                   P231FINISHEDGOODTRANFERVAR.Page = 0;
                                   //-------------
@@ -317,30 +420,39 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                                   Wid01: CheckBoxC(
                                     getChbox: (p0) {
                                       setState(() {
-                                        _datain[i].check = p0;
+                                        _data_exp[i].check = p0;
                                       });
                                     },
-                                    value: _datain[i].check,
+                                    value: _data_exp[i].check,
                                   ),
                                   holding:
                                       P231FINISHEDGOODTRANFERVAR.holding == i,
-                                  text01: _datain[i].PROCESS_ORDER,
-                                  text02: _datain[i].MATERIAL,
-                                  text03: _datain[i].MATERIAL_TEXT,
-                                  text04: _datain[i].PROD_SUP_DESC,
-                                  text05: _datain[i].BATCH,
-                                  text06: _datain[i].Yield,
-                                  text07: _datain[i].NumPackSize1 != ''
-                                      ? '(P${_datain[i].NumPackSize1})*${_datain[i].NumQuantity1}'
+                                  text01: _data_exp[i].PROCESS_ORDER,
+                                  text02: _data_exp[i].MATERIAL,
+                                  text03: _data_exp[i].MATERIAL_TEXT,
+                                  text04: _data_exp[i].PROD_SUP_DESC,
+                                  text05: _data_exp[i].BATCH,
+                                  text06: _data_exp[i].Yield,
+                                  text07: (_data_exp[i].sizep ==
+                                          _data_exp[i].NumPackSize1)
+                                      ? (_data_exp[i].NumPackSize1 != ''
+                                          ? '(P${_data_exp[i].NumPackSize1})*${_data_exp[i].NumQuantity1}'
+                                          : "")
                                       : "",
-                                  text08: _datain[i].NumPackSize2 != ''
-                                      ? '(P${_datain[i].NumPackSize2})*${_datain[i].NumQuantity2}'
+                                  text08: (_data_exp[i].sizep ==
+                                          _data_exp[i].NumPackSize2)
+                                      ? (_data_exp[i].NumPackSize2 != ''
+                                          ? '(P${_data_exp[i].NumPackSize2})*${_data_exp[i].NumQuantity2}'
+                                          : "")
                                       : "",
-                                  text09: _datain[i].NumPackSize3 != ''
-                                      ? '(P${_datain[i].NumPackSize3})*${_datain[i].NumQuantity3}'
+                                  text09: (_data_exp[i].sizep ==
+                                          _data_exp[i].NumPackSize3)
+                                      ? (_data_exp[i].NumPackSize3 != ''
+                                          ? '(P${_data_exp[i].NumPackSize3})*${_data_exp[i].NumQuantity3}'
+                                          : "")
                                       : "",
-                                  text10: "-",
-                                  text11: "-",
+                                  text10: _data_exp[i].MTBEZ,
+                                  text11: _data_exp[i].SYSTEM_STATUS,
                                   text12: "-",
                                 ),
                               ),
@@ -367,7 +479,7 @@ void _POPUPCREATEUSERSW(BuildContext contextin) {
     builder: (BuildContext context) {
       return Center(
         child: Container(
-          height: 300,
+          height: 400,
           width: 800,
           color: Colors.white,
           child: Material(child: _DATAGETSET()),
@@ -411,124 +523,201 @@ class __DATAGETSETState extends State<_DATAGETSET> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    var now = DateTime.now();
+    P231FINISHEDGOODTRANFERVAR.day_send = DateFormat('dd').format(now);
+    P231FINISHEDGOODTRANFERVAR.month_send = DateFormat('MM').format(now);
+    P231FINISHEDGOODTRANFERVAR.year_send = DateFormat('yyyy').format(now);
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: [
-          if (P231FINISHEDGOODTRANFERVAR.Page == 0) ...[
-            // if (_datasearch
-            //     .any((item) => item.PLANT == 'noxrust'))
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                child: Text("DATA TO STORE"),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("TO STORE"),
-                  ),
-                  ComInputText(
-                    height: 40,
-                    width: 200,
-                    isContr: P231FINISHEDGOODTRANFERVAR.iscontrol,
-                    fnContr: (input) {
-                      setState(() {
-                        P231FINISHEDGOODTRANFERVAR.iscontrol = input;
-                      });
-                    },
-                    sValue: P231FINISHEDGOODTRANFERVAR.FINALSEND,
-                    returnfunc: (String s) {
-                      setState(() {
-                        P231FINISHEDGOODTRANFERVAR.FINALSEND = s;
-                      });
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(P231FINISHEDGOODTRANFERVAR.UNIT),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              child: InkWell(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            if (P231FINISHEDGOODTRANFERVAR.Page == 0) ...[
+              // if (_datasearch
+              //     .any((item) => item.PLANT == 'noxrust'))
+              InkWell(
                 onTap: () {
-                  //
                   DateTime calendaset = DateTime.now();
-                  Map<String, String> dataset = {
-                    "PSTNG_DATE":
-                        // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                        "${P231FINISHEDGOODTRANFERVAR.day_next}.${P231FINISHEDGOODTRANFERVAR.month_next}.${P231FINISHEDGOODTRANFERVAR.year_next}",
-                    "DOC_DATE":
-                        // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                        "${P231FINISHEDGOODTRANFERVAR.day_next}.${P231FINISHEDGOODTRANFERVAR.month_next}.${P231FINISHEDGOODTRANFERVAR.year_next}",
-                    "REF_DOC_NO":
-                        P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.PROCESS_ORDER,
-                    "HEADER_TXT": "USER DATA",
-                    "MATERIAL": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.MATERIAL,
-                    "PLANT": "1000",
-                    "STGE_LOC": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.STGE_LOC,
-                    "BATCH": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.BATCH,
-                    "MOVE_TYPE": "101",
-                    "STCK_TYPE": "",
-                    "ENTRY_QNT": P231FINISHEDGOODTRANFERVAR.FINALSEND,
-                    "ENTRY_UOM": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.UOM,
-                    "ORDERID":
-                        P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.PROCESS_ORDER,
-                    "EXPIRYDATE": "",
-                    "PROD_DATE":
-                        // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                        "${P231FINISHEDGOODTRANFERVAR.day_next}.${P231FINISHEDGOODTRANFERVAR.month_next}.${P231FINISHEDGOODTRANFERVAR.year_next}",
-                    "TEMPLATE": ""
-                  };
 
-                  // print(dataset);
-
-                  FreeLoading(context);
-                  Dio()
-                      .post(
-                    "${server2}03iPPGETDATACHEM/SETI003DATA",
-                    data: dataset,
-                  )
-                      .then((v) {
+                  //
+                  CalendaSelectDates(context, calendaset, (day, month, year) {
                     //
-                    // Navigator.pop(P231FINISHEDGOODTRANFERcontext);
-                    // Navigator.pop(context);
-                    Navigator.pop(context);
-                    P231FINISHEDGOODTRANFERVAR.Page = 1;
+                    P231FINISHEDGOODTRANFERVAR.day_send = day;
+                    P231FINISHEDGOODTRANFERVAR.month_send = month;
+                    P231FINISHEDGOODTRANFERVAR.year_send = year;
+
                     setState(() {});
-                    print(v.data);
                   });
                 },
                 child: Container(
-                  width: 400,
-                  height: 100,
-                  color: Colors.blue,
+                  height: 30,
+                  // width: 900,
+                  decoration: BoxDecoration(
+                    // color: Colors.blue.shade900,
+                    border: Border(
+                      top: BorderSide(),
+                      left: BorderSide(),
+                      right: BorderSide(),
+                      bottom: BorderSide(),
+                    ),
+                  ),
                   child: Center(
-                    child: Text("POST TO STORE"),
+                    child: Text(
+                      "วันที่ส่ง : ${P231FINISHEDGOODTRANFERVAR.day_send}-${P231FINISHEDGOODTRANFERVAR.month_send}-${P231FINISHEDGOODTRANFERVAR.year_send}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ] else ...[
-            // QrImageView(
-            //   data: '1234567890',
-            //   version: QrVersions.auto,
-            //   size: 200.0,
-            // ),
-            Text("QRCODE REMAIN")
-          ]
-        ],
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SizedBox(
+                  child: Text("DATA TO STORE"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: SizedBox(
+                  child: Text(
+                      "Production date: ${P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.BASIC_FINISH_DATE}"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: SizedBox(
+                  child: Text(
+                      "BATCH: ${P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.MATERIAL}${P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.BATCH}"),
+                ),
+              ),
+              //P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.BATCH
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: SizedBox(
+                  child: Text(
+                      "ORDER: ${P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.PROCESS_ORDER}"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("TO STORE"),
+                    ),
+                    ComInputText(
+                      height: 40,
+                      width: 200,
+                      isContr: P231FINISHEDGOODTRANFERVAR.iscontrol,
+                      fnContr: (input) {
+                        setState(() {
+                          P231FINISHEDGOODTRANFERVAR.iscontrol = input;
+                        });
+                      },
+                      sValue: P231FINISHEDGOODTRANFERVAR.FINALSEND,
+                      returnfunc: (String s) {
+                        setState(() {
+                          P231FINISHEDGOODTRANFERVAR.FINALSEND = s;
+                        });
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(P231FINISHEDGOODTRANFERVAR.UNIT),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                child: InkWell(
+                  onTap: () {
+                    //
+                    DateTime calendaset = DateTime.now();
+                    Map<String, String> dataset = {
+                      "PSTNG_DATE":
+                          // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                          "${P231FINISHEDGOODTRANFERVAR.day_send}.${P231FINISHEDGOODTRANFERVAR.month_send}.${P231FINISHEDGOODTRANFERVAR.year_send}",
+                      "DOC_DATE":
+                          // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                          "${P231FINISHEDGOODTRANFERVAR.day_send}.${P231FINISHEDGOODTRANFERVAR.month_send}.${P231FINISHEDGOODTRANFERVAR.year_send}",
+                      "REF_DOC_NO":
+                          P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.PROCESS_ORDER,
+                      "HEADER_TXT": "USER DATA",
+                      "MATERIAL":
+                          P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.MATERIAL,
+                      "PLANT": "1000",
+                      "STGE_LOC":
+                          P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.STGE_LOC,
+                      "BATCH": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.BATCH,
+                      "MOVE_TYPE": "101",
+                      "STCK_TYPE": "",
+                      "ENTRY_QNT": P231FINISHEDGOODTRANFERVAR.FINALSEND,
+                      "ENTRY_UOM": P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.UOM,
+                      "ORDERID":
+                          P231FINISHEDGOODTRANFERVAR.FGPOSTDATA.PROCESS_ORDER,
+                      "EXPIRYDATE": "",
+                      "PROD_DATE": P231FINISHEDGOODTRANFERVAR
+                          .FGPOSTDATA.BASIC_FINISH_DATE,
+                      // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                      // "${P231FINISHEDGOODTRANFERVAR.day_send}.${P231FINISHEDGOODTRANFERVAR.month_send}.${P231FINISHEDGOODTRANFERVAR.year_send}",
+                      "TEMPLATE": ""
+                    };
+
+                    // print(dataset);
+
+                    FreeLoading(context);
+                    Dio()
+                        .post(
+                      "${server2}03iPPGETDATACHEM/SETI003DATA",
+                      data: dataset,
+                    )
+                        .then((v) {
+                      //
+                      // Navigator.pop(P231FINISHEDGOODTRANFERcontext);
+                      // Navigator.pop(context);
+                      Navigator.pop(context);
+                      P231FINISHEDGOODTRANFERVAR.Page = 1;
+                      setState(() {});
+                      print(v.data);
+                      if (v.data.length > 0) {
+                        if (v.data['MESSAGE_TYPE'] != null) {
+                          if (v.data['MESSAGE_TYPE'].toString() == 'E') {
+                            showErrorPopup(P231FINISHEDGOODTRANFERcontext,
+                                v.data.toString());
+                          } else {
+                            showGoodPopup(P231FINISHEDGOODTRANFERcontext,
+                                v.data.toString());
+                          }
+                        }
+                      }
+                    });
+                  },
+                  child: Container(
+                    width: 400,
+                    height: 100,
+                    color: Colors.blue,
+                    child: Center(
+                      child: Text("POST TO STORE"),
+                    ),
+                  ),
+                ),
+              ),
+            ] else ...[
+              // QrImageView(
+              //   data: '1234567890',
+              //   version: QrVersions.auto,
+              //   size: 200.0,
+              // ),
+              Text("QRCODE REMAIN")
+            ]
+          ],
+        ),
       ),
     );
   }

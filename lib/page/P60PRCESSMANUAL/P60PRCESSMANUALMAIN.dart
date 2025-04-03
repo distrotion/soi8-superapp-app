@@ -1,13 +1,18 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tpk_login_v2/widget/common/Error_NO_Popup.dart';
 
 import '../../bloc/BlocEvent/60-02-P60SETRAWMAT.dart';
 import '../../bloc/cubit/Rebuild.dart';
 import '../../data/base64pic.dart';
+import '../../data/global.dart';
 import '../../widget/common/ComInputText.dart';
+import '../../widget/common/ErrorPopup.dart';
+import '../../widget/common/Safty.dart';
 import '../../widget/table/P60SETRAWMATADD.dart';
 import 'P60PRCESSMANUALVAR.dart';
 
@@ -246,11 +251,55 @@ class _P60PRCESSMANUALMAINState extends State<P60PRCESSMANUALMAIN> {
                               height: 12,
                             ),
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
                                 //
-                                context
-                                    .read<SETRAWMATMAIN__Bloc>()
-                                    .add(SETRAWMATMAIN_SET());
+                                // context
+                                //     .read<SETRAWMATMAIN__Bloc>()
+                                //     .add(SETRAWMATMAIN_SET());
+                                List<Map<String, String>> datauotsave = [];
+
+                                for (var i = 0;
+                                    i < P60PRCESSMANUALVAR.LISTSAVE.length;
+                                    i++) {
+                                  datauotsave.add({
+                                    "NumOrder": P60PRCESSMANUALVAR.ORDER
+                                        .substring(12, 18),
+                                    "StrChemical":
+                                        P60PRCESSMANUALVAR.LISTSAVE[i].Chm,
+                                    "StrLotNum":
+                                        P60PRCESSMANUALVAR.LISTSAVE[i].LOT,
+                                    "StrBarcode": "",
+                                    "NumStep": "${i + 1}",
+                                    "NumSp": ConverstStr(
+                                        P60PRCESSMANUALVAR.LISTSAVE[i].PW),
+                                    "NumAct": ConverstStr(
+                                        P60PRCESSMANUALVAR.LISTSAVE[i].W),
+                                  });
+                                }
+                                //
+
+                                if (datauotsave.isNotEmpty) {
+                                  datauotsave.add({
+                                    "NumOrder": P60PRCESSMANUALVAR.ORDER
+                                        .substring(12, 18),
+                                    "StrChemical": "END",
+                                    "StrLotNum": "RTM",
+                                    "StrBarcode": "END",
+                                    "NumStep": "${datauotsave.length + 1}",
+                                    "NumSp": "0",
+                                    "NumAct": "0",
+                                  });
+                                }
+
+                                Dio().post(
+                                  serverGB + 'MANUALPROCESS/SAVEdata',
+                                  data: {"DATA": datauotsave},
+                                ).then((v) {
+                                  //
+                                  P60PRCESSMANUALVAR.LISTSAVE = [];
+                                  showGoodPopup(context, v.data.toString());
+                                  setState(() {});
+                                });
                               },
                               child: Container(
                                 height: 40,
@@ -271,6 +320,14 @@ class _P60PRCESSMANUALMAINState extends State<P60PRCESSMANUALMAIN> {
                             InkWell(
                               onTap: () {
                                 //
+                                P60PRCESSMANUALVAR.NumPackSize1 = '';
+                                P60PRCESSMANUALVAR.NumPackSize2 = '';
+                                P60PRCESSMANUALVAR.NumPackSize3 = '';
+                                P60PRCESSMANUALVAR.NumQuantity1 = '';
+                                P60PRCESSMANUALVAR.NumQuantity2 = '';
+                                P60PRCESSMANUALVAR.NumQuantity3 = '';
+                                P60PRCESSMANUALVAR.NumWeight = '';
+                                _POPUPPACK(context);
                               },
                               child: Container(
                                 height: 40,
@@ -758,11 +815,268 @@ class _ADDLOTDATASETState extends State<ADDLOTDATASET> {
                     child: Text("ADD"),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+void _POPUPPACK(BuildContext contextin) {
+  showDialog(
+    context: contextin,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              height: 400,
+              width: 700,
+              child: Dialog(child: POPUPPACKF()),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+class POPUPPACKF extends StatefulWidget {
+  const POPUPPACKF({super.key});
+
+  @override
+  State<POPUPPACKF> createState() => _POPUPPACKFState();
+}
+
+class _POPUPPACKFState extends State<POPUPPACKF> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet Size 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumPackSize1,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumPackSize1 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet QTY 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumQuantity1,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumQuantity1 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet Size 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumPackSize2,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumPackSize2 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet QTY 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumQuantity2,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumQuantity2 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet Size 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumPackSize3,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumPackSize3 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: ComInputText(
+                        sLabel: "Packet QTY 01",
+                        height: 40,
+                        width: 250,
+                        isContr: P60PRCESSMANUALVAR.iscontrol,
+                        fnContr: (input) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.iscontrol = input;
+                          });
+                        },
+                        sPlaceholder: "",
+                        sValue: P60PRCESSMANUALVAR.NumQuantity3,
+                        returnfunc: (String s) {
+                          setState(() {
+                            P60PRCESSMANUALVAR.NumQuantity3 = s;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: ComInputText(
+                    sLabel: "Remain",
+                    height: 40,
+                    width: 250,
+                    isContr: P60PRCESSMANUALVAR.iscontrol,
+                    fnContr: (input) {
+                      setState(() {
+                        P60PRCESSMANUALVAR.iscontrol = input;
+                      });
+                    },
+                    sPlaceholder: "",
+                    sValue: P60PRCESSMANUALVAR.NumWeight,
+                    returnfunc: (String s) {
+                      setState(() {
+                        P60PRCESSMANUALVAR.NumWeight = s;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () async {
+                  Dio().post(
+                    server2 + 'datacentertest/PackNoSCADA',
+                    data: {
+                      "NumOrder": P60PRCESSMANUALVAR.ORDER.substring(12, 18),
+                      "NumPackSize1": P60PRCESSMANUALVAR.NumPackSize1,
+                      "NumPackSize2": P60PRCESSMANUALVAR.NumPackSize2,
+                      "NumPackSize3": P60PRCESSMANUALVAR.NumPackSize3,
+                      //
+                      "NumQuantity1": P60PRCESSMANUALVAR.NumQuantity1,
+                      "NumQuantity2": P60PRCESSMANUALVAR.NumQuantity2,
+                      "NumQuantity3": P60PRCESSMANUALVAR.NumQuantity3,
+                      "NumWeight": P60PRCESSMANUALVAR.NumWeight,
+                      //
+                    },
+                  ).then((v) {
+                    //
+
+                    setState(() {});
+                    if (v.data['msg'] != null) {
+                      showGoodPopup(
+                          P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
+                      Navigator.pop(context);
+                    } else {
+                      showErrorPopup(
+                          P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
+                    }
+                  });
+                },
+                child: Container(
+                  height: 60,
+                  width: 500,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text("ADD"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

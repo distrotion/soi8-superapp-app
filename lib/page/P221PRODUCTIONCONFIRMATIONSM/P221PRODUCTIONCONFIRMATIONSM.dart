@@ -64,6 +64,36 @@ class _P221PRODUCTIONCONFIRMATIONSMState
     List<P221PRODUCTIONCONFIRMATIONSMgetclass> _datain = widget.data ?? [];
     List<P221PRODUCTIONCONFIRMATIONSMgetclass> _datasearch = [];
 
+    //  text01: _datain[i].PROCESS_ORDER,
+    //                             text02: _datain[i].MATERIAL,
+    //                             text03: _datain[i].MATERIAL_TEXT,
+    //                             text04: _datain[i].PROD_SUP_DESC,
+    //                             text05: _datain[i].PROD_SUP,
+    //                             text06: _datain[i].BATCH,
+
+    List<P221PRODUCTIONCONFIRMATIONSMgetclass> _data_exp = [];
+
+    for (int i = 0; i < _datain.length; i++) {
+      if (_datain[i]
+              .PROCESS_ORDER
+              .contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH) ||
+          _datain[i]
+              .MATERIAL
+              .contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH) ||
+          _datain[i]
+              .MATERIAL_TEXT
+              .contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH) ||
+          _datain[i]
+              .PROD_SUP_DESC
+              .contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH) ||
+          _datain[i]
+              .PROD_SUP
+              .contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH) ||
+          _datain[i].BATCH.contains(P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH)) {
+        _data_exp.add(_datain[i]);
+      }
+    }
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(26.0),
@@ -257,6 +287,40 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                       ),
                     ),
                   ),
+                  Container(
+                    height: 60,
+                    // width: 900,
+                    decoration: BoxDecoration(
+                      // color: Colors.blue.shade900,
+                      border: Border(
+                        top: BorderSide(),
+                        left: BorderSide(),
+                        right: BorderSide(),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: ComInputText(
+                          height: 40,
+                          width: 500,
+                          isContr: P221PRODUCTIONCONFIRMATIONSMVAR.iscontrol,
+                          fnContr: (input) {
+                            setState(() {
+                              P221PRODUCTIONCONFIRMATIONSMVAR.iscontrol = input;
+                            });
+                          },
+                          sPlaceholder: "search",
+                          sValue: P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH,
+                          returnfunc: (String s) {
+                            setState(() {
+                              P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH = s;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   PRODUCTIONCONFIRMATIONtable(),
                   // if (_datasearch
                   //     .any((item) => item.PLANT == 'noxrust'))
@@ -267,22 +331,23 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                         // width: 1100,
                         child: Column(
                           children: [
-                            for (int i = 0; i < _datain.length; i++) ...[
+                            for (int i = 0; i < _data_exp.length; i++) ...[
                               // for (int i = 0; i < 10; i++) ...[
                               InkWell(
                                 onTap: () {
                                   //
                                   P221PRODUCTIONCONFIRMATIONSMVAR
                                           .PROCESS_ORDERselect =
-                                      _datain[i].PROCESS_ORDER;
+                                      _data_exp[i].PROCESS_ORDER;
 
                                   P310CHEMTANKVAR.PLANT =
-                                      _datain[i].PROD_SUP_DESC;
+                                      _data_exp[i].PROD_SUP_DESC;
+                                  P310CHEMTANKVAR.MATERIAL =
+                                      _data_exp[i].MATERIAL;
                                   P310CHEMTANKVAR.ORDER =
-                                      // _datain[i].PROCESS_ORDER;
-                                      _datain[i].LINK_PROC_ORDER;
+                                      _data_exp[i].LINK_PROC_ORDER;
                                   P221PRODUCTIONCONFIRMATIONSMVAR.datasetsend =
-                                      _datain[i];
+                                      _data_exp[i];
                                   _POPUPCREATEUSERSW(context);
 
                                   // print(_datain[i].PROCESS_ORDER);
@@ -298,20 +363,20 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                                   holding:
                                       P221PRODUCTIONCONFIRMATIONSMVAR.holding ==
                                           i,
-                                  text01: _datain[i].PROCESS_ORDER,
-                                  text02: _datain[i].MATERIAL,
-                                  text03: _datain[i].MATERIAL_TEXT,
-                                  text04: _datain[i].PROD_SUP_DESC,
-                                  text05: _datain[i].PROD_SUP,
-                                  text06: _datain[i].BATCH,
-                                  text07: (_datain[i].Yield != '')
-                                      ? (_datain[i].Yield +
+                                  text01: _data_exp[i].PROCESS_ORDER,
+                                  text02: _data_exp[i].MATERIAL,
+                                  text03: _data_exp[i].MATERIAL_TEXT,
+                                  text04: _data_exp[i].PROD_SUP_DESC,
+                                  text05: _data_exp[i].PROD_SUP,
+                                  text06: _data_exp[i].BATCH,
+                                  text07: (_data_exp[i].Yield != '')
+                                      ? (_data_exp[i].Yield +
                                           ' ' +
-                                          _datain[i].UOM)
+                                          _data_exp[i].UOM)
                                       : '',
-                                  text08: _datain[i].STATUS,
+                                  text08: _data_exp[i].STATUS,
                                   text09: "",
-                                  // text09: _datain[i].SYSTEM_STATUS,
+                                  // text09: _data_exp[i].SYSTEM_STATUS,
                                   //SYSTEM_STATUS
                                   text10: "-",
                                 ),

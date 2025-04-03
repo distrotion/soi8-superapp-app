@@ -41,7 +41,7 @@ class oneunitbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 80,
       child: Center(
         child: Text(
           textin ?? '',
@@ -88,7 +88,7 @@ class oneunitbox01 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 80,
       child: Center(
         child: SizedBox(
           child: Center(
@@ -136,7 +136,7 @@ class oneunitbox02 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 80,
       child: Center(
         child: SizedBox(
           child: Center(
@@ -195,7 +195,7 @@ class oneunitbox_NB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 80,
       child: Center(
         child: Text(
           textin ?? '',
@@ -253,7 +253,7 @@ class oneunitbox_NB_BIG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 80,
       child: Center(
         child: Text(
           textin ?? '',

@@ -33,32 +33,32 @@ class SETRAWMATMAIN__Bloc
   Future<void> _SETRAWMATMAIN_GET(List<SETRAWMATMAINclass> toAdd,
       Emitter<List<SETRAWMATMAINclass>> emit) async {
     List<SETRAWMATMAINclass> output = [];
-    final response = await Dio().post(
-      serverGB + 'MANUALPROCESS/selecfml',
-      data: {
-        "MAT": P60PRCESSMANUALVAR.MAT,
-      },
-    );
+    // final response = await Dio().post(
+    //   serverGB + 'MANUALPROCESS/selecfml',
+    //   data: {
+    //     "MAT": P60PRCESSMANUALVAR.MAT,
+    //   },
+    // );
 
-    if (response.statusCode == 200) {
-      var databuff = response.data;
-      print(databuff);
-      if (databuff.length > 0) {
-        //
-        for (var i = 0; i < databuff.length; i++) {
-          //
-          print(databuff[i]['Chm']);
-          output.add(SETRAWMATMAINclass(
-            Fml: safenull(databuff[i]['Fml']),
-            Chm: safenull(databuff[i]['Chm']),
-            Bc: safenull(databuff[i]['Bc']),
-            PW: safenull(databuff[i]['W']),
-          ));
-        }
-      }
-    } else {
-      //
-    }
+    // if (response.statusCode == 200) {
+    //   var databuff = response.data;
+    //   print(databuff);
+    //   if (databuff.length > 0) {
+    //     //
+    //     for (var i = 0; i < databuff.length; i++) {
+    //       //
+    //       print(databuff[i]['Chm']);
+    //       output.add(SETRAWMATMAINclass(
+    //         Fml: safenull(databuff[i]['Fml']),
+    //         Chm: safenull(databuff[i]['Chm']),
+    //         Bc: safenull(databuff[i]['Bc']),
+    //         PW: safenull(databuff[i]['W']),
+    //       ));
+    //     }
+    //   }
+    // } else {
+    //   //
+    // }
     emit(output);
   }
 

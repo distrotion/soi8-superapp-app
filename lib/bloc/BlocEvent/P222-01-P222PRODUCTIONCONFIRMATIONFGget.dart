@@ -132,7 +132,6 @@ class P222PRODUCTIONCONFIRMATIONFGget_Bloc extends Bloc<
               if (response2.statusCode == 200) {
                 var databuff = response2.data;
                 if (databuff.length > 0) {
-                  buffer.STATUS = 'Complete';
                   double holddata = 0;
                   for (var s = 0; s < databuff.length; s++) {
                     holddata = holddata +
@@ -140,6 +139,28 @@ class P222PRODUCTIONCONFIRMATIONFGget_Bloc extends Bloc<
                             ConverstStr(databuff[s]['NumAct'].toString()));
                   }
                   buffer.Yield = holddata.toStringAsFixed(2);
+                }
+
+                final response3 = await Dio().post(
+                  "${server2}datacentertest/getsoi8order-pack-or",
+                  data: {
+                    "PLANT": "",
+                    "ORDER":
+                        (ConverstStr(buffer.LINK_PROC_ORDER)).substring(4, 10),
+                    // "PLANT": "liquid",
+                    // "ORDER": "227276"
+                  },
+                );
+                if (response3.statusCode == 200) {
+                  var databuff = response3.data;
+                  // input = databuff;
+                  if (databuff.length > 0) {
+                    buffer.STATUS = 'Complete';
+                  }
+
+                  // Navigator.pop(P26PROGRESSMAINcontext);
+
+                  emit(output);
                 }
               }
             }

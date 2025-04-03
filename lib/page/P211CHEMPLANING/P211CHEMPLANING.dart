@@ -43,13 +43,13 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
     P211CHEMPLANINGVAR.month = DateFormat('MM').format(now);
     P211CHEMPLANINGVAR.year = DateFormat('yyyy').format(now);
 
-    // P211CHEMPLANINGVAR.day_next = DateFormat('dd').format(now);
-    // P211CHEMPLANINGVAR.month_next = DateFormat('MM').format(now);
-    // P211CHEMPLANINGVAR.year_next = DateFormat('yyyy').format(now);
+    P211CHEMPLANINGVAR.day_next = DateFormat('dd').format(now);
+    P211CHEMPLANINGVAR.month_next = DateFormat('MM').format(now);
+    P211CHEMPLANINGVAR.year_next = DateFormat('yyyy').format(now);
 
-    P211CHEMPLANINGVAR.day_next = "05";
-    P211CHEMPLANINGVAR.month_next = "04";
-    P211CHEMPLANINGVAR.year_next = "2025";
+    // P211CHEMPLANINGVAR.day_next = "05";
+    // P211CHEMPLANINGVAR.month_next = "04";
+    // P211CHEMPLANINGVAR.year_next = "2025";
 
     P211CHEMPLANINGVAR.iscontrol = true;
     P211CHEMPLANINGVAR.SEARCH = '';

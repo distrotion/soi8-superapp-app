@@ -12,6 +12,8 @@ import '../../bloc/BlocEvent/P311-02-P26TANKDATAPACKINGFG.dart';
 import '../../data/global.dart';
 import '../../widget/common/ComInputText.dart';
 
+import '../../widget/common/ErrorPopup.dart';
+import '../../widget/common/Error_NO_Popup.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 
@@ -1395,6 +1397,7 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                       {
                                         "MATERIAL": ordersemi.MATERIAL,
                                         "PLANT": "1000",
+                                        // "STGE_LOC": ordersemi.STGE_LOC,
                                         "STGE_LOC": ordersemi.STGE_LOC,
                                         "BATCH": ordersemi.BATCH,
                                         "MOVE_TYPE": "101",
@@ -1553,11 +1556,60 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                     )
                                         .then((v) {
                                       //
+
+                                      Map<String, String> printout = {
+                                        "PD_Name": orderfg.MATERIAL_TEXT,
+                                        "Lot": orderfg.BATCH,
+                                        "EXP": "",
+                                        "Weight": _wg.NumWeight,
+                                        "UOM": orderfg.UOM,
+                                        "User": USERDATA.NAME,
+                                      };
+                                      Dio().post(
+                                        "http://172.101.5.6:1880/PrintProductRemained",
+                                        data: printout,
+                                        // {
+                                        //   "TIMECONF": {
+                                        //     "ORDERID": orderfg.PROCESS_ORDER,
+                                        //     "PHASE": "0020",
+                                        //     // "YIELD": orderfg.Yield,
+                                        //     "YIELD":
+                                        //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
+                                        //         "401.5",
+                                        //     "CONF_QUAN_UNIT": orderfg.UOM,
+                                        //     // "POSTG_DATE":
+                                        //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                        //     // "EXEC_START_DATE":
+                                        //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                        //     "POSTG_DATE":
+                                        //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                        //     "EXEC_START_DATE":
+                                        //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                        //   },
+                                        //   "T_GOODSMOVEMENT": dataout2,
+                                        // },
+                                      );
+
+                                      Navigator.pop(context);
+                                      Navigator.pop(
+                                          P222PRODUCTIONCONFIRMATIONFGcontext);
                                       print(v.data);
+                                      if (v.data.length > 0) {
+                                        if (v.data[0]['TYPE'] != null) {
+                                          if (v.data[0]['TYPE'].toString() ==
+                                              'E') {
+                                            showErrorPopup(
+                                                P222PRODUCTIONCONFIRMATIONFGcontext,
+                                                v.data.toString());
+                                          } else {
+                                            showGoodPopup(
+                                                P222PRODUCTIONCONFIRMATIONFGcontext,
+                                                v.data.toString());
+                                          }
+                                        }
+                                      }
                                     });
-                                    Navigator.pop(context);
-                                    Navigator.pop(
-                                        P222PRODUCTIONCONFIRMATIONFGcontext);
+
                                     // });
                                     // });
                                   },
@@ -1587,6 +1639,190 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                               //     ),
                               //   ),
                               // ),
+                              InkWell(
+                                onTap: () {
+                                  P222PRODUCTIONCONFIRMATIONFGgetclass
+                                      ordersemi =
+                                      P222PRODUCTIONCONFIRMATIONFGgetclass();
+
+                                  P222PRODUCTIONCONFIRMATIONFGgetclass orderfg =
+                                      P222PRODUCTIONCONFIRMATIONFGgetclass();
+
+                                  for (var i = 0;
+                                      i <
+                                          P222PRODUCTIONCONFIRMATIONFGVAR
+                                              .dataSEMI.length;
+                                      i++) {
+                                    if (P222PRODUCTIONCONFIRMATIONFGVAR
+                                            .datasetsend.LINK_PROC_ORDER ==
+                                        P222PRODUCTIONCONFIRMATIONFGVAR
+                                            .dataSEMI[i].PROCESS_ORDER) {
+                                      ordersemi =
+                                          P222PRODUCTIONCONFIRMATIONFGVAR
+                                              .dataSEMI[i];
+                                    }
+                                  }
+
+                                  for (var i = 0;
+                                      i <
+                                          P222PRODUCTIONCONFIRMATIONFGVAR
+                                              .dataFG.length;
+                                      i++) {
+                                    if (P222PRODUCTIONCONFIRMATIONFGVAR
+                                            .datasetsend.PROCESS_ORDER ==
+                                        P222PRODUCTIONCONFIRMATIONFGVAR
+                                            .dataFG[i].PROCESS_ORDER) {
+                                      orderfg = P222PRODUCTIONCONFIRMATIONFGVAR
+                                          .dataFG[i];
+                                    }
+                                  }
+
+                                  List<P222GETDETAILclass> dataCOMPOdata = [];
+
+                                  for (var i = 0;
+                                      i <
+                                          P222PRODUCTIONCONFIRMATIONFGVAR
+                                              .dataCOMPO.length;
+                                      i++) {
+                                    if (orderfg.PROCESS_ORDER ==
+                                        P222PRODUCTIONCONFIRMATIONFGVAR
+                                            .dataCOMPO[i].PROCESS_ORDER) {
+                                      // print(P222PRODUCTIONCONFIRMATIONFGVAR
+                                      //     .dataCOMPO[i].MATERIAL);
+
+                                      dataCOMPOdata.add(
+                                          P222PRODUCTIONCONFIRMATIONFGVAR
+                                              .dataCOMPO[i]);
+                                    }
+                                  }
+
+                                  List<Map<String, String>> dataout1 = [
+                                    {
+                                      "MATERIAL": ordersemi.MATERIAL,
+                                      "PLANT": "1000",
+                                      "STGE_LOC": ordersemi.STGE_LOC,
+                                      "BATCH": ordersemi.BATCH,
+                                      "MOVE_TYPE": "101",
+                                      "ENTRY_QNT": orderfg.Yield,
+                                      "ENTRY_UOM": ordersemi.UOM,
+                                      "MFG_DATE":
+                                          // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                          "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    }
+                                  ];
+
+                                  List<Map<String, String>> dataout2 = [];
+                                  for (var i = 0;
+                                      i < dataCOMPOdata.length;
+                                      i++) {
+                                    //
+                                    print(dataCOMPOdata[i]
+                                        .MATERIAL
+                                        .substring(0, 2));
+
+                                    if (dataCOMPOdata[i]
+                                            .MATERIAL
+                                            .substring(0, 2) ==
+                                        '12') {
+                                      print(dataCOMPOdata[i].MATERIAL);
+                                      dataout2.add({
+                                        "MATERIAL": dataCOMPOdata[i].MATERIAL,
+                                        "PLANT": "1000",
+                                        "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
+                                        "BATCH": "",
+                                        "MOVE_TYPE": dataCOMPOdata[i].MVT_TYPE,
+                                        // "ENTRY_QNT": orderfg.Yield,
+                                        "ENTRY_QNT":
+                                            "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
+                                        "ENTRY_UOM": dataCOMPOdata[i].UOM,
+                                        "MFG_DATE": ""
+                                      });
+                                    } else if (dataCOMPOdata[i]
+                                                .MATERIAL
+                                                .substring(0, 2) ==
+                                            '95' &&
+                                        i == 1) {
+                                      // print(dataCOMPOdata[i].MATERIAL);
+
+                                      dataout2.add({
+                                        "MATERIAL": dataCOMPOdata[i].MATERIAL,
+                                        "PLANT": "1000",
+                                        "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
+                                        "BATCH": "",
+                                        "MOVE_TYPE": dataCOMPOdata[i].MVT_TYPE,
+                                        "ENTRY_QNT":
+                                            (ConverstStr(_wg.NumQuantity1)),
+                                        // "ENTRY_QNT":
+                                        //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
+                                        "ENTRY_UOM": dataCOMPOdata[i].UOM,
+                                        "MFG_DATE": ""
+                                      });
+                                    } else if (dataCOMPOdata[i]
+                                                .MATERIAL
+                                                .substring(0, 2) ==
+                                            '95' &&
+                                        i == 2) {
+                                      // print(dataCOMPOdata[i].MATERIAL);
+
+                                      dataout2.add({
+                                        "MATERIAL": dataCOMPOdata[i].MATERIAL,
+                                        "PLANT": "1000",
+                                        "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
+                                        "BATCH": "",
+                                        "MOVE_TYPE": dataCOMPOdata[i].MVT_TYPE,
+                                        "ENTRY_QNT": dataCOMPOdata[i].BATCH_QTY,
+                                        // "ENTRY_QNT":
+                                        //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
+                                        "ENTRY_UOM": dataCOMPOdata[i].UOM,
+                                        "MFG_DATE": ""
+                                      });
+                                    }
+                                  }
+                                  Map<String, String> printout = {
+                                    "PD_Name": orderfg.MATERIAL_TEXT,
+                                    "Lot": orderfg.BATCH,
+                                    "EXP": "",
+                                    "Weight": _wg.NumWeight,
+                                    "UOM": orderfg.UOM,
+                                    "User": USERDATA.NAME,
+                                  };
+                                  Dio().post(
+                                    "http://172.101.5.6:1880/PrintProductRemained",
+                                    data: printout,
+                                    // {
+                                    //   "TIMECONF": {
+                                    //     "ORDERID": orderfg.PROCESS_ORDER,
+                                    //     "PHASE": "0020",
+                                    //     // "YIELD": orderfg.Yield,
+                                    //     "YIELD":
+                                    //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
+                                    //         "401.5",
+                                    //     "CONF_QUAN_UNIT": orderfg.UOM,
+                                    //     // "POSTG_DATE":
+                                    //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //     // "EXEC_START_DATE":
+                                    //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //     "POSTG_DATE":
+                                    //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //     "EXEC_START_DATE":
+                                    //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //   },
+                                    //   "T_GOODSMOVEMENT": dataout2,
+                                    // },
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 80,
+                                    width: 100,
+                                    color: Colors.green,
+                                    child: Center(
+                                      child: Text("Reprin remain tag"),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           )
                         ],
