@@ -63,6 +63,39 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
     List<P211CHEMPLANINGgetclass> _datain = widget.data ?? [];
     List<P211CHEMPLANINGgetclass> _datasearch = [];
 
+    Widget outset = Column(
+      children: [
+        for (int i = 0; i < _datain.length; i++) ...[
+          // for (int i = 0; i < 10; i++) ...[
+          InkWell(
+            onTap: () {
+              //
+              P211CHEMPLANINGVAR.PROCESS_ORDERselect = _datain[i].PROCESS_ORDER;
+              _POPUPCREATEUSERSW(context);
+            },
+            onHover: (v) {
+              //
+              // print(v.toString() + ":" + i.toString());
+              setState(() {
+                P211CHEMPLANINGVAR.holding = i;
+              });
+            },
+            child: PLANINGitem(
+              holding: P211CHEMPLANINGVAR.holding == i,
+              text01: _datain[i].PROCESS_ORDER,
+              text02: _datain[i].MATERIAL,
+              text03: _datain[i].MATERIAL_TEXT,
+              text04: _datain[i].PROD_SUP_DESC,
+              text05: _datain[i].PROD_SUP,
+              text06: _datain[i].BATCH,
+              text07: '${_datain[i].TOTAL_QTY} ${_datain[i].UOM}',
+              text08: _datain[i].STATUS,
+            ),
+          ),
+        ],
+      ],
+    );
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(26.0),
@@ -264,40 +297,7 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
                     child: SingleChildScrollView(
                       child: Container(
                         // width: 1100,
-                        child: Column(
-                          children: [
-                            for (int i = 0; i < _datain.length; i++) ...[
-                              // for (int i = 0; i < 10; i++) ...[
-                              InkWell(
-                                onTap: () {
-                                  //
-                                  P211CHEMPLANINGVAR.PROCESS_ORDERselect =
-                                      _datain[i].PROCESS_ORDER;
-                                  _POPUPCREATEUSERSW(context);
-                                },
-                                onHover: (v) {
-                                  //
-                                  // print(v.toString() + ":" + i.toString());
-                                  setState(() {
-                                    P211CHEMPLANINGVAR.holding = i;
-                                  });
-                                },
-                                child: PLANINGitem(
-                                  holding: P211CHEMPLANINGVAR.holding == i,
-                                  text01: _datain[i].PROCESS_ORDER,
-                                  text02: _datain[i].MATERIAL,
-                                  text03: _datain[i].MATERIAL_TEXT,
-                                  text04: _datain[i].PROD_SUP_DESC,
-                                  text05: _datain[i].PROD_SUP,
-                                  text06: _datain[i].BATCH,
-                                  text07:
-                                      '${_datain[i].TOTAL_QTY} ${_datain[i].UOM}',
-                                  text08: _datain[i].STATUS,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
+                        child: outset,
                       ),
                     ),
                   ),

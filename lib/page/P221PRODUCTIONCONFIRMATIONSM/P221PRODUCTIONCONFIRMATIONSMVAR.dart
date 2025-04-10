@@ -3,6 +3,7 @@ import '../../bloc/BlocEvent/P221-01-P221PRODUCTIONCONFIRMATIONSMget.dart';
 class P221PRODUCTIONCONFIRMATIONSMVAR {
   static bool iscontrol = false;
   static String SEARCH = '';
+
   static bool isHoveredClear = false;
   // static String formattedDate = '';
 

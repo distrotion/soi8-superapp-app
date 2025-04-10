@@ -37,10 +37,11 @@ class _P222PRODUCTIONCONFIRMATIONFGState
   void initState() {
     super.initState();
     var now = DateTime.now();
+    var now3d = DateTime.now().subtract(const Duration(days: 3));
     // P222PRODUCTIONCONFIRMATIONFGVAR.formattedDate = DateFormat('dd-MM-yy').format(now);
-    P222PRODUCTIONCONFIRMATIONFGVAR.day = DateFormat('dd').format(now);
-    P222PRODUCTIONCONFIRMATIONFGVAR.month = DateFormat('MM').format(now);
-    P222PRODUCTIONCONFIRMATIONFGVAR.year = DateFormat('yyyy').format(now);
+    P222PRODUCTIONCONFIRMATIONFGVAR.day = DateFormat('dd').format(now3d);
+    P222PRODUCTIONCONFIRMATIONFGVAR.month = DateFormat('MM').format(now3d);
+    P222PRODUCTIONCONFIRMATIONFGVAR.year = DateFormat('yyyy').format(now3d);
 
     P222PRODUCTIONCONFIRMATIONFGVAR.day_next = DateFormat('dd').format(now);
     P222PRODUCTIONCONFIRMATIONFGVAR.month_next = DateFormat('MM').format(now);
@@ -86,6 +87,57 @@ class _P222PRODUCTIONCONFIRMATIONFGState
         _data_exp.add(_datain[i]);
       }
     }
+
+    Widget outset = Column(
+      children: [
+        for (int i = 0; i < _data_exp.length; i++) ...[
+          InkWell(
+            onTap: () {
+              //
+              P222PRODUCTIONCONFIRMATIONFGVAR.PROCESS_ORDERselect =
+                  _data_exp[i].PROCESS_ORDER;
+
+              P311CHEMTANKFGVAR.PLANT = _data_exp[i].PROD_SUP_DESC;
+              P311CHEMTANKFGVAR.ORDER =
+                  // _datain[i].PROCESS_ORDER;
+                  _data_exp[i].LINK_PROC_ORDER;
+              P222PRODUCTIONCONFIRMATIONFGVAR.datasetsend = _data_exp[i];
+
+              P311CHEMTANKFGVAR.MATERIAL_TEXT = _data_exp[i].MATERIAL_TEXT;
+
+              //  _data_exp[i].PROD_SUP_DESC;
+              _POPUPCREATEUSERSW(context);
+
+              // print(_datain[i].PROCESS_ORDER);
+            },
+            onHover: (v) {
+              //
+              // print(v.toString() + ":" + i.toString());
+              setState(() {
+                P222PRODUCTIONCONFIRMATIONFGVAR.holding = i;
+              });
+            },
+            child: PRODUCTIONCONFIRMATIONitem(
+              holding: P222PRODUCTIONCONFIRMATIONFGVAR.holding == i,
+              text01: _data_exp[i].PROCESS_ORDER,
+              text02: _data_exp[i].MATERIAL,
+              text03: _data_exp[i].MATERIAL_TEXT,
+              text04: _data_exp[i].PROD_SUP_DESC,
+              text05: _data_exp[i].PROD_SUP,
+              text06: _data_exp[i].BATCH,
+              text07: (_data_exp[i].Yield != '')
+                  ? (_data_exp[i].Yield + ' ' + _data_exp[i].UOM)
+                  : '',
+              text08: _data_exp[i].STATUS,
+              text09: _data_exp[i].SYSTEM_STATUS,
+              // text09: _data_exp[i].MTBEZ,
+              //SYSTEM_STATUS
+              text10: "-",
+            ),
+          ),
+        ],
+      ],
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -322,60 +374,65 @@ class _P222PRODUCTIONCONFIRMATIONFGState
                     child: SingleChildScrollView(
                       child: Container(
                         // width: 1100,
-                        child: Column(
-                          children: [
-                            for (int i = 0; i < _data_exp.length; i++) ...[
-                              // for (int i = 0; i < 10; i++) ...[
-                              InkWell(
-                                onTap: () {
-                                  //
-                                  P222PRODUCTIONCONFIRMATIONFGVAR
-                                          .PROCESS_ORDERselect =
-                                      _data_exp[i].PROCESS_ORDER;
+                        child: outset,
 
-                                  P311CHEMTANKFGVAR.PLANT =
-                                      _data_exp[i].PROD_SUP_DESC;
-                                  P311CHEMTANKFGVAR.ORDER =
-                                      // _datain[i].PROCESS_ORDER;
-                                      _data_exp[i].LINK_PROC_ORDER;
-                                  P222PRODUCTIONCONFIRMATIONFGVAR.datasetsend =
-                                      _data_exp[i];
-                                  _POPUPCREATEUSERSW(context);
+                        // Column(
+                        //   children: [
+                        //     for (int i = 0; i < _data_exp.length; i++) ...[
+                        //       // for (int i = 0; i < 10; i++) ...[
+                        //       InkWell(
+                        //         onTap: () {
+                        //           //
+                        //           P222PRODUCTIONCONFIRMATIONFGVAR
+                        //                   .PROCESS_ORDERselect =
+                        //               _data_exp[i].PROCESS_ORDER;
 
-                                  // print(_datain[i].PROCESS_ORDER);
-                                },
-                                onHover: (v) {
-                                  //
-                                  // print(v.toString() + ":" + i.toString());
-                                  setState(() {
-                                    P222PRODUCTIONCONFIRMATIONFGVAR.holding = i;
-                                  });
-                                },
-                                child: PRODUCTIONCONFIRMATIONitem(
-                                  holding:
-                                      P222PRODUCTIONCONFIRMATIONFGVAR.holding ==
-                                          i,
-                                  text01: _data_exp[i].PROCESS_ORDER,
-                                  text02: _data_exp[i].MATERIAL,
-                                  text03: _data_exp[i].MATERIAL_TEXT,
-                                  text04: _data_exp[i].PROD_SUP_DESC,
-                                  text05: _data_exp[i].PROD_SUP,
-                                  text06: _data_exp[i].BATCH,
-                                  text07: (_data_exp[i].Yield != '')
-                                      ? (_data_exp[i].Yield +
-                                          ' ' +
-                                          _data_exp[i].UOM)
-                                      : '',
-                                  text08: _data_exp[i].STATUS,
-                                  text09: _data_exp[i].SYSTEM_STATUS,
-                                  // text09: _data_exp[i].MTBEZ,
-                                  //SYSTEM_STATUS
-                                  text10: "-",
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
+                        //           P311CHEMTANKFGVAR.PLANT =
+                        //               _data_exp[i].PROD_SUP_DESC;
+                        //           P311CHEMTANKFGVAR.ORDER =
+                        //               // _datain[i].PROCESS_ORDER;
+                        //               _data_exp[i].LINK_PROC_ORDER;
+                        //           P222PRODUCTIONCONFIRMATIONFGVAR.datasetsend =
+                        //               _data_exp[i];
+
+                        //           P311CHEMTANKFGVAR.MATERIAL_TEXT =
+                        //               _data_exp[i].MATERIAL_TEXT;
+                        //           _POPUPCREATEUSERSW(context);
+
+                        //           // print(_datain[i].PROCESS_ORDER);
+                        //         },
+                        //         onHover: (v) {
+                        //           //
+                        //           // print(v.toString() + ":" + i.toString());
+                        //           setState(() {
+                        //             P222PRODUCTIONCONFIRMATIONFGVAR.holding = i;
+                        //           });
+                        //         },
+                        //         child: PRODUCTIONCONFIRMATIONitem(
+                        //           holding:
+                        //               P222PRODUCTIONCONFIRMATIONFGVAR.holding ==
+                        //                   i,
+                        //           text01: _data_exp[i].PROCESS_ORDER,
+                        //           text02: _data_exp[i].MATERIAL,
+                        //           text03: _data_exp[i].MATERIAL_TEXT,
+                        //           text04: _data_exp[i].PROD_SUP_DESC,
+                        //           text05: _data_exp[i].PROD_SUP,
+                        //           text06: _data_exp[i].BATCH,
+                        //           text07: (_data_exp[i].Yield != '')
+                        //               ? (_data_exp[i].Yield +
+                        //                   ' ' +
+                        //                   _data_exp[i].UOM)
+                        //               : '',
+                        //           text08: _data_exp[i].STATUS,
+                        //           text09: _data_exp[i].SYSTEM_STATUS,
+                        //           // text09: _data_exp[i].MTBEZ,
+                        //           //SYSTEM_STATUS
+                        //           text10: "-",
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ],
+                        // ),
                       ),
                     ),
                   ),

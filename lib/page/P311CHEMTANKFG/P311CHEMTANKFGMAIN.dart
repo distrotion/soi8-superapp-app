@@ -4,12 +4,14 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../bloc/BlocEvent/P222-01-P222PRODUCTIONCONFIRMATIONFGget.dart';
 
 import '../../bloc/BlocEvent/P311-01-P26PROGRESSGETDATAFG.dart';
 import '../../bloc/BlocEvent/P311-02-P26TANKDATAPACKINGFG.dart';
 import '../../data/global.dart';
+import '../../widget/common/Calendarwid.dart';
 import '../../widget/common/ComInputText.dart';
 
 import '../../widget/common/ErrorPopup.dart';
@@ -42,6 +44,11 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
     super.initState();
     context.read<P311CHEMTANKGETFGDATA_Bloc>().add(P311CHEMTANKGETFGDATA_GET());
     Timer(Duration(seconds: 1), () {
+      var now = DateTime.now();
+
+      P311CHEMTANKFGVAR.day_send = DateFormat('dd').format(now);
+      P311CHEMTANKFGVAR.month_send = DateFormat('MM').format(now);
+      P311CHEMTANKFGVAR.year_send = DateFormat('yyyy').format(now);
       context
           .read<P311TANKDATAPACKINGFG_Bloc>()
           .add(P311TANKDATAPACKINGFG_GET());
@@ -83,6 +90,43 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
         _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL));
     double totalSP =
         _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.SP));
+
+    List<String> MATERIAL_TEXT = P311CHEMTANKFGVAR.MATERIAL_TEXT.split("|");
+    // String PAcksize = '';
+
+    String PAcksize = 'no';
+
+    if (MATERIAL_TEXT.length == 2) {
+      print(MATERIAL_TEXT[1]);
+      // PAcksize =
+      //     (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+      PAcksize = (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+
+      // print(buffer.sizep);
+    }
+    String selectpack = '';
+    // print(">>>>>${PAcksize}");
+
+    if (PAcksize == '') {
+      selectpack =
+          "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1))}";
+    } else {
+      if (P311CHEMTANKFGVAR.PLANT == 'Titrating') {
+        selectpack =
+            "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1))}";
+      } else {
+        if (ConverstStr(_wg.NumPackSize1) == PAcksize) {
+          selectpack =
+              "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1))}";
+        } else if (ConverstStr(_wg.NumPackSize2) == PAcksize) {
+          selectpack =
+              "${double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2))}";
+        } else if (ConverstStr(_wg.NumPackSize3) == PAcksize) {
+          selectpack =
+              "${double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}";
+        }
+      }
+    }
 
     return Scaffold(
       body: Stack(
@@ -1225,6 +1269,65 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                               ),
                             ],
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: selectpack == ''
+                                    ? Colors.red
+                                    : Colors.lightGreen.shade400,
+                                // color: Colors.blue.shade900,
+                                border: Border(
+                                  top: BorderSide(),
+                                  left: BorderSide(),
+                                  right: BorderSide(),
+                                  bottom: BorderSide(),
+                                ),
+                              ),
+                              height: 70,
+                              child: Center(
+                                child: Text(
+                                    "${P311CHEMTANKFGVAR.MATERIAL_TEXT}  FROM To SEND ${selectpack}"),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              DateTime calendaset = DateTime.now();
+
+                              //
+                              CalendaSelectDates(context, calendaset,
+                                  (day, month, year) {
+                                //
+                                P311CHEMTANKFGVAR.day_send = day;
+                                P311CHEMTANKFGVAR.month_send = month;
+                                P311CHEMTANKFGVAR.year_send = year;
+
+                                setState(() {});
+                              });
+                            },
+                            child: Container(
+                              height: 30,
+                              // width: 900,
+                              decoration: BoxDecoration(
+                                // color: Colors.blue.shade900,
+                                border: Border(
+                                  top: BorderSide(),
+                                  left: BorderSide(),
+                                  right: BorderSide(),
+                                  bottom: BorderSide(),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "วันที่ส่ง : ${P311CHEMTANKFGVAR.day_send}-${P311CHEMTANKFGVAR.month_send}-${P311CHEMTANKFGVAR.year_send}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
                           Row(
                             children: [
                               Padding(
@@ -1401,11 +1504,12 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                         "STGE_LOC": ordersemi.STGE_LOC,
                                         "BATCH": ordersemi.BATCH,
                                         "MOVE_TYPE": "101",
-                                        "ENTRY_QNT": orderfg.Yield,
+                                        // "ENTRY_QNT": orderfg.Yield,
+                                        "ENTRY_QNT": selectpack,
                                         "ENTRY_UOM": ordersemi.UOM,
                                         "MFG_DATE":
                                             // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                            "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                            "${P311CHEMTANKFGVAR.day_send}.${P311CHEMTANKFGVAR.month_send}.${P311CHEMTANKFGVAR.year_send}",
                                       }
                                     ];
 
@@ -1430,9 +1534,10 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                           "BATCH": "",
                                           "MOVE_TYPE":
                                               dataCOMPOdata[i].MVT_TYPE,
-                                          // "ENTRY_QNT": orderfg.Yield,
-                                          "ENTRY_QNT":
-                                              "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
+                                          // "ENTRY_QNT": orderfg.Yield, selectpack
+                                          // "ENTRY_QNT":
+                                          //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
+                                          "ENTRY_QNT": selectpack,
                                           "ENTRY_UOM": dataCOMPOdata[i].UOM,
                                           "MFG_DATE": ""
                                         });
@@ -1504,8 +1609,8 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                     // ).then((v) {
                                     // print(v.data);
                                     // Timer(Duration(seconds: 4), () {
-                                    print(
-                                        "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))}");
+                                    // print(
+                                    //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))}");
 
                                     Map<String, dynamic> dotaout = {
                                       "TIMECONF": {
@@ -1513,8 +1618,8 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                         "PHASE": "0020",
                                         // "YIELD": orderfg.Yield,
                                         //+ (double.parse(ConverstStr(_wg.NumWeight)))
-                                        "YIELD":
-                                            "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)))}",
+                                        "YIELD": selectpack,
+                                        // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)))}",
                                         // "401.5",
                                         "CONF_QUAN_UNIT": orderfg.UOM,
                                         // "POSTG_DATE":
@@ -1522,9 +1627,9 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                         // "EXEC_START_DATE":
                                         //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
                                         "POSTG_DATE":
-                                            "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                            "${P311CHEMTANKFGVAR.day_send}.${P311CHEMTANKFGVAR.month_send}.${P311CHEMTANKFGVAR.year_send}",
                                         "EXEC_START_DATE":
-                                            "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                            "${P311CHEMTANKFGVAR.day_send}.${P311CHEMTANKFGVAR.month_send}.${P311CHEMTANKFGVAR.year_send}",
                                       },
                                       "T_GOODSMOVEMENT": dataout2,
                                     };
@@ -1565,31 +1670,34 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                         "UOM": orderfg.UOM,
                                         "User": USERDATA.NAME,
                                       };
-                                      Dio().post(
-                                        "http://172.101.5.6:1880/PrintProductRemained",
-                                        data: printout,
-                                        // {
-                                        //   "TIMECONF": {
-                                        //     "ORDERID": orderfg.PROCESS_ORDER,
-                                        //     "PHASE": "0020",
-                                        //     // "YIELD": orderfg.Yield,
-                                        //     "YIELD":
-                                        //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
-                                        //         "401.5",
-                                        //     "CONF_QUAN_UNIT": orderfg.UOM,
-                                        //     // "POSTG_DATE":
-                                        //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                        //     // "EXEC_START_DATE":
-                                        //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                        //     "POSTG_DATE":
-                                        //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                        //     "EXEC_START_DATE":
-                                        //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                        //   },
-                                        //   "T_GOODSMOVEMENT": dataout2,
-                                        // },
-                                      );
-
+                                      // Dio().post(
+                                      //   "http://172.101.5.6:1880/PrintProductRemained",
+                                      //   data: printout,
+                                      //   // {
+                                      //   //   "TIMECONF": {
+                                      //   //     "ORDERID": orderfg.PROCESS_ORDER,
+                                      //   //     "PHASE": "0020",
+                                      //   //     // "YIELD": orderfg.Yield,
+                                      //   //     "YIELD":
+                                      //   //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
+                                      //   //         "401.5",
+                                      //   //     "CONF_QUAN_UNIT": orderfg.UOM,
+                                      //   //     // "POSTG_DATE":
+                                      //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                      //   //     // "EXEC_START_DATE":
+                                      //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                      //   //     "POSTG_DATE":
+                                      //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                      //   //     "EXEC_START_DATE":
+                                      //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                      //   //   },
+                                      //   //   "T_GOODSMOVEMENT": dataout2,
+                                      //   // },
+                                      // );
+                                      P222PRODUCTIONCONFIRMATIONFGcontext.read<
+                                              P222PRODUCTIONCONFIRMATIONFGget_Bloc>()
+                                          .add(
+                                              P222PRODUCTIONCONFIRMATIONFGget_GET());
                                       Navigator.pop(context);
                                       Navigator.pop(
                                           P222PRODUCTIONCONFIRMATIONFGcontext);

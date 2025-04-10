@@ -7,4 +7,10 @@ class P311CHEMTANKFGVAR {
 
   static String PLANT = '';
   static String ORDER = '';
+
+  static String MATERIAL_TEXT = '';
+
+  static String day_send = '';
+  static String month_send = '';
+  static String year_send = '';
 }

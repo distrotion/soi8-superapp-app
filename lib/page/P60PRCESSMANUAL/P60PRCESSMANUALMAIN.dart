@@ -1054,14 +1054,14 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     //
 
                     setState(() {});
-                    if (v.data['msg'] != null) {
-                      showGoodPopup(
-                          P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
-                      Navigator.pop(context);
-                    } else {
-                      showErrorPopup(
-                          P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
-                    }
+                    // if (v.data['msg'] != null) {
+                    Navigator.pop(context);
+                    showGoodPopup(
+                        P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
+                    // } else {
+                    //   showErrorPopup(
+                    //       P60PRCESSMANUALMAINcontext, v.data['msg'].toString());
+                    // }
                   });
                 },
                 child: Container(

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/global.dart';
+import '../../page/P231FINISHEDGOODTRANFER/P231FINISHEDGOODTRANFER.dart';
 import '../../page/P231FINISHEDGOODTRANFER/P231FINISHEDGOODTRANFERVAR.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
@@ -44,6 +45,7 @@ class P231FINISHEDGOODTRANFERget_Bloc extends Bloc<
     // FreeLoadingTan(CONTEXTFORUSEPAGE19TO25.LOADINGcontext);
     List<P231FINISHEDGOODTRANFERgetclass> output = [];
     //-------------------------------------------------------------------------------------
+    FreeLoadingTan(P231FINISHEDGOODTRANFERcontext);
     final response = await Dio().post(
       "${server2}03iPPGETDATACHEM/GETDATA",
       data: {
@@ -185,6 +187,7 @@ class P231FINISHEDGOODTRANFERget_Bloc extends Bloc<
       }
     }
 
+    Navigator.pop(P231FINISHEDGOODTRANFERcontext);
     emit(output);
   }
 

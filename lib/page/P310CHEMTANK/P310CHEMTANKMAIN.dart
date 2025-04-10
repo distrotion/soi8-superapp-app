@@ -86,6 +86,12 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
     double totalSP =
         _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.SP));
 
+    // if (P310CHEMTANKVAR.dataac == '') {
+    P310CHEMTANKVAR.dataac = _datasearch
+        .fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL))
+        .toString();
+    // }
+
     return Scaffold(
       body: Stack(
         children: [
@@ -1253,6 +1259,21 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                           //   ],
                           // ),
 
+                          ComInputText(
+                            // sPlaceholder: "Search...",
+                            // isSideIcon: true,
+                            height: 40,
+                            width: 200,
+                            isContr: P310CHEMTANKVAR.iscontrol,
+                            fnContr: (input) {
+                              P310CHEMTANKVAR.iscontrol = input;
+                            },
+                            sValue: P310CHEMTANKVAR.dataac,
+                            returnfunc: (String s) {
+                              P310CHEMTANKVAR.dataac = s;
+                            },
+                          ),
+
                           Row(
                             children: [
                               Padding(
@@ -1429,7 +1450,8 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                         "BATCH": ordersemi.BATCH,
                                         "MOVE_TYPE": "101",
                                         // "ENTRY_QNT": orderfg.Yield,
-                                        "ENTRY_QNT": totalActual.toString(),
+                                        // "ENTRY_QNT": totalActual.toString(),
+                                        "ENTRY_QNT": P310CHEMTANKVAR.dataac,
                                         "ENTRY_UOM": ordersemi.UOM,
                                         "MFG_DATE":
                                             // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
@@ -1456,7 +1478,8 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                           "MOVE_TYPE":
                                               dataCOMPOdata[i].MVT_TYPE,
                                           // "ENTRY_QNT": orderfg.Yield,
-                                          "ENTRY_QNT": totalActual.toString(),
+                                          "ENTRY_QNT": P310CHEMTANKVAR.dataac,
+                                          // "ENTRY_QNT": totalActual.toString(),
                                           // "ENTRY_QNT":
                                           //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
                                           "ENTRY_UOM": dataCOMPOdata[i].UOM,
@@ -1464,28 +1487,34 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                         });
                                       }
                                     }
-                                    FreeLoading(context);
-                                    Dio().post(
-                                      "${server2}03iPPGETDATACHEM/SETI005DATA",
-                                      data: {
-                                        "TIMECONF": {
-                                          "ORDERID": ordersemi.PROCESS_ORDER,
-                                          "PHASE": "0020",
-                                          // "YIELD": orderfg.Yield,
-                                          "YIELD": totalActual.toString(),
-                                          "CONF_QUAN_UNIT": ordersemi.UOM,
-                                          // "POSTG_DATE":
-                                          //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                          // "EXEC_START_DATE":
-                                          //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                          "POSTG_DATE":
-                                              "${P221PRODUCTIONCONFIRMATIONSMVAR.day_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.month_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.year_next}",
-                                          "EXEC_START_DATE":
-                                              "${P221PRODUCTIONCONFIRMATIONSMVAR.day_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.month_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.year_next}",
-                                        },
-                                        "T_GOODSMOVEMENT": dataout1,
+                                    Map<String, dynamic> dataouttt = {
+                                      "TIMECONF": {
+                                        "ORDERID": ordersemi.PROCESS_ORDER,
+                                        "PHASE": "0020",
+                                        // "YIELD": orderfg.Yield,
+                                        // "YIELD": totalActual.toString(),
+                                        "YIELD": P310CHEMTANKVAR.dataac,
+                                        //
+                                        "CONF_QUAN_UNIT": ordersemi.UOM,
+                                        // "POSTG_DATE":
+                                        //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                        // "EXEC_START_DATE":
+                                        //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                        "POSTG_DATE":
+                                            "${P221PRODUCTIONCONFIRMATIONSMVAR.day_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.month_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.year_next}",
+                                        "EXEC_START_DATE":
+                                            "${P221PRODUCTIONCONFIRMATIONSMVAR.day_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.month_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.year_next}",
                                       },
-                                    ).then((v) {
+                                      "T_GOODSMOVEMENT": dataout1,
+                                    };
+                                    print(dataouttt);
+                                    FreeLoading(context);
+                                    Dio()
+                                        .post(
+                                      "${server2}03iPPGETDATACHEM/SETI005DATA",
+                                      data: dataouttt,
+                                    )
+                                        .then((v) {
                                       //
                                       print(v.data);
 
@@ -1515,6 +1544,11 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                       //     //
                                       //     print(v.data);
                                       //   });
+
+                                      P221PRODUCTIONCONFIRMATIONSMcontext.read<
+                                              P221PRODUCTIONCONFIRMATIONSMget_Bloc>()
+                                          .add(
+                                              P221PRODUCTIONCONFIRMATIONSMget_GET());
                                       Navigator.pop(context);
                                       Navigator.pop(
                                           P221PRODUCTIONCONFIRMATIONSMcontext);

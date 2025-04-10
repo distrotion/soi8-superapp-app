@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/global.dart';
 
+import '../../page/P211CHEMPLANING/P211CHEMPLANING.dart';
+import '../../page/P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSM.dart';
 import '../../page/P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSMVAR.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
@@ -49,6 +51,7 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
     List<P221PRODUCTIONCONFIRMATIONSMgetclass> output2 = [];
     List<P221GETDETAILclass> output3 = [];
     //-------------------------------------------------------------------------------------
+    FreeLoadingTan(P221PRODUCTIONCONFIRMATIONSMcontext);
     final response = await Dio().post(
       "${server2}03iPPGETDATACHEM/GETDATA",
       data: {
@@ -219,11 +222,11 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
         }
         P221PRODUCTIONCONFIRMATIONSMVAR.dataCOMPO = output3;
       }
-
-      // Navigator.pop(CONTEXTFORUSEPAGE19TO25.LOADINGcontext);
     } else {
       print("where is my server");
     }
+
+    Navigator.pop(P221PRODUCTIONCONFIRMATIONSMcontext);
 
     emit(output);
   }

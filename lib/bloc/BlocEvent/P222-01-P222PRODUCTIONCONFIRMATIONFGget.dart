@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/global.dart';
 
+import '../../page/P222PRODUCTIONCONFIRMATIONFG/P222PRODUCTIONCONFIRMATIONFG.dart';
 import '../../page/P222PRODUCTIONCONFIRMATIONFG/P222PRODUCTIONCONFIRMATIONFGVAR.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
@@ -49,6 +50,7 @@ class P222PRODUCTIONCONFIRMATIONFGget_Bloc extends Bloc<
     List<P222PRODUCTIONCONFIRMATIONFGgetclass> output2 = [];
     List<P222GETDETAILclass> output3 = [];
     //-------------------------------------------------------------------------------------
+    FreeLoadingTan(P222PRODUCTIONCONFIRMATIONFGcontext);
     final response = await Dio().post(
       "${server2}03iPPGETDATACHEM/GETDATA",
       data: {
@@ -156,6 +158,19 @@ class P222PRODUCTIONCONFIRMATIONFGget_Bloc extends Bloc<
                   // input = databuff;
                   if (databuff.length > 0) {
                     buffer.STATUS = 'Complete';
+                    List<String> MATERIAL_TEXT =
+                        buffer.MATERIAL_TEXT.split("|");
+                    // String PAcksize = '';
+
+                    if (MATERIAL_TEXT.length == 2) {
+                      print(MATERIAL_TEXT[1]);
+                      // PAcksize =
+                      //     (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+                      buffer.sizep =
+                          (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+
+                      print(buffer.sizep);
+                    }
                   }
 
                   // Navigator.pop(P26PROGRESSMAINcontext);
@@ -244,6 +259,8 @@ class P222PRODUCTIONCONFIRMATIONFGget_Bloc extends Bloc<
       print("where is my server");
     }
 
+    Navigator.pop(P222PRODUCTIONCONFIRMATIONFGcontext);
+
     emit(output);
   }
 
@@ -304,6 +321,7 @@ class P222PRODUCTIONCONFIRMATIONFGgetclass {
     this.LINK_PROC_ORDER = '',
     this.STATUS = '',
     this.Yield = '',
+    this.sizep = '',
   });
 
   String PROCESS_ORDER;
@@ -330,6 +348,7 @@ class P222PRODUCTIONCONFIRMATIONFGgetclass {
 
   String STATUS;
   String Yield;
+  String sizep;
 }
 
 class P222GETDETAILclass {

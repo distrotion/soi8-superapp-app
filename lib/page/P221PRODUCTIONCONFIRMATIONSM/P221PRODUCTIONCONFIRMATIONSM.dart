@@ -37,10 +37,11 @@ class _P221PRODUCTIONCONFIRMATIONSMState
   void initState() {
     super.initState();
     var now = DateTime.now();
+    var now3d = DateTime.now().subtract(const Duration(days: 1));
     // P221PRODUCTIONCONFIRMATIONSMVAR.formattedDate = DateFormat('dd-MM-yy').format(now);
-    P221PRODUCTIONCONFIRMATIONSMVAR.day = DateFormat('dd').format(now);
-    P221PRODUCTIONCONFIRMATIONSMVAR.month = DateFormat('MM').format(now);
-    P221PRODUCTIONCONFIRMATIONSMVAR.year = DateFormat('yyyy').format(now);
+    P221PRODUCTIONCONFIRMATIONSMVAR.day = DateFormat('dd').format(now3d);
+    P221PRODUCTIONCONFIRMATIONSMVAR.month = DateFormat('MM').format(now3d);
+    P221PRODUCTIONCONFIRMATIONSMVAR.year = DateFormat('yyyy').format(now3d);
 
     P221PRODUCTIONCONFIRMATIONSMVAR.day_next = DateFormat('dd').format(now);
     P221PRODUCTIONCONFIRMATIONSMVAR.month_next = DateFormat('MM').format(now);
@@ -53,6 +54,7 @@ class _P221PRODUCTIONCONFIRMATIONSMState
     P221PRODUCTIONCONFIRMATIONSMVAR.iscontrol = true;
     P221PRODUCTIONCONFIRMATIONSMVAR.SEARCH = '';
     P221PRODUCTIONCONFIRMATIONSMVAR.holding = 999;
+
     context
         .read<P221PRODUCTIONCONFIRMATIONSMget_Bloc>()
         .add(P221PRODUCTIONCONFIRMATIONSMget_GET());
@@ -93,6 +95,54 @@ class _P221PRODUCTIONCONFIRMATIONSMState
         _data_exp.add(_datain[i]);
       }
     }
+
+    Widget outset = Column(
+      children: [
+        for (int i = 0; i < _data_exp.length; i++) ...[
+          // for (int i = 0; i < 10; i++) ...[
+          InkWell(
+            onTap: () {
+              //
+              P221PRODUCTIONCONFIRMATIONSMVAR.PROCESS_ORDERselect =
+                  _data_exp[i].PROCESS_ORDER;
+
+              P310CHEMTANKVAR.PLANT = _data_exp[i].PROD_SUP_DESC;
+              P310CHEMTANKVAR.MATERIAL = _data_exp[i].MATERIAL;
+              P310CHEMTANKVAR.ORDER = _data_exp[i].LINK_PROC_ORDER;
+              P221PRODUCTIONCONFIRMATIONSMVAR.datasetsend = _data_exp[i];
+              P310CHEMTANKVAR.dataac = '';
+              _POPUPCREATEUSERSW(context);
+
+              // print(_datain[i].PROCESS_ORDER);
+            },
+            onHover: (v) {
+              //
+              // print(v.toString() + ":" + i.toString());
+              setState(() {
+                P221PRODUCTIONCONFIRMATIONSMVAR.holding = i;
+              });
+            },
+            child: PRODUCTIONCONFIRMATIONitem(
+              holding: P221PRODUCTIONCONFIRMATIONSMVAR.holding == i,
+              text01: _data_exp[i].PROCESS_ORDER,
+              text02: _data_exp[i].MATERIAL,
+              text03: _data_exp[i].MATERIAL_TEXT,
+              text04: _data_exp[i].PROD_SUP_DESC,
+              text05: _data_exp[i].PROD_SUP,
+              text06: _data_exp[i].BATCH,
+              text07: (_data_exp[i].Yield != '')
+                  ? (_data_exp[i].Yield + ' ' + _data_exp[i].UOM)
+                  : '',
+              text08: _data_exp[i].STATUS,
+              text09: _data_exp[i].SYSTEM_STATUS,
+              // text09: _data_exp[i].SYSTEM_STATUS,
+              //SYSTEM_STATUS
+              text10: "-",
+            ),
+          ),
+        ],
+      ],
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -321,6 +371,7 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                       ),
                     ),
                   ),
+
                   PRODUCTIONCONFIRMATIONtable(),
                   // if (_datasearch
                   //     .any((item) => item.PLANT == 'noxrust'))
@@ -329,61 +380,7 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                     child: SingleChildScrollView(
                       child: Container(
                         // width: 1100,
-                        child: Column(
-                          children: [
-                            for (int i = 0; i < _data_exp.length; i++) ...[
-                              // for (int i = 0; i < 10; i++) ...[
-                              InkWell(
-                                onTap: () {
-                                  //
-                                  P221PRODUCTIONCONFIRMATIONSMVAR
-                                          .PROCESS_ORDERselect =
-                                      _data_exp[i].PROCESS_ORDER;
-
-                                  P310CHEMTANKVAR.PLANT =
-                                      _data_exp[i].PROD_SUP_DESC;
-                                  P310CHEMTANKVAR.MATERIAL =
-                                      _data_exp[i].MATERIAL;
-                                  P310CHEMTANKVAR.ORDER =
-                                      _data_exp[i].LINK_PROC_ORDER;
-                                  P221PRODUCTIONCONFIRMATIONSMVAR.datasetsend =
-                                      _data_exp[i];
-                                  _POPUPCREATEUSERSW(context);
-
-                                  // print(_datain[i].PROCESS_ORDER);
-                                },
-                                onHover: (v) {
-                                  //
-                                  // print(v.toString() + ":" + i.toString());
-                                  setState(() {
-                                    P221PRODUCTIONCONFIRMATIONSMVAR.holding = i;
-                                  });
-                                },
-                                child: PRODUCTIONCONFIRMATIONitem(
-                                  holding:
-                                      P221PRODUCTIONCONFIRMATIONSMVAR.holding ==
-                                          i,
-                                  text01: _data_exp[i].PROCESS_ORDER,
-                                  text02: _data_exp[i].MATERIAL,
-                                  text03: _data_exp[i].MATERIAL_TEXT,
-                                  text04: _data_exp[i].PROD_SUP_DESC,
-                                  text05: _data_exp[i].PROD_SUP,
-                                  text06: _data_exp[i].BATCH,
-                                  text07: (_data_exp[i].Yield != '')
-                                      ? (_data_exp[i].Yield +
-                                          ' ' +
-                                          _data_exp[i].UOM)
-                                      : '',
-                                  text08: _data_exp[i].STATUS,
-                                  text09: "",
-                                  // text09: _data_exp[i].SYSTEM_STATUS,
-                                  //SYSTEM_STATUS
-                                  text10: "-",
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
+                        child: outset,
                       ),
                     ),
                   ),

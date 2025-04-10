@@ -3,6 +3,7 @@ import '../../bloc/BlocEvent/P231-01-P221FINISHEDGOODTRANFERget.dart';
 class P231FINISHEDGOODTRANFERVAR {
   static bool iscontrol = false;
   static String SEARCH = '';
+  static String BARCODE = '';
   static bool isHoveredClear = false;
   // static String formattedDate = '';
 

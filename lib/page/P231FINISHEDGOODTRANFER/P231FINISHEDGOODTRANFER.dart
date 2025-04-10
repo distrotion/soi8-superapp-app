@@ -21,6 +21,7 @@ import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 
 import '../../widget/newtable/FINISHEDGOODTRANFERtable.dart';
+import '../P311CHEMTANKFG/P311CHEMTANKFGVAR.dart';
 import '../page1.dart';
 
 import 'P231FINISHEDGOODTRANFERVAR.dart';
@@ -44,10 +45,11 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
   void initState() {
     super.initState();
     var now = DateTime.now();
+    var now3d = DateTime.now().subtract(const Duration(days: 3));
     // P231FINISHEDGOODTRANFERVAR.formattedDate = DateFormat('dd-MM-yy').format(now);
-    P231FINISHEDGOODTRANFERVAR.day = DateFormat('dd').format(now);
-    P231FINISHEDGOODTRANFERVAR.month = DateFormat('MM').format(now);
-    P231FINISHEDGOODTRANFERVAR.year = DateFormat('yyyy').format(now);
+    P231FINISHEDGOODTRANFERVAR.day = DateFormat('dd').format(now3d);
+    P231FINISHEDGOODTRANFERVAR.month = DateFormat('MM').format(now3d);
+    P231FINISHEDGOODTRANFERVAR.year = DateFormat('yyyy').format(now3d);
 
     P231FINISHEDGOODTRANFERVAR.day_next = DateFormat('dd').format(now);
     P231FINISHEDGOODTRANFERVAR.month_next = DateFormat('MM').format(now);
@@ -92,6 +94,128 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
         _data_exp.add(_datain[i]);
       }
     }
+
+    Widget outset = Column(
+      children: [
+        for (int i = 0; i < _data_exp.length; i++) ...[
+          // for (int i = 0; i < 10; i++) ...[
+          InkWell(
+            onTap: () {
+              //
+              // P231FINISHEDGOODTRANFERVAR
+              //         .PROCESS_ORDERselect =
+              //     _datain[i].PROCESS_ORDER;
+              //-----------------------------------------------
+
+              // print(_data_exp[i].MATERIAL_TEXT);
+              List<String> MATERIAL_TEXT =
+                  _data_exp[i].MATERIAL_TEXT.split("|");
+
+              String PAcksize = '0';
+              String FINALSEND = '0';
+
+              //Titrating
+              // P311CHEMTANKFGVAR.PLANT
+
+              //
+              if (MATERIAL_TEXT.length == 2) {
+                //
+                PAcksize = (MATERIAL_TEXT[1]).replaceAll(RegExp(r'[^0-9]'), '');
+
+                print(PAcksize);
+
+                if ((PAcksize) == _data_exp[i].NumPackSize1) {
+                  FINALSEND =
+                      (double.parse(ConverstStr(_data_exp[i].NumPackSize1)) *
+                              (double.parse(
+                                  ConverstStr(_data_exp[i].NumQuantity1))))
+                          .toString();
+                } else if ((PAcksize) == _data_exp[i].NumPackSize2) {
+                  FINALSEND =
+                      (double.parse(ConverstStr(_data_exp[i].NumPackSize2)) *
+                              (double.parse(
+                                  ConverstStr(_data_exp[i].NumQuantity2))))
+                          .toString();
+                } else if ((PAcksize) == _data_exp[i].NumPackSize3) {
+                  FINALSEND =
+                      (double.parse(ConverstStr(_data_exp[i].NumPackSize3)) *
+                              (double.parse(
+                                  ConverstStr(_data_exp[i].NumQuantity3))))
+                          .toString();
+                }
+              }
+              // P231FINISHEDGOODTRANFERVAR
+              //     .FINALSEND = (double.parse(ConverstStr(
+              //                 _data_exp[i].NumPackSize1)) *
+              //             double.parse(ConverstStr(
+              //                 _data_exp[i].NumQuantity1)) +
+              //         double.parse(ConverstStr(_data_exp[i].NumPackSize2)) *
+              //             double.parse(ConverstStr(
+              //                 _data_exp[i].NumQuantity2)) +
+              //         double.parse(ConverstStr(_data_exp[i].NumPackSize3)) *
+              //             double.parse(ConverstStr(
+              //                 _data_exp[i].NumQuantity3)))
+              //     .toString();
+              P231FINISHEDGOODTRANFERVAR.FINALSEND = FINALSEND;
+              P231FINISHEDGOODTRANFERVAR.UNIT = _data_exp[i].UOM;
+              P231FINISHEDGOODTRANFERVAR.FGPOSTDATA = _data_exp[i];
+              _POPUPCREATEUSERSW(context);
+              P231FINISHEDGOODTRANFERVAR.Page = 0;
+              //-------------
+              // setState(() {
+              //   if (_datain[i].check) {
+              //     _datain[i].check = false;
+              //   } else {
+              //     _datain[i].check = true;
+              //   }
+              // });
+            },
+            onHover: (v) {
+              //
+              // print(v.toString() + ":" + i.toString());
+              setState(() {
+                P231FINISHEDGOODTRANFERVAR.holding = i;
+              });
+            },
+            child: FINISHEDGOODTRANFERitem(
+              Wid01: CheckBoxC(
+                getChbox: (p0) {
+                  setState(() {
+                    _data_exp[i].check = p0;
+                  });
+                },
+                value: _data_exp[i].check,
+              ),
+              holding: P231FINISHEDGOODTRANFERVAR.holding == i,
+              text01: _data_exp[i].PROCESS_ORDER,
+              text02: _data_exp[i].MATERIAL,
+              text03: _data_exp[i].MATERIAL_TEXT,
+              text04: _data_exp[i].PROD_SUP_DESC,
+              text05: _data_exp[i].BATCH,
+              text06: _data_exp[i].Yield,
+              text07: (_data_exp[i].sizep == _data_exp[i].NumPackSize1)
+                  ? (_data_exp[i].NumPackSize1 != ''
+                      ? '(P${_data_exp[i].NumPackSize1})*${_data_exp[i].NumQuantity1}'
+                      : "")
+                  : "",
+              text08: (_data_exp[i].sizep == _data_exp[i].NumPackSize2)
+                  ? (_data_exp[i].NumPackSize2 != ''
+                      ? '(P${_data_exp[i].NumPackSize2})*${_data_exp[i].NumQuantity2}'
+                      : "")
+                  : "",
+              text09: (_data_exp[i].sizep == _data_exp[i].NumPackSize3)
+                  ? (_data_exp[i].NumPackSize3 != ''
+                      ? '(P${_data_exp[i].NumPackSize3})*${_data_exp[i].NumQuantity3}'
+                      : "")
+                  : "",
+              text10: _data_exp[i].MTBEZ,
+              text11: _data_exp[i].SYSTEM_STATUS,
+              text12: "-",
+            ),
+          ),
+        ],
+      ],
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -322,6 +446,124 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                       ),
                     ),
                   ),
+                  Container(
+                    height: 60,
+                    // width: 900,
+                    decoration: BoxDecoration(
+                      // color: Colors.blue.shade900,
+                      border: Border(
+                        top: BorderSide(),
+                        left: BorderSide(),
+                        right: BorderSide(),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Row(
+                          children: [
+                            ComInputText(
+                              height: 40,
+                              width: 500,
+                              isContr: P231FINISHEDGOODTRANFERVAR.iscontrol,
+                              fnContr: (input) {
+                                setState(() {
+                                  P231FINISHEDGOODTRANFERVAR.iscontrol = input;
+                                });
+                              },
+                              sPlaceholder: "BARCODE",
+                              sValue: P231FINISHEDGOODTRANFERVAR.BARCODE,
+                              returnfunc: (String s) {
+                                setState(() {
+                                  P231FINISHEDGOODTRANFERVAR.BARCODE = s;
+                                });
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: InkWell(
+                                onTap: () {
+                                  //-----------------------------------------------
+                                  //110002372504071
+
+                                  for (var i = 0; i < _data_exp.length; i++) {
+                                    //
+                                    if ((_data_exp[i].MATERIAL +
+                                            _data_exp[i].BATCH) ==
+                                        P231FINISHEDGOODTRANFERVAR.BARCODE) {
+                                      //
+                                      print(_data_exp[i].MATERIAL +
+                                          _data_exp[i].BATCH);
+
+                                      List<String> MATERIAL_TEXT =
+                                          _data_exp[i].MATERIAL_TEXT.split("|");
+
+                                      String PAcksize = '0';
+                                      String FINALSEND = '0';
+
+                                      if (MATERIAL_TEXT.length == 2) {
+                                        //
+                                        PAcksize = (MATERIAL_TEXT[1])
+                                            .replaceAll(RegExp(r'[^0-9]'), '');
+
+                                        print(PAcksize);
+
+                                        if ((PAcksize) ==
+                                            _data_exp[i].NumPackSize1) {
+                                          FINALSEND = (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumPackSize1)) *
+                                                  (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumQuantity1))))
+                                              .toString();
+                                        } else if ((PAcksize) ==
+                                            _data_exp[i].NumPackSize2) {
+                                          FINALSEND = (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumPackSize2)) *
+                                                  (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumQuantity2))))
+                                              .toString();
+                                        } else if ((PAcksize) ==
+                                            _data_exp[i].NumPackSize3) {
+                                          FINALSEND = (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumPackSize3)) *
+                                                  (double.parse(ConverstStr(
+                                                      _data_exp[i]
+                                                          .NumQuantity3))))
+                                              .toString();
+                                        }
+                                      }
+
+                                      P231FINISHEDGOODTRANFERVAR.FINALSEND =
+                                          FINALSEND;
+                                      P231FINISHEDGOODTRANFERVAR.UNIT =
+                                          _data_exp[i].UOM;
+                                      P231FINISHEDGOODTRANFERVAR.FGPOSTDATA =
+                                          _data_exp[i];
+                                      _POPUPCREATEUSERSW(context);
+                                      P231FINISHEDGOODTRANFERVAR.Page = 0;
+                                    }
+                                  }
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 150,
+                                  color: Colors.blue,
+                                  child: Center(
+                                    child: Text("SCAN"),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   FINISHEDGOODTRANFERtable(),
                   // if (_datasearch
                   //     .any((item) => item.PLANT == 'noxrust'))
@@ -330,135 +572,7 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                     child: SingleChildScrollView(
                       child: Container(
                         // width: 1100,
-                        child: Column(
-                          children: [
-                            for (int i = 0; i < _data_exp.length; i++) ...[
-                              // for (int i = 0; i < 10; i++) ...[
-                              InkWell(
-                                onTap: () {
-                                  //
-                                  // P231FINISHEDGOODTRANFERVAR
-                                  //         .PROCESS_ORDERselect =
-                                  //     _datain[i].PROCESS_ORDER;
-                                  //-----------------------------------------------
-
-                                  // print(_data_exp[i].MATERIAL_TEXT);
-                                  List<String> MATERIAL_TEXT =
-                                      _data_exp[i].MATERIAL_TEXT.split("|");
-
-                                  String PAcksize = '0';
-                                  String FINALSEND = '0';
-
-                                  //
-                                  if (MATERIAL_TEXT.length == 2) {
-                                    //
-                                    PAcksize = (MATERIAL_TEXT[1])
-                                        .replaceAll(RegExp(r'[^0-9]'), '');
-
-                                    print(PAcksize);
-
-                                    if ((PAcksize) ==
-                                        _data_exp[i].NumPackSize1) {
-                                      FINALSEND = (double.parse(ConverstStr(
-                                                  _data_exp[i].NumPackSize1)) *
-                                              (double.parse(ConverstStr(
-                                                  _data_exp[i].NumQuantity1))))
-                                          .toString();
-                                    } else if ((PAcksize) ==
-                                        _data_exp[i].NumPackSize2) {
-                                      FINALSEND = (double.parse(ConverstStr(
-                                                  _data_exp[i].NumPackSize2)) *
-                                              (double.parse(ConverstStr(
-                                                  _data_exp[i].NumQuantity2))))
-                                          .toString();
-                                    } else if ((PAcksize) ==
-                                        _data_exp[i].NumPackSize3) {
-                                      FINALSEND = (double.parse(ConverstStr(
-                                                  _data_exp[i].NumPackSize3)) *
-                                              (double.parse(ConverstStr(
-                                                  _data_exp[i].NumQuantity3))))
-                                          .toString();
-                                    }
-                                  }
-                                  // P231FINISHEDGOODTRANFERVAR
-                                  //     .FINALSEND = (double.parse(ConverstStr(
-                                  //                 _data_exp[i].NumPackSize1)) *
-                                  //             double.parse(ConverstStr(
-                                  //                 _data_exp[i].NumQuantity1)) +
-                                  //         double.parse(ConverstStr(_data_exp[i].NumPackSize2)) *
-                                  //             double.parse(ConverstStr(
-                                  //                 _data_exp[i].NumQuantity2)) +
-                                  //         double.parse(ConverstStr(_data_exp[i].NumPackSize3)) *
-                                  //             double.parse(ConverstStr(
-                                  //                 _data_exp[i].NumQuantity3)))
-                                  //     .toString();
-                                  P231FINISHEDGOODTRANFERVAR.FINALSEND =
-                                      FINALSEND;
-                                  P231FINISHEDGOODTRANFERVAR.UNIT =
-                                      _data_exp[i].UOM;
-                                  P231FINISHEDGOODTRANFERVAR.FGPOSTDATA =
-                                      _data_exp[i];
-                                  _POPUPCREATEUSERSW(context);
-                                  P231FINISHEDGOODTRANFERVAR.Page = 0;
-                                  //-------------
-                                  // setState(() {
-                                  //   if (_datain[i].check) {
-                                  //     _datain[i].check = false;
-                                  //   } else {
-                                  //     _datain[i].check = true;
-                                  //   }
-                                  // });
-                                },
-                                onHover: (v) {
-                                  //
-                                  // print(v.toString() + ":" + i.toString());
-                                  setState(() {
-                                    P231FINISHEDGOODTRANFERVAR.holding = i;
-                                  });
-                                },
-                                child: FINISHEDGOODTRANFERitem(
-                                  Wid01: CheckBoxC(
-                                    getChbox: (p0) {
-                                      setState(() {
-                                        _data_exp[i].check = p0;
-                                      });
-                                    },
-                                    value: _data_exp[i].check,
-                                  ),
-                                  holding:
-                                      P231FINISHEDGOODTRANFERVAR.holding == i,
-                                  text01: _data_exp[i].PROCESS_ORDER,
-                                  text02: _data_exp[i].MATERIAL,
-                                  text03: _data_exp[i].MATERIAL_TEXT,
-                                  text04: _data_exp[i].PROD_SUP_DESC,
-                                  text05: _data_exp[i].BATCH,
-                                  text06: _data_exp[i].Yield,
-                                  text07: (_data_exp[i].sizep ==
-                                          _data_exp[i].NumPackSize1)
-                                      ? (_data_exp[i].NumPackSize1 != ''
-                                          ? '(P${_data_exp[i].NumPackSize1})*${_data_exp[i].NumQuantity1}'
-                                          : "")
-                                      : "",
-                                  text08: (_data_exp[i].sizep ==
-                                          _data_exp[i].NumPackSize2)
-                                      ? (_data_exp[i].NumPackSize2 != ''
-                                          ? '(P${_data_exp[i].NumPackSize2})*${_data_exp[i].NumQuantity2}'
-                                          : "")
-                                      : "",
-                                  text09: (_data_exp[i].sizep ==
-                                          _data_exp[i].NumPackSize3)
-                                      ? (_data_exp[i].NumPackSize3 != ''
-                                          ? '(P${_data_exp[i].NumPackSize3})*${_data_exp[i].NumQuantity3}'
-                                          : "")
-                                      : "",
-                                  text10: _data_exp[i].MTBEZ,
-                                  text11: _data_exp[i].SYSTEM_STATUS,
-                                  text12: "-",
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
+                        child: outset,
                       ),
                     ),
                   ),

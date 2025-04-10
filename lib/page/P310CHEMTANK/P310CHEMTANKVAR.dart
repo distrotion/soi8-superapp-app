@@ -7,4 +7,6 @@ class P310CHEMTANKVAR {
   static String MATERIAL = '';
   static String PLANT = '';
   static String ORDER = '';
+
+  static String dataac = '';
 }
