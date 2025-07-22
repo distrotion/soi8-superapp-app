@@ -8,7 +8,6 @@ import 'page10.dart';
 import 'page101.dart';
 import 'page102.dart';
 import 'page11.dart';
-import 'page231.dart';
 import 'page31.dart';
 import 'page40.dart';
 import 'page41.dart';
@@ -25,8 +24,7 @@ class Page0 extends StatelessWidget {
   Widget build(BuildContext context) {
     // return Page0Body();
     // return Page60();
-    // return Page1();
-    return Page231();
+    return Page1();
   }
 }
 

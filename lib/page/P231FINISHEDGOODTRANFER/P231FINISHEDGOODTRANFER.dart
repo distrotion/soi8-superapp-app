@@ -45,7 +45,7 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
   void initState() {
     super.initState();
     var now = DateTime.now();
-    var now3d = DateTime.now().subtract(const Duration(days: 3));
+    var now3d = DateTime.now().subtract(const Duration(days: 7));
     // P231FINISHEDGOODTRANFERVAR.formattedDate = DateFormat('dd-MM-yy').format(now);
     P231FINISHEDGOODTRANFERVAR.day = DateFormat('dd').format(now3d);
     P231FINISHEDGOODTRANFERVAR.month = DateFormat('MM').format(now3d);
@@ -546,6 +546,7 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                                           _data_exp[i];
                                       _POPUPCREATEUSERSW(context);
                                       P231FINISHEDGOODTRANFERVAR.Page = 0;
+                                      break;
                                     }
                                   }
                                 },
@@ -555,6 +556,26 @@ class _P231FINISHEDGOODTRANFERState extends State<P231FINISHEDGOODTRANFER> {
                                   color: Colors.blue,
                                   child: Center(
                                     child: Text("SCAN"),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: InkWell(
+                                onTap: () {
+                                  P231FINISHEDGOODTRANFERVAR.iscontrol = true;
+                                  P231FINISHEDGOODTRANFERVAR.BARCODE = '';
+                                  setState(() {});
+                                  //-----------------------------------------------
+                                  //110002372504071
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 150,
+                                  color: Colors.orange,
+                                  child: Center(
+                                    child: Text("CLEAR"),
                                   ),
                                 ),
                               ),

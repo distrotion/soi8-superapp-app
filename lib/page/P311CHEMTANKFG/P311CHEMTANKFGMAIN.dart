@@ -144,7 +144,7 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                     ).createShader(bounds),
                     child: Text(
                       // '${USERDATA.PLANTNAME} : ${USERDATA.TANK} : ${USERDATA.ORDER}',
-                      "",
+                      "${P222PRODUCTIONCONFIRMATIONFGVAR.datasetsend.LINK_PROC_ORDER}",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -1531,7 +1531,7 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                           "MATERIAL": dataCOMPOdata[i].MATERIAL,
                                           "PLANT": "1000",
                                           "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
-                                          "BATCH": "",
+                                          "BATCH": dataCOMPOdata[i].BATCH,
                                           "MOVE_TYPE":
                                               dataCOMPOdata[i].MVT_TYPE,
                                           // "ENTRY_QNT": orderfg.Yield, selectpack
@@ -1577,7 +1577,8 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                           "MOVE_TYPE":
                                               dataCOMPOdata[i].MVT_TYPE,
                                           "ENTRY_QNT":
-                                              dataCOMPOdata[i].BATCH_QTY,
+                                              // dataCOMPOdata[i].BATCH_QTY,
+                                              (ConverstStr(_wg.NumQuantity1)),
                                           // "ENTRY_QNT":
                                           //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
                                           "ENTRY_UOM": dataCOMPOdata[i].UOM,
@@ -1634,89 +1635,89 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                       "T_GOODSMOVEMENT": dataout2,
                                     };
                                     print(dotaout);
-                                    Dio()
-                                        .post(
-                                      "${server2}03iPPGETDATACHEM/SETI005DATA",
-                                      data: dotaout,
-                                      // {
-                                      //   "TIMECONF": {
-                                      //     "ORDERID": orderfg.PROCESS_ORDER,
-                                      //     "PHASE": "0020",
-                                      //     // "YIELD": orderfg.Yield,
-                                      //     "YIELD":
-                                      //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
-                                      //         "401.5",
-                                      //     "CONF_QUAN_UNIT": orderfg.UOM,
-                                      //     // "POSTG_DATE":
-                                      //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                      //     // "EXEC_START_DATE":
-                                      //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                      //     "POSTG_DATE":
-                                      //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                      //     "EXEC_START_DATE":
-                                      //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                      //   },
-                                      //   "T_GOODSMOVEMENT": dataout2,
-                                      // },
-                                    )
-                                        .then((v) {
-                                      //
+                                    // Dio()
+                                    //     .post(
+                                    //   "${server2}03iPPGETDATACHEM/SETI005DATA",
+                                    //   data: dotaout,
+                                    //   // {
+                                    //   //   "TIMECONF": {
+                                    //   //     "ORDERID": orderfg.PROCESS_ORDER,
+                                    //   //     "PHASE": "0020",
+                                    //   //     // "YIELD": orderfg.Yield,
+                                    //   //     "YIELD":
+                                    //   //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
+                                    //   //         "401.5",
+                                    //   //     "CONF_QUAN_UNIT": orderfg.UOM,
+                                    //   //     // "POSTG_DATE":
+                                    //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //   //     // "EXEC_START_DATE":
+                                    //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //   //     "POSTG_DATE":
+                                    //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //   //     "EXEC_START_DATE":
+                                    //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //   //   },
+                                    //   //   "T_GOODSMOVEMENT": dataout2,
+                                    //   // },
+                                    // )
+                                    //     .then((v) {
+                                    //   //
 
-                                      Map<String, String> printout = {
-                                        "PD_Name": orderfg.MATERIAL_TEXT,
-                                        "Lot": orderfg.BATCH,
-                                        "EXP": "",
-                                        "Weight": _wg.NumWeight,
-                                        "UOM": orderfg.UOM,
-                                        "User": USERDATA.NAME,
-                                      };
-                                      // Dio().post(
-                                      //   "http://172.101.5.6:1880/PrintProductRemained",
-                                      //   data: printout,
-                                      //   // {
-                                      //   //   "TIMECONF": {
-                                      //   //     "ORDERID": orderfg.PROCESS_ORDER,
-                                      //   //     "PHASE": "0020",
-                                      //   //     // "YIELD": orderfg.Yield,
-                                      //   //     "YIELD":
-                                      //   //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
-                                      //   //         "401.5",
-                                      //   //     "CONF_QUAN_UNIT": orderfg.UOM,
-                                      //   //     // "POSTG_DATE":
-                                      //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                      //   //     // "EXEC_START_DATE":
-                                      //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
-                                      //   //     "POSTG_DATE":
-                                      //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                      //   //     "EXEC_START_DATE":
-                                      //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
-                                      //   //   },
-                                      //   //   "T_GOODSMOVEMENT": dataout2,
-                                      //   // },
-                                      // );
-                                      P222PRODUCTIONCONFIRMATIONFGcontext.read<
-                                              P222PRODUCTIONCONFIRMATIONFGget_Bloc>()
-                                          .add(
-                                              P222PRODUCTIONCONFIRMATIONFGget_GET());
-                                      Navigator.pop(context);
-                                      Navigator.pop(
-                                          P222PRODUCTIONCONFIRMATIONFGcontext);
-                                      print(v.data);
-                                      if (v.data.length > 0) {
-                                        if (v.data[0]['TYPE'] != null) {
-                                          if (v.data[0]['TYPE'].toString() ==
-                                              'E') {
-                                            showErrorPopup(
-                                                P222PRODUCTIONCONFIRMATIONFGcontext,
-                                                v.data.toString());
-                                          } else {
-                                            showGoodPopup(
-                                                P222PRODUCTIONCONFIRMATIONFGcontext,
-                                                v.data.toString());
-                                          }
-                                        }
-                                      }
-                                    });
+                                    //   Map<String, String> printout = {
+                                    //     "PD_Name": orderfg.MATERIAL_TEXT,
+                                    //     "Lot": orderfg.BATCH,
+                                    //     "EXP": "",
+                                    //     "Weight": _wg.NumWeight,
+                                    //     "UOM": orderfg.UOM,
+                                    //     "User": USERDATA.NAME,
+                                    //   };
+                                    //   // Dio().post(
+                                    //   //   "http://172.101.5.6:1880/PrintProductRemained",
+                                    //   //   data: printout,
+                                    //   //   // {
+                                    //   //   //   "TIMECONF": {
+                                    //   //   //     "ORDERID": orderfg.PROCESS_ORDER,
+                                    //   //   //     "PHASE": "0020",
+                                    //   //   //     // "YIELD": orderfg.Yield,
+                                    //   //   //     "YIELD":
+                                    //   //   //         // "${(double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3)) + (double.parse(ConverstStr(_wg.NumWeight)))).toStringAsFixed(2)}",
+                                    //   //   //         "401.5",
+                                    //   //   //     "CONF_QUAN_UNIT": orderfg.UOM,
+                                    //   //   //     // "POSTG_DATE":
+                                    //   //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //   //   //     // "EXEC_START_DATE":
+                                    //   //   //     //     "${calendaset.day}.${calendaset.month}.${calendaset.year}",
+                                    //   //   //     "POSTG_DATE":
+                                    //   //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //   //   //     "EXEC_START_DATE":
+                                    //   //   //         "${P222PRODUCTIONCONFIRMATIONFGVAR.day_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.month_next}.${P222PRODUCTIONCONFIRMATIONFGVAR.year_next}",
+                                    //   //   //   },
+                                    //   //   //   "T_GOODSMOVEMENT": dataout2,
+                                    //   //   // },
+                                    //   // );
+                                    //   P222PRODUCTIONCONFIRMATIONFGcontext.read<
+                                    //           P222PRODUCTIONCONFIRMATIONFGget_Bloc>()
+                                    //       .add(
+                                    //           P222PRODUCTIONCONFIRMATIONFGget_GET());
+                                    //   Navigator.pop(context);
+                                    //   Navigator.pop(
+                                    //       P222PRODUCTIONCONFIRMATIONFGcontext);
+                                    //   print(v.data);
+                                    //   if (v.data.length > 0) {
+                                    //     if (v.data[0]['TYPE'] != null) {
+                                    //       if (v.data[0]['TYPE'].toString() ==
+                                    //           'E') {
+                                    //         showErrorPopup(
+                                    //             P222PRODUCTIONCONFIRMATIONFGcontext,
+                                    //             v.data.toString());
+                                    //       } else {
+                                    //         showGoodPopup(
+                                    //             P222PRODUCTIONCONFIRMATIONFGcontext,
+                                    //             v.data.toString());
+                                    //       }
+                                    //     }
+                                    //   }
+                                    // });
 
                                     // });
                                     // });
@@ -1837,7 +1838,7 @@ class _P311CHEMTANKFGState extends State<P311CHEMTANKFG> {
                                         "MATERIAL": dataCOMPOdata[i].MATERIAL,
                                         "PLANT": "1000",
                                         "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
-                                        "BATCH": "",
+                                        "BATCH": dataCOMPOdata[i].BATCH,
                                         "MOVE_TYPE": dataCOMPOdata[i].MVT_TYPE,
                                         // "ENTRY_QNT": orderfg.Yield,
                                         "ENTRY_QNT":

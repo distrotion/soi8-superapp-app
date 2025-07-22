@@ -9,4 +9,10 @@ class P310CHEMTANKVAR {
   static String ORDER = '';
 
   static String dataac = '';
+
+  static String ADD1 = '';
+  static String ADD2 = '';
+  static String ADD3 = '';
+  static String ADD4 = '';
+  static String ADD5 = '';
 }

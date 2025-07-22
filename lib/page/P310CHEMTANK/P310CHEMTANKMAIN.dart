@@ -47,9 +47,9 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
   void initState() {
     super.initState();
     context.read<P310CHEMTANKGETDATA_Bloc>().add(P310CHEMTANKGETDATA_GET());
-    // Timer(Duration(seconds: 1), () {
-    //   context.read<P26TANKDATAPACKING_Bloc>().add(P26TANKDATAPACKING_GET());
-    // });
+    Timer(Duration(seconds: 1), () {
+      context.read<P26TANKDATAPACKING_Bloc>().add(P26TANKDATAPACKING_GET());
+    });
 
     P310CHEMTANKVAR.iscontrol = true;
     P310CHEMTANKVAR.SEARCH = '';
@@ -63,6 +63,10 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
 
     P26TANKDATAPACKINGclass _wg = widget.wg ?? P26TANKDATAPACKINGclass();
 
+    if (_wg.PVW != '') {
+      P310CHEMTANKVAR.ADD4 = _wg.PVW;
+    }
+
     final ids = Set();
     _datain.retainWhere((x) =>
         ids.add(x.CHEMICALNAME) |
@@ -71,6 +75,10 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
         ids.add(x.ACTUAL));
 
     List<P310CHEMTANKGETDATAclass> _datasearch = [];
+    List<P310CHEMTANKGETDATAclass> _datasearchaddald = [];
+    List<P310CHEMTANKGETDATAclass> _datasearchadd = [
+      P310CHEMTANKGETDATAclass()
+    ];
     _datasearch.addAll(
       _datain.where(
         (data) =>
@@ -81,15 +89,18 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
       ),
     );
 
-    double totalActual =
-        _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL));
-    double totalSP =
-        _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.SP));
+    // double totalActual =
+    //     _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL));
+    // double totalSP =
+    //     _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.SP));
+
+    double totalActual = 0;
+    double totalSP = 0;
 
     // if (P310CHEMTANKVAR.dataac == '') {
-    P310CHEMTANKVAR.dataac = _datasearch
-        .fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL))
-        .toString();
+    P310CHEMTANKVAR.dataac =
+        ((totalActual + double.parse(ConverstStr(P310CHEMTANKVAR.ADD4)))
+            .toString());
     // }
 
     return Scaffold(
@@ -113,7 +124,7 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                         ).createShader(bounds),
                         child: Text(
                           // '${USERDATA.PLANTNAME} : ${USERDATA.TANK} : ${USERDATA.ORDER}',
-                          "",
+                          "${P221PRODUCTIONCONFIRMATIONSMVAR.datasetsend.LINK_PROC_ORDER}",
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -131,6 +142,7 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                         CuPage = Page60();
                         MainBodyContext.read<ChangePage_Bloc>()
                             .add(ChangePage_nodrower());
+                        // _POPUPMANUAL(P221PRODUCTIONCONFIRMATIONSMcontext);
                       },
                       child: Container(
                         height: 50,
@@ -497,6 +509,7 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                               ),
                             ],
                           ),
+
                           SizedBox(
                             height: 16,
                           ),
@@ -1259,20 +1272,348 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                           //   ],
                           // ),
 
-                          ComInputText(
-                            // sPlaceholder: "Search...",
-                            // isSideIcon: true,
+                          Row(
+                            children: [
+                              Table(
+                                border: TableBorder.all(),
+                                columnWidths: const {
+                                  0: FixedColumnWidth(50.0),
+                                  1: FixedColumnWidth(300),
+                                  2: FixedColumnWidth(100.0),
+                                  3: FixedColumnWidth(100.0),
+                                  4: FixedColumnWidth(100.0),
+                                  5: FixedColumnWidth(100.0),
+                                  6: FixedColumnWidth(100.0),
+                                },
+                                children: [
+                                  TableRow(
+                                    children: [
+                                      TableCell(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 50,
+                                                child: Container(
+                                                  color: Colors.blue,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'NO.',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 50,
+                                                child: Container(
+                                                  color: Colors.blue,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'CHEMICAL',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 50,
+                                                child: Container(
+                                                  color: Colors.blue,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'BARCODE',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 50,
+                                                child: Container(
+                                                  color: Colors.blue,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'SP. (kg)',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      TableCell(
+                                        child: SizedBox(
+                                          height: 50,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                right: 0,
+                                                height: 50,
+                                                child: Container(
+                                                  color: Colors.blue,
+                                                  child: Center(
+                                                    child: Text(
+                                                      'ACTUAL (kg)',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  ..._datasearchadd.map(
+                                    (item) {
+                                      int dataCount =
+                                          _datasearch.indexOf(item) + 1;
+                                      return TableRow(
+                                        children: [
+                                          TableCell(
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: Center(
+                                                child:
+                                                    Text(dataCount.toString()),
+                                              ),
+                                            ),
+                                          ),
+                                          TableCell(
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: ComInputText(
+                                                // sPlaceholder: "Search...",
+                                                // isSideIcon: true,
+                                                isEnabled: _wg.ORDER == '',
+                                                height: 40,
+                                                width: 400,
+                                                isContr:
+                                                    P310CHEMTANKVAR.iscontrol,
+                                                fnContr: (input) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.iscontrol =
+                                                        input;
+                                                  });
+                                                },
+                                                sValue: _wg.CHEM == ''
+                                                    ? P310CHEMTANKVAR.ADD1
+                                                    : _wg.CHEM,
+                                                returnfunc: (String s) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.ADD1 = s;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TableCell(
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: ComInputText(
+                                                // sPlaceholder: "Search...",
+                                                // isSideIcon: true,
+                                                isEnabled: _wg.ORDER == '',
+                                                height: 40,
+                                                width: 200,
+                                                isContr:
+                                                    P310CHEMTANKVAR.iscontrol,
+                                                fnContr: (input) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.iscontrol =
+                                                        input;
+                                                  });
+                                                },
+                                                sValue: _wg.BARCODE == ''
+                                                    ? P310CHEMTANKVAR.ADD2
+                                                    : _wg.BARCODE,
+                                                returnfunc: (String s) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.ADD2 = s;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TableCell(
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: ComInputText(
+                                                // sPlaceholder: "Search...",
+                                                // isSideIcon: true,
+
+                                                isEnabled: _wg.ORDER == '',
+                                                height: 40,
+                                                width: 200,
+                                                isContr:
+                                                    P310CHEMTANKVAR.iscontrol,
+                                                fnContr: (input) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.iscontrol =
+                                                        input;
+                                                  });
+                                                },
+                                                sValue: _wg.SVW == ''
+                                                    ? P310CHEMTANKVAR.ADD3
+                                                    : _wg.SVW,
+                                                returnfunc: (String s) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.ADD3 = s;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          TableCell(
+                                            child: SizedBox(
+                                              height: 40,
+                                              child: ComInputText(
+                                                // sPlaceholder: "Search...",
+                                                // isSideIcon: true,
+                                                isEnabled: _wg.ORDER == '',
+                                                height: 40,
+                                                width: 200,
+                                                isContr:
+                                                    P310CHEMTANKVAR.iscontrol,
+                                                fnContr: (input) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.iscontrol =
+                                                        input;
+                                                  });
+                                                },
+                                                sValue: _wg.PVW == ''
+                                                    ? P310CHEMTANKVAR.ADD4
+                                                    : _wg.PVW,
+                                                returnfunc: (String s) {
+                                                  setState(() {
+                                                    P310CHEMTANKVAR.ADD4 = s;
+                                                  });
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  final response3 = await Dio().post(
+                                    // "${server2}datacentertest/getsoi8order-pack-or",
+                                    "${serverGB}MANUALPROCESS/SAVEADDdataSET",
+                                    data: {
+                                      "ORDER": P310CHEMTANKVAR.ORDER
+                                          .substring(4, 10),
+                                      "CHEM": P310CHEMTANKVAR.ADD1,
+                                      "BARCODE": P310CHEMTANKVAR.ADD2,
+                                      "SVW": P310CHEMTANKVAR.ADD3,
+                                      "PVW": P310CHEMTANKVAR.ADD4,
+                                    },
+                                  );
+                                  if (response3.statusCode == 200) {
+                                    var databuff = response3.data;
+                                    print(databuff);
+                                    context
+                                        .read<P26TANKDATAPACKING_Bloc>()
+                                        .add(P26TANKDATAPACKING_GET());
+                                  } else {
+                                    print("where is my server");
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 80,
+                                    width: 100,
+                                    color: Colors.green,
+                                    child: Center(
+                                      child: Text("SAVE DATA"),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Container(
+                            color: Colors.blue,
                             height: 40,
                             width: 200,
-                            isContr: P310CHEMTANKVAR.iscontrol,
-                            fnContr: (input) {
-                              P310CHEMTANKVAR.iscontrol = input;
-                            },
-                            sValue: P310CHEMTANKVAR.dataac,
-                            returnfunc: (String s) {
-                              P310CHEMTANKVAR.dataac = s;
-                            },
+                            child: Center(
+                              // child: Text(P310CHEMTANKVAR.dataac),
+                              child: Text(_wg.dataw),
+                            ),
                           ),
+                          // ComInputText(
+                          //   // sPlaceholder: "Search...",
+                          //   // isSideIcon: true,
+                          //   isEnabled: false,
+                          //   height: 40,
+                          //   width: 200,
+                          //   isContr: P310CHEMTANKVAR.iscontrol,
+                          //   fnContr: (input) {
+                          //     P310CHEMTANKVAR.iscontrol = input;
+                          //   },
+                          //   sValue: P310CHEMTANKVAR.dataac,
+                          //   returnfunc: (String s) {
+                          //     P310CHEMTANKVAR.dataac = s;
+                          //   },
+                          // ),
 
                           Row(
                             children: [
@@ -1451,7 +1792,8 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                         "MOVE_TYPE": "101",
                                         // "ENTRY_QNT": orderfg.Yield,
                                         // "ENTRY_QNT": totalActual.toString(),
-                                        "ENTRY_QNT": P310CHEMTANKVAR.dataac,
+                                        // "ENTRY_QNT": P310CHEMTANKVAR.dataac,
+                                        "ENTRY_QNT": _wg.dataw,
                                         "ENTRY_UOM": ordersemi.UOM,
                                         "MFG_DATE":
                                             // "${calendaset.day}.${calendaset.month}.${calendaset.year}",
@@ -1474,11 +1816,12 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                           "MATERIAL": dataCOMPOdata[i].MATERIAL,
                                           "PLANT": "1000",
                                           "STGE_LOC": dataCOMPOdata[i].STGE_LOC,
-                                          "BATCH": "",
+                                          "BATCH": dataCOMPOdata[i].BATCH,
                                           "MOVE_TYPE":
                                               dataCOMPOdata[i].MVT_TYPE,
                                           // "ENTRY_QNT": orderfg.Yield,
-                                          "ENTRY_QNT": P310CHEMTANKVAR.dataac,
+                                          // "ENTRY_QNT": P310CHEMTANKVAR.dataac,
+                                          "ENTRY_QNT": _wg.dataw,
                                           // "ENTRY_QNT": totalActual.toString(),
                                           // "ENTRY_QNT":
                                           //     "${double.parse(ConverstStr(_wg.NumQuantity1)) * double.parse(ConverstStr(_wg.NumPackSize1)) + double.parse(ConverstStr(_wg.NumQuantity2)) * double.parse(ConverstStr(_wg.NumPackSize2)) + double.parse(ConverstStr(_wg.NumQuantity3)) * double.parse(ConverstStr(_wg.NumPackSize3))}",
@@ -1493,7 +1836,8 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
                                         "PHASE": "0020",
                                         // "YIELD": orderfg.Yield,
                                         // "YIELD": totalActual.toString(),
-                                        "YIELD": P310CHEMTANKVAR.dataac,
+                                        // "YIELD": P310CHEMTANKVAR.dataac,
+                                        "YIELD": _wg.dataw,
                                         //
                                         "CONF_QUAN_UNIT": ordersemi.UOM,
                                         // "POSTG_DATE":
@@ -2463,4 +2807,26 @@ class textpop extends StatelessWidget {
       ],
     );
   }
+}
+
+void _POPUPMANUAL(BuildContext contextin) {
+  showDialog(
+    context: contextin,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              height: 700,
+              width: 900,
+              child: Page60(),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

@@ -63,14 +63,28 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
     List<P211CHEMPLANINGgetclass> _datain = widget.data ?? [];
     List<P211CHEMPLANINGgetclass> _datasearch = [];
 
+    List<P211CHEMPLANINGgetclass> _data_exp = [];
+
+    for (int i = 0; i < _datain.length; i++) {
+      if (_datain[i].PROCESS_ORDER.contains(P211CHEMPLANINGVAR.SEARCH) ||
+          _datain[i].MATERIAL.contains(P211CHEMPLANINGVAR.SEARCH) ||
+          _datain[i].MATERIAL_TEXT.contains(P211CHEMPLANINGVAR.SEARCH) ||
+          _datain[i].PROD_SUP_DESC.contains(P211CHEMPLANINGVAR.SEARCH) ||
+          _datain[i].PROD_SUP.contains(P211CHEMPLANINGVAR.SEARCH) ||
+          _datain[i].BATCH.contains(P211CHEMPLANINGVAR.SEARCH)) {
+        _data_exp.add(_datain[i]);
+      }
+    }
+
     Widget outset = Column(
       children: [
-        for (int i = 0; i < _datain.length; i++) ...[
+        for (int i = 0; i < _data_exp.length; i++) ...[
           // for (int i = 0; i < 10; i++) ...[
           InkWell(
             onTap: () {
               //
-              P211CHEMPLANINGVAR.PROCESS_ORDERselect = _datain[i].PROCESS_ORDER;
+              P211CHEMPLANINGVAR.PROCESS_ORDERselect =
+                  _data_exp[i].PROCESS_ORDER;
               _POPUPCREATEUSERSW(context);
             },
             onHover: (v) {
@@ -82,14 +96,14 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
             },
             child: PLANINGitem(
               holding: P211CHEMPLANINGVAR.holding == i,
-              text01: _datain[i].PROCESS_ORDER,
-              text02: _datain[i].MATERIAL,
-              text03: _datain[i].MATERIAL_TEXT,
-              text04: _datain[i].PROD_SUP_DESC,
-              text05: _datain[i].PROD_SUP,
-              text06: _datain[i].BATCH,
-              text07: '${_datain[i].TOTAL_QTY} ${_datain[i].UOM}',
-              text08: _datain[i].STATUS,
+              text01: _data_exp[i].PROCESS_ORDER,
+              text02: _data_exp[i].MATERIAL,
+              text03: _data_exp[i].MATERIAL_TEXT,
+              text04: _data_exp[i].PROD_SUP_DESC,
+              text05: _data_exp[i].PROD_SUP,
+              text06: _data_exp[i].BATCH,
+              text07: '${_data_exp[i].TOTAL_QTY} ${_data_exp[i].UOM}',
+              text08: _data_exp[i].STATUS,
             ),
           ),
         ],
@@ -208,10 +222,32 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        "Incoming Table",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
+                      child: InkWell(
+                        onTap: () {
+                          DateTime calendaset = DateTime.now();
+                          //
+                          CalendaSelectDates(context, calendaset,
+                              (day, month, year) {
+                            //
+                            P211CHEMPLANINGVAR.day = day;
+                            P211CHEMPLANINGVAR.month = month;
+                            P211CHEMPLANINGVAR.year = year;
+
+                            P211CHEMPLANINGVAR.day_next = day;
+                            P211CHEMPLANINGVAR.month_next = month;
+                            P211CHEMPLANINGVAR.year_next = year;
+
+                            setState(() {});
+                            context
+                                .read<P211CHEMPLANINGget_Bloc>()
+                                .add(P211CHEMPLANINGget_GET());
+                          });
+                        },
+                        child: Text(
+                          "Planning Table",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
                   ),
@@ -285,6 +321,40 @@ class _P211CHEMPLANINGState extends State<P211CHEMPLANING> {
                           "ถึงวันที่ : ${P211CHEMPLANINGVAR.day_next}-${P211CHEMPLANINGVAR.month_next}-${P211CHEMPLANINGVAR.year_next}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 60,
+                    // width: 900,
+                    decoration: BoxDecoration(
+                      // color: Colors.blue.shade900,
+                      border: Border(
+                        top: BorderSide(),
+                        left: BorderSide(),
+                        right: BorderSide(),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: ComInputText(
+                          height: 40,
+                          width: 500,
+                          isContr: P211CHEMPLANINGVAR.iscontrol,
+                          fnContr: (input) {
+                            setState(() {
+                              P211CHEMPLANINGVAR.iscontrol = input;
+                            });
+                          },
+                          sPlaceholder: "search",
+                          sValue: P211CHEMPLANINGVAR.SEARCH,
+                          returnfunc: (String s) {
+                            setState(() {
+                              P211CHEMPLANINGVAR.SEARCH = s;
+                            });
+                          },
                         ),
                       ),
                     ),

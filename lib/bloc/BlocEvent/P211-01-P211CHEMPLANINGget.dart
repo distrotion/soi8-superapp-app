@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/global.dart';
+import '../../page/P211CHEMPLANING/P211CHEMPLANING.dart';
 import '../../page/P211CHEMPLANING/P211CHEMPLANINGVAR.dart';
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
@@ -37,8 +38,10 @@ class P211CHEMPLANINGget_Bloc
 
   Future<void> _P211CHEMPLANINGget_GET(List<P211CHEMPLANINGgetclass> toAdd,
       Emitter<List<P211CHEMPLANINGgetclass>> emit) async {
-    // FreeLoadingTan(CONTEXTFORUSEPAGE19TO25.LOADINGcontext);
+    FreeLoadingTan(P211CHEMPLANINGcontext);
+
     List<P211CHEMPLANINGgetclass> output = [];
+
     //-------------------------------------------------------------------------------------
     final response = await Dio().post(
       "${server2}03iPPGETDATACHEM/GETDATA",
@@ -127,12 +130,11 @@ class P211CHEMPLANINGget_Bloc
           }
         }
       }
-
-      // Navigator.pop(CONTEXTFORUSEPAGE19TO25.LOADINGcontext);
     } else {
       print("where is my server");
     }
 
+    Navigator.pop(P211CHEMPLANINGcontext);
     emit(output);
   }
 

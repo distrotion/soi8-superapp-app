@@ -251,10 +251,33 @@ class _P222PRODUCTIONCONFIRMATIONFGState
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        "PRODUCTION CONFIRMATION TABLE",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
+                      child: InkWell(
+                        onTap: () {
+                          //
+                          DateTime calendaset = DateTime.now();
+                          //
+                          CalendaSelectDates(context, calendaset,
+                              (day, month, year) {
+                            //
+                            P222PRODUCTIONCONFIRMATIONFGVAR.day = day;
+                            P222PRODUCTIONCONFIRMATIONFGVAR.month = month;
+                            P222PRODUCTIONCONFIRMATIONFGVAR.year = year;
+
+                            P222PRODUCTIONCONFIRMATIONFGVAR.day_next = day;
+                            P222PRODUCTIONCONFIRMATIONFGVAR.month_next = month;
+                            P222PRODUCTIONCONFIRMATIONFGVAR.year_next = year;
+
+                            setState(() {});
+                            context
+                                .read<P222PRODUCTIONCONFIRMATIONFGget_Bloc>()
+                                .add(P222PRODUCTIONCONFIRMATIONFGget_GET());
+                          });
+                        },
+                        child: Text(
+                          "PRODUCTION CONFIRMATION FG TABLE",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
                   ),

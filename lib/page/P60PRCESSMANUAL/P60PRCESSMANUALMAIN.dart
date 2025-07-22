@@ -867,6 +867,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet Size 01",
                         height: 40,
                         width: 250,
@@ -890,6 +891,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet QTY 01",
                         height: 40,
                         width: 250,
@@ -917,6 +919,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet Size 01",
                         height: 40,
                         width: 250,
@@ -940,6 +943,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet QTY 01",
                         height: 40,
                         width: 250,
@@ -967,6 +971,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet Size 01",
                         height: 40,
                         width: 250,
@@ -990,6 +995,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: ComInputText(
+                        isNumberOnly: true,
                         sLabel: "Packet QTY 01",
                         height: 40,
                         width: 250,
@@ -1015,6 +1021,7 @@ class _POPUPPACKFState extends State<POPUPPACKF> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: ComInputText(
+                    isNumberOnly: true,
                     sLabel: "Remain",
                     height: 40,
                     width: 250,

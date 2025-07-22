@@ -15,6 +15,7 @@ import '../../widget/common/ComInputText.dart';
 import '../../widget/newtable/PRODUCTIONCONFIRMATIONtable.dart';
 import '../P310CHEMTANK/P310CHEMTANKVAR.dart';
 import '../page310.dart';
+import '../page60.dart';
 import 'P221PRODUCTIONCONFIRMATIONSMVAR.dart';
 
 late BuildContext P221PRODUCTIONCONFIRMATIONSMcontext;
@@ -111,6 +112,13 @@ class _P221PRODUCTIONCONFIRMATIONSMState
               P310CHEMTANKVAR.ORDER = _data_exp[i].LINK_PROC_ORDER;
               P221PRODUCTIONCONFIRMATIONSMVAR.datasetsend = _data_exp[i];
               P310CHEMTANKVAR.dataac = '';
+              //
+              P310CHEMTANKVAR.ADD1 = '';
+              P310CHEMTANKVAR.ADD2 = '';
+              P310CHEMTANKVAR.ADD3 = '';
+              P310CHEMTANKVAR.ADD4 = '';
+              P310CHEMTANKVAR.ADD5 = '';
+              //
               _POPUPCREATEUSERSW(context);
 
               // print(_datain[i].PROCESS_ORDER);
@@ -256,10 +264,32 @@ class _P221PRODUCTIONCONFIRMATIONSMState
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        "PRODUCTION CONFIRMATION TABLE",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
+                      child: InkWell(
+                        onTap: () {
+                          DateTime calendaset = DateTime.now();
+                          //
+                          CalendaSelectDates(context, calendaset,
+                              (day, month, year) {
+                            //
+                            P221PRODUCTIONCONFIRMATIONSMVAR.day = day;
+                            P221PRODUCTIONCONFIRMATIONSMVAR.month = month;
+                            P221PRODUCTIONCONFIRMATIONSMVAR.year = year;
+
+                            P221PRODUCTIONCONFIRMATIONSMVAR.day_next = day;
+                            P221PRODUCTIONCONFIRMATIONSMVAR.month_next = month;
+                            P221PRODUCTIONCONFIRMATIONSMVAR.year_next = year;
+
+                            setState(() {});
+                            context
+                                .read<P221PRODUCTIONCONFIRMATIONSMget_Bloc>()
+                                .add(P221PRODUCTIONCONFIRMATIONSMget_GET());
+                          });
+                        },
+                        child: Text(
+                          "PRODUCTION CONFIRMATION SM TABLE",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                        ),
                       ),
                     ),
                   ),
@@ -517,3 +547,5 @@ void _POPUPCREATEUSERSW(BuildContext contextin) {
 // }
 
 // //P221PRODUCTIONCONFIRMATIONSMgetsubclass
+
+
