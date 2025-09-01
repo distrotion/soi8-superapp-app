@@ -89,13 +89,13 @@ class _P310CHEMTANKMAINState extends State<P310CHEMTANKMAIN> {
       ),
     );
 
-    // double totalActual =
-    //     _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.ACTUAL));
-    // double totalSP =
-    //     _datasearch.fold(0.0, (sum, item) => sum + double.parse(item.SP));
+    double totalActual = _datasearch.fold(
+        0.0, (sum, item) => sum + double.parse(ConverstStr(item.ACTUAL)));
+    double totalSP = _datasearch.fold(
+        0.0, (sum, item) => sum + double.parse(ConverstStr(item.SP)));
 
-    double totalActual = 0;
-    double totalSP = 0;
+    // double totalActual = 0;
+    // double totalSP = 0;
 
     // if (P310CHEMTANKVAR.dataac == '') {
     P310CHEMTANKVAR.dataac =

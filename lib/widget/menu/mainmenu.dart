@@ -26,6 +26,7 @@ import '../../page/page41.dart';
 import '../../page/page42.dart';
 import '../../page/page5.dart';
 import '../../page/page60.dart';
+import '../../page/page62.dart';
 import 'sub_widget.dart';
 
 late BuildContext MenuContext;
@@ -278,7 +279,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 280,
+              height: 320,
               child: Column(
                 children: [
                   menu_sub(
@@ -317,6 +318,12 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                   menu_sub(
                     name: "NON-SCADA",
                     page: Page60(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    tapcolor: Colors.green,
+                    name: "KUBOTA",
+                    page: Page62(),
                     Lv: 1,
                   ),
                 ],

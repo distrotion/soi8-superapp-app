@@ -137,7 +137,7 @@ class P26TANKDATAPACKING_Bloc
 
             print(binary32ToDouble(setdata));
 
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm2_order'].toString().padLeft(6, '0')) {
@@ -149,7 +149,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][6]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm3_order'].toString().padLeft(6, '0')) {
@@ -161,7 +161,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][10]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm4_order'].toString().padLeft(6, '0')) {
@@ -173,7 +173,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][16]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm5_order'].toString().padLeft(6, '0')) {
@@ -185,7 +185,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][20]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm6_order'].toString().padLeft(6, '0')) {
@@ -197,7 +197,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][26]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm7_order'].toString().padLeft(6, '0')) {
@@ -209,7 +209,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][30]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm8_order'].toString().padLeft(6, '0')) {
@@ -221,7 +221,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][36]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm9_order'].toString().padLeft(6, '0')) {
@@ -233,7 +233,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][40]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm10_order'].toString().padLeft(6, '0')) {
@@ -245,7 +245,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][46]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm11_order'].toString().padLeft(6, '0')) {
@@ -257,7 +257,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][50]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm12_order'].toString().padLeft(6, '0')) {
@@ -269,7 +269,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][56]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm13_order'].toString().padLeft(6, '0')) {
@@ -281,7 +281,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][60]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm14_order'].toString().padLeft(6, '0')) {
@@ -293,7 +293,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][66]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm15_order'].toString().padLeft(6, '0')) {
@@ -305,7 +305,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][70]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm16_order'].toString().padLeft(6, '0')) {
@@ -317,7 +317,7 @@ class P26TANKDATAPACKING_Bloc
                     dec2binSigned(int.parse("${databuff['WEIG'][76]}"));
 
             print(binary32ToDouble(setdata));
-            output.dataw = binary32ToDouble(setdata).toString();
+            output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
           }
           if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
               databuff['DATA']['pm17_order'].toString().padLeft(6, '0')) {
@@ -366,7 +366,7 @@ class P26TANKDATAPACKINGclass {
 String savenull(input) {
   String output = '-';
   if (input != null) {
-    output = input.toString();
+    output = input.toStringAsFixed(0);
   }
   return output;
 }

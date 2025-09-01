@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:qc_ui_isn_hes/page/page10.dart';
 
 import '../data/global.dart';
 import '../widget/common/Checkbox.dart';
 import 'TEST.dart';
 import 'page1.dart';
-
+import 'page10.dart';
 import 'page101.dart';
 import 'page102.dart';
 import 'page11.dart';
@@ -25,7 +24,7 @@ class Page0 extends StatelessWidget {
   Widget build(BuildContext context) {
     // return Page0Body();
     // return Page60();
-    return Page10();
+    return Page1();
   }
 }
 
