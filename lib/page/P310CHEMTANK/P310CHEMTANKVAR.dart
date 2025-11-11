@@ -5,6 +5,7 @@ class P310CHEMTANKVAR {
   static String DUMMY = '';
   static bool isHoveredClear = false;
   static String MATERIAL = '';
+  static String Fml = '';
   static String PLANT = '';
   static String ORDER = '';
 

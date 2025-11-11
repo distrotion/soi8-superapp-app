@@ -105,7 +105,7 @@ class _GETWEIGHTState extends State<GETWEIGHT> {
                                   serverGB + "PRODUCTIONHISTORY/FREEQUERY",
                                   data: {
                                     "query":
-                                        "SELECT TOP (1000) [date],[station],[weig],[code] FROM [SOI8LOG].[dbo].[kubotalog] where code = '${GETWEIGHTvar.POINPUT}' order by date desc",
+                                        "SELECT TOP (1000) [date],[station],[weig],[code] FROM [SOI8LOG].[dbo].[kubotalog] where code = '${GETWEIGHTvar.POINPUT.replaceAll(" ", " ")}' order by date desc",
                                   },
                                 ).then((s) {
                                   // print(s.data);

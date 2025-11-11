@@ -241,8 +241,8 @@ class P26TANKDATAPACKING_Bloc
             print("TANK11");
 
             String setdata =
-                dec2binSigned(int.parse("${databuff['WEIG'][47]}")) +
-                    dec2binSigned(int.parse("${databuff['WEIG'][46]}"));
+                dec2binSigned(int.parse("${databuff['DATA2'][2]}")) +
+                    dec2binSigned(int.parse("${databuff['DATA2'][1]}"));
 
             print(binary32ToDouble(setdata));
             output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
@@ -253,8 +253,8 @@ class P26TANKDATAPACKING_Bloc
             print("TANK12");
 
             String setdata =
-                dec2binSigned(int.parse("${databuff['WEIG'][51]}")) +
-                    dec2binSigned(int.parse("${databuff['WEIG'][50]}"));
+                dec2binSigned(int.parse("${databuff['WEIG'][47]}")) +
+                    dec2binSigned(int.parse("${databuff['WEIG'][46]}"));
 
             print(binary32ToDouble(setdata));
             output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
@@ -265,8 +265,8 @@ class P26TANKDATAPACKING_Bloc
             print("TANK13");
 
             String setdata =
-                dec2binSigned(int.parse("${databuff['WEIG'][57]}")) +
-                    dec2binSigned(int.parse("${databuff['WEIG'][56]}"));
+                dec2binSigned(int.parse("${databuff['WEIG'][51]}")) +
+                    dec2binSigned(int.parse("${databuff['WEIG'][50]}"));
 
             print(binary32ToDouble(setdata));
             output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
@@ -301,8 +301,8 @@ class P26TANKDATAPACKING_Bloc
             print("TANK16");
 
             String setdata =
-                dec2binSigned(int.parse("${databuff['WEIG'][71]}")) +
-                    dec2binSigned(int.parse("${databuff['WEIG'][70]}"));
+                dec2binSigned(int.parse("${databuff['DATA2'][7]}")) +
+                    dec2binSigned(int.parse("${databuff['DATA2'][6]}"));
 
             print(binary32ToDouble(setdata));
             output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
@@ -323,6 +323,47 @@ class P26TANKDATAPACKING_Bloc
               databuff['DATA']['pm17_order'].toString().padLeft(6, '0')) {
             print(P310CHEMTANKVAR.ORDER.substring(4, 10));
             print("TANK AT1");
+          }
+
+          if (databuff['WEIGPW'] != null) {
+            if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
+                databuff['DATAPW']['pm2_order'].toString().padLeft(6, '0')) {
+              print(P310CHEMTANKVAR.ORDER.substring(4, 10));
+              print("PW02");
+
+              String setdata =
+                  dec2binSigned(int.parse("${databuff['WEIGPW'][1]}")) +
+                      dec2binSigned(int.parse("${databuff['WEIGPW'][0]}"));
+
+              print(binary32ToDouble(setdata));
+              output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
+            }
+
+            if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
+                databuff['DATAPW']['pm3_order'].toString().padLeft(6, '0')) {
+              print(P310CHEMTANKVAR.ORDER.substring(4, 10));
+              print("PW03");
+
+              String setdata =
+                  dec2binSigned(int.parse("${databuff['WEIGPW'][3]}")) +
+                      dec2binSigned(int.parse("${databuff['WEIGPW'][2]}"));
+
+              print(binary32ToDouble(setdata));
+              output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
+            }
+
+            if (P310CHEMTANKVAR.ORDER.substring(4, 10) ==
+                databuff['DATAPW']['pm4_order'].toString().padLeft(6, '0')) {
+              print(P310CHEMTANKVAR.ORDER.substring(4, 10));
+              print("PW04");
+
+              String setdata =
+                  dec2binSigned(int.parse("${databuff['WEIGPW'][5]}")) +
+                      dec2binSigned(int.parse("${databuff['WEIGPW'][4]}"));
+
+              print(binary32ToDouble(setdata));
+              output.dataw = binary32ToDouble(setdata).toStringAsFixed(0);
+            }
           }
         }
       }

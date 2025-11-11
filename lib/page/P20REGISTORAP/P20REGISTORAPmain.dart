@@ -10,6 +10,7 @@ import '../../widget/common/popup.dart';
 import 'P20REGISTORAPvar.dart';
 
 final GlobalKey _globalKey = GlobalKey();
+late BuildContext RegisterBoxContext;
 
 class RegisterBox extends StatefulWidget {
   RegisterBox({
@@ -35,6 +36,7 @@ class _RegisterBoxState extends State<RegisterBox> {
 
   @override
   Widget build(BuildContext context) {
+    RegisterBoxContext = context;
     if (widget.data == 2) {
       P20REGISTORAPvar.isPOINPUT = true;
       setState(() {
@@ -412,9 +414,15 @@ class _clearkButtonState extends State<_clearkButton> {
   }
 }
 
-class _RegisterButton extends StatelessWidget {
+class _RegisterButton extends StatefulWidget {
   _RegisterButton({Key? key, this.data}) : super(key: key);
   int? data;
+
+  @override
+  State<_RegisterButton> createState() => _RegisterButtonState();
+}
+
+class _RegisterButtonState extends State<_RegisterButton> {
   @override
   Widget build(BuildContext context) {
     // if (data == 2) {
@@ -427,15 +435,95 @@ class _RegisterButton extends StatelessWidget {
     return InkWell(
         onTap: () {
           if (P20REGISTORAPvar.COMMENT.length > 10) {
-            if (P20REGISTORAPvar.POINPUT.length == 18) {
-              //
-              P20REGISTORAPvar.ischeck = false;
+            // if (P20REGISTORAPvar.POINPUT.length == 18) {
+            //   //
+            //   P20REGISTORAPvar.ischeck = false;
 
-              context.read<RegisterPOID_Bloc>().add(RegisterPOID_Pressed());
-              context.read<checkregis_Bloc>().add(checkregis_flush());
-              // context.read<checkregis_Bloc>().add(checkregis_get());
-              //
-            }
+            //   context.read<RegisterPOID_Bloc>().add(RegisterPOID_Pressed());
+            //   context.read<checkregis_Bloc>().add(checkregis_flush());
+            //   // context.read<checkregis_Bloc>().add(checkregis_get());
+            //   //
+            // }
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) {
+                return Center(
+                  child: SizedBox(
+                    height: 160,
+                    width: 500,
+                    child: Dialog(
+                      child: Container(
+                        height: 160,
+                        width: 500,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 350,
+                              color: Colors.red,
+                              child: ComInputText(
+                                height: 40,
+                                width: 350,
+                                sPlaceholder: "WEIGHT",
+                                isContr: P20REGISTORAPvar.iscontrol,
+                                fnContr: (input) {
+                                  setState(() {
+                                    P20REGISTORAPvar.iscontrol = input;
+                                  });
+                                },
+                                sValue: P20REGISTORAPvar.WEIGHT,
+                                returnfunc: (String s) {
+                                  setState(() {
+                                    P20REGISTORAPvar.WEIGHT = s;
+                                  });
+                                },
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                P20REGISTORAPvar.ischeck = false;
+                                RegisterBoxContext.read<checkregis_Bloc>()
+                                    .add(checkregis_flush());
+                                RegisterBoxContext.read<RegisterPOID_Bloc>()
+                                    .add(RegisterPOID_Pressed());
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Register",
+                                    style: TextStyle(
+                                      fontFamily: 'Mitr',
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      fontStyle: FontStyle.normal,
+                                      letterSpacing: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
           } else {
             WORNINGpop(
                 context,

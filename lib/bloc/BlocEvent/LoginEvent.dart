@@ -12,7 +12,7 @@ import '../cubit/NotificationEvent.dart';
 
 //-------------------------------------------------
 // String server = 'http://127.0.0.1:15000/';
-String server = serverGB;
+String server = 'http://172.23.10.34:18000/';
 
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 late Future<String> tokenSP;
@@ -43,14 +43,12 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
     // token = (prefs.getString('token') ?? '');
     final response = await Dio().post(
       server + "login",
-      data: {
-        "ID": logindata.userID,
-        "PASS": logindata.userPASS,
-      },
+      data: {"ID": logindata.userID, "PASS": logindata.userPASS},
     );
 
     if (response.statusCode == 200) {
       var databuff = response.data;
+      print(databuff);
       if (databuff['return'] == 'OK') {
         token =
             '{"ID":"${databuff['ID'].toString()}","NAME":"${databuff['NAME'].toString()}","LV":"${databuff['LV'].toString()}","Section":"${databuff['Section'].toString()}","Def":"${databuff['Def'].toString()}"  ,"PD":"${databuff['PD'].toString()}","QC":"${databuff['QC'].toString()}","QA":"${databuff['QA'].toString()}","MFT":"${databuff['MFT'].toString()}","RM":"${databuff['RM'].toString()}","DL":"${databuff['DL'].toString()}"}';
@@ -80,11 +78,15 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
     });
 
     if (token != '') {
-      BlocProvider.of<BlocNotification>(contextGB).UpdateNotification(
-          "Success", "Login OK", enumNotificationlist.Success);
+      BlocProvider.of<BlocNotification>(
+        contextGB,
+      ).UpdateNotification("Success", "Login OK", enumNotificationlist.Success);
     } else {
-      BlocProvider.of<BlocNotification>(contextGB).UpdateNotification("Error",
-          "user or password have some problem", enumNotificationlist.Error);
+      BlocProvider.of<BlocNotification>(contextGB).UpdateNotification(
+        "Error",
+        "user or password have some problem",
+        enumNotificationlist.Error,
+      );
     }
 
     // BlocProvider.of<Notification_Bloc>(contextGB)
@@ -131,8 +133,9 @@ class Login_Bloc extends Bloc<LoginEvent, String> {
     });
 
     if (token == '') {
-      BlocProvider.of<BlocNotification>(contextGB)
-          .UpdateNotification("", "Logout", enumNotificationlist.Success);
+      BlocProvider.of<BlocNotification>(
+        contextGB,
+      ).UpdateNotification("", "Logout", enumNotificationlist.Success);
     }
 
     emit('');

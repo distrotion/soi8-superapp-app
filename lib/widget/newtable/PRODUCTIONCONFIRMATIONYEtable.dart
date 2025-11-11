@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'tablebox.dart';
 
-class PRODUCTIONCONFIRMATIONtable extends StatelessWidget {
-  const PRODUCTIONCONFIRMATIONtable({super.key});
+class PRODUCTIONCONFIRMATIONYEtable extends StatelessWidget {
+  const PRODUCTIONCONFIRMATIONYEtable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +48,13 @@ class PRODUCTIONCONFIRMATIONtable extends StatelessWidget {
         Expanded(
           flex: 1,
           child: rowbox_type0(
-            Head: "Yield SCADA",
+            Head: "Yield confirm",
           ),
         ),
         Expanded(
           flex: 1,
           child: rowbox_type0(
-            Head: "Yield CONFIRM",
+            Head: "Yield packing",
           ),
         ),
         Expanded(
@@ -80,8 +80,8 @@ class PRODUCTIONCONFIRMATIONtable extends StatelessWidget {
   }
 }
 
-class PRODUCTIONCONFIRMATIONitem extends StatelessWidget {
-  PRODUCTIONCONFIRMATIONitem({
+class PRODUCTIONCONFIRMATIONYEitem extends StatelessWidget {
+  PRODUCTIONCONFIRMATIONYEitem({
     super.key,
     this.text01,
     this.text02,

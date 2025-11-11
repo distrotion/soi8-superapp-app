@@ -30,6 +30,7 @@ class RegisterPOID_Bloc extends Bloc<RegisterPOID_Event, int> {
         "PO": P20REGISTORAPvar.POINPUT,
         "ID": USERDATA.ID,
         "COMMENT": P20REGISTORAPvar.COMMENT,
+        "wegiht": P20REGISTORAPvar.WEIGHT,
       },
     );
     int output = 0;

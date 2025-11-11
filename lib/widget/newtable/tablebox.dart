@@ -195,7 +195,7 @@ class oneunitbox_NB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 40,
       child: Center(
         child: Text(
           textin ?? '',

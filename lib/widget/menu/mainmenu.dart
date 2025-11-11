@@ -15,6 +15,7 @@ import '../../page/page211.dart';
 import '../../page/page22.dart';
 import '../../page/page221.dart';
 import '../../page/page222.dart';
+import '../../page/page224.dart';
 import '../../page/page23.dart';
 import '../../page/page231.dart';
 import '../../page/page3.dart';
@@ -279,7 +280,7 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
           ),
           if (menu_PD) ...[
             SizedBox(
-              height: 320,
+              height: 360,
               child: Column(
                 children: [
                   menu_sub(
@@ -308,6 +309,11 @@ class _Data_Menu_mainmenuState extends State<Data_Menu_mainmenu> {
                   menu_sub(
                     name: "PRODUCTION SM",
                     page: Page221(),
+                    Lv: 1,
+                  ),
+                  menu_sub(
+                    name: "PRODUCTION YE",
+                    page: Page224(),
                     Lv: 1,
                   ),
                   menu_sub(

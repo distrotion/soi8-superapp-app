@@ -37,7 +37,7 @@ class _P222PRODUCTIONCONFIRMATIONFGState
   void initState() {
     super.initState();
     var now = DateTime.now();
-    var now3d = DateTime.now().subtract(const Duration(days: 3));
+    var now3d = DateTime.now().subtract(const Duration(days: 0));
     // P222PRODUCTIONCONFIRMATIONFGVAR.formattedDate = DateFormat('dd-MM-yy').format(now);
     P222PRODUCTIONCONFIRMATIONFGVAR.day = DateFormat('dd').format(now3d);
     P222PRODUCTIONCONFIRMATIONFGVAR.month = DateFormat('MM').format(now3d);

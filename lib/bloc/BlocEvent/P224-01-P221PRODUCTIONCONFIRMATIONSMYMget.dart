@@ -4,63 +4,65 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/global.dart';
 
 import '../../page/P211CHEMPLANING/P211CHEMPLANING.dart';
-import '../../page/P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSM.dart';
-import '../../page/P221PRODUCTIONCONFIRMATIONSM/P221PRODUCTIONCONFIRMATIONSMVAR.dart';
+
+import '../../page/P224P221PRODUCTIONCONFIRMATIONSMYE/P224PRODUCTIONCONFIRMATIONSMYE.dart';
+import '../../page/P224P221PRODUCTIONCONFIRMATIONSMYE/P224PRODUCTIONCONFIRMATIONSMYEVAR.dart';
+
 import '../../widget/common/Loading.dart';
 import '../../widget/common/Safty.dart';
 //-------------------------------------------------
 
-abstract class P221PRODUCTIONCONFIRMATIONSMget_Event {}
+abstract class P224PRODUCTIONCONFIRMATIONSMYEget_Event {}
 
-class P221PRODUCTIONCONFIRMATIONSMget_GET
-    extends P221PRODUCTIONCONFIRMATIONSMget_Event {}
+class P224PRODUCTIONCONFIRMATIONSMYEget_GET
+    extends P224PRODUCTIONCONFIRMATIONSMYEget_Event {}
 
-class P221PRODUCTIONCONFIRMATIONSMget_GET2
-    extends P221PRODUCTIONCONFIRMATIONSMget_Event {}
+class P224PRODUCTIONCONFIRMATIONSMYEget_GET2
+    extends P224PRODUCTIONCONFIRMATIONSMYEget_Event {}
 
-class P221PRODUCTIONCONFIRMATIONSMget_GET3
-    extends P221PRODUCTIONCONFIRMATIONSMget_Event {}
+class P224PRODUCTIONCONFIRMATIONSMYEget_GET3
+    extends P224PRODUCTIONCONFIRMATIONSMYEget_Event {}
 
-class P221PRODUCTIONCONFIRMATIONSMget_FLUSH
-    extends P221PRODUCTIONCONFIRMATIONSMget_Event {}
+class P224PRODUCTIONCONFIRMATIONSMYEget_FLUSH
+    extends P224PRODUCTIONCONFIRMATIONSMYEget_Event {}
 
-class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
-    P221PRODUCTIONCONFIRMATIONSMget_Event,
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass>> {
-  P221PRODUCTIONCONFIRMATIONSMget_Bloc() : super([]) {
-    on<P221PRODUCTIONCONFIRMATIONSMget_GET>((event, emit) {
-      return _P221PRODUCTIONCONFIRMATIONSMget_GET([], emit);
+class P224PRODUCTIONCONFIRMATIONSMYEget_Bloc extends Bloc<
+    P224PRODUCTIONCONFIRMATIONSMYEget_Event,
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass>> {
+  P224PRODUCTIONCONFIRMATIONSMYEget_Bloc() : super([]) {
+    on<P224PRODUCTIONCONFIRMATIONSMYEget_GET>((event, emit) {
+      return _P224PRODUCTIONCONFIRMATIONSMYEget_GET([], emit);
     });
 
-    on<P221PRODUCTIONCONFIRMATIONSMget_GET2>((event, emit) {
-      return _P221PRODUCTIONCONFIRMATIONSMget_GET2([], emit);
+    on<P224PRODUCTIONCONFIRMATIONSMYEget_GET2>((event, emit) {
+      return _P224PRODUCTIONCONFIRMATIONSMYEget_GET2([], emit);
     });
-    on<P221PRODUCTIONCONFIRMATIONSMget_GET3>((event, emit) {
-      return _P221PRODUCTIONCONFIRMATIONSMget_GET3([], emit);
+    on<P224PRODUCTIONCONFIRMATIONSMYEget_GET3>((event, emit) {
+      return _P224PRODUCTIONCONFIRMATIONSMYEget_GET3([], emit);
     });
-    on<P221PRODUCTIONCONFIRMATIONSMget_FLUSH>((event, emit) {
-      return _P221PRODUCTIONCONFIRMATIONSMget_FLUSH([], emit);
+    on<P224PRODUCTIONCONFIRMATIONSMYEget_FLUSH>((event, emit) {
+      return _P224PRODUCTIONCONFIRMATIONSMYEget_FLUSH([], emit);
     });
   }
 
-  Future<void> _P221PRODUCTIONCONFIRMATIONSMget_GET(
-      List<P221PRODUCTIONCONFIRMATIONSMgetclass> toAdd,
-      Emitter<List<P221PRODUCTIONCONFIRMATIONSMgetclass>> emit) async {
+  Future<void> _P224PRODUCTIONCONFIRMATIONSMYEget_GET(
+      List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> toAdd,
+      Emitter<List<P224PRODUCTIONCONFIRMATIONSMYEgetclass>> emit) async {
     // FreeLoadingTan(CONTEXTFORUSEPAGE19TO25.LOADINGcontext);
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> output = [];
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> output2 = [];
-    List<P221GETDETAILclass> output3 = [];
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> output = [];
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> output2 = [];
+    List<P224GETDETAILclass> output3 = [];
     //-------------------------------------------------------------------------------------
-    FreeLoadingTan(P221PRODUCTIONCONFIRMATIONSMcontext);
+    FreeLoadingTan(P224PRODUCTIONCONFIRMATIONSMYEcontext);
     final response = await Dio().post(
       "${server2}03iPPGETDATACHEM/GETDATA",
       data: {
         "HEADER": {
           "PLANT": "1000",
           "ORD_ST_DATE_FR":
-              "${P221PRODUCTIONCONFIRMATIONSMVAR.day}.${P221PRODUCTIONCONFIRMATIONSMVAR.month}.${P221PRODUCTIONCONFIRMATIONSMVAR.year}",
+              "${P224PRODUCTIONCONFIRMATIONSMYEVAR.day}.${P224PRODUCTIONCONFIRMATIONSMYEVAR.month}.${P224PRODUCTIONCONFIRMATIONSMYEVAR.year}",
           "ORD_ST_DATE_TO":
-              "${P221PRODUCTIONCONFIRMATIONSMVAR.day_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.month_next}.${P221PRODUCTIONCONFIRMATIONSMVAR.year_next}",
+              "${P224PRODUCTIONCONFIRMATIONSMYEVAR.day_next}.${P224PRODUCTIONCONFIRMATIONSMYEVAR.month_next}.${P224PRODUCTIONCONFIRMATIONSMYEVAR.year_next}",
           "ORDER_TYPE": "",
           "PROD_SUP": ""
         },
@@ -79,10 +81,10 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
       if (databuff['HEADER_INFO'].length > 0) {
         for (var i = 0; i < databuff['HEADER_INFO'].length; i++) {
           if (databuff['HEADER_INFO'][i]['LINK_PROC_ORDER'].toString() == '') {
-            P221PRODUCTIONCONFIRMATIONSMgetclass buffer =
-                P221PRODUCTIONCONFIRMATIONSMgetclass();
+            P224PRODUCTIONCONFIRMATIONSMYEgetclass buffer =
+                P224PRODUCTIONCONFIRMATIONSMYEgetclass();
 
-            buffer = (P221PRODUCTIONCONFIRMATIONSMgetclass(
+            buffer = (P224PRODUCTIONCONFIRMATIONSMYEgetclass(
               PROCESS_ORDER:
                   databuff['HEADER_INFO'][i]['PROCESS_ORDER'].toString(),
               ORDER_TYPE: databuff['HEADER_INFO'][i]['ORDER_TYPE'].toString(),
@@ -122,37 +124,37 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
             ));
 
             if (buffer.LINK_PROC_ORDER.length > 9) {
-              final response2 = await Dio().post(
-                "${server2}datacentertest/getsoi8order-ro",
-                data: {
-                  "PLANT": 'liquid',
-                  "ORDER":
-                      (ConverstStr(buffer.LINK_PROC_ORDER)).substring(4, 10),
-                  // ).toString().substring(5, 11),
-                },
-              );
-              if (response2.statusCode == 200) {
-                var databuff = response2.data;
-                if (databuff.length > 0) {
-                  buffer.STATUS = 'Processing';
-                  double holddata = 0;
-                  for (var s = 0; s < databuff.length; s++) {
-                    holddata = holddata +
-                        double.parse(
-                            ConverstStr(databuff[s]['NumAct'].toString()));
+              // final response2 = await Dio().post(
+              //   "${server2}datacentertest/getsoi8order-ro",
+              //   data: {
+              //     "PLANT": 'liquid',
+              //     "ORDER":
+              //         (ConverstStr(buffer.LINK_PROC_ORDER)).substring(4, 10),
+              //     // ).toString().substring(5, 11),
+              //   },
+              // );
+              // if (response2.statusCode == 200) {
+              //   var databuff = response2.data;
+              //   if (databuff.length > 0) {
+              //     buffer.STATUS = 'Processing';
+              //     double holddata = 0;
+              //     for (var s = 0; s < databuff.length; s++) {
+              //       holddata = holddata +
+              //           double.parse(
+              //               ConverstStr(databuff[s]['NumAct'].toString()));
 
-                    if (databuff[s]['StrChemical']
-                            .toString()
-                            .replaceAll(' ', '') ==
-                        'END') {
-                      buffer.STATUS = 'Complete';
-                    }
-                  }
-                  buffer.Yield = holddata.toStringAsFixed(2);
-                }
-              }
-              print(ConverstStr(buffer.MATERIAL) +
-                  ConverstStr(buffer.LINK_PROC_ORDER));
+              //       if (databuff[s]['StrChemical']
+              //               .toString()
+              //               .replaceAll(' ', '') ==
+              //           'END') {
+              //         buffer.STATUS = 'Complete';
+              //       }
+              //     }
+              //     buffer.Yield = holddata.toStringAsFixed(2);
+              //   }
+              // }
+              // print(ConverstStr(buffer.MATERIAL) +
+              //     ConverstStr(buffer.LINK_PROC_ORDER));
               await Dio().post(
                 // "${server3}datacentertest/getsoi8order",
                 "${server2}datacentertest/getconfirm",
@@ -170,6 +172,32 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
                   buffer.Y1 = input[1]['weight'].toString();
                 }
               });
+              await Dio().post(
+                serverGB + "PRODUCTIONHISTORY/FREEQUERY",
+                data: {
+                  "query":
+                      "SELECT TOP (1000) [date],[station],[weig],[code] FROM [SOI8LOG].[dbo].[kubotalog] where code like '%${buffer.BATCH.replaceAll(" ", " ")}%' order by date desc",
+                },
+              ).then((s) {
+                // print(s.data);
+                var input = s.data;
+                print(input);
+                double dotaout = 0;
+                //PROD_SUP_DESC
+                if (buffer.PROD_SUP_DESC.contains("Liq")) {
+                  if (input.length > 0) {
+                    for (var i = 0; i < input.length; i++) {
+                      if (input[i]['weig'] != Null) {
+                        if (double.parse(ConverstStr(input[i]['weig'])) > 200) {
+                          dotaout = dotaout +
+                              double.parse(ConverstStr(input[i]['weig']));
+                        }
+                      }
+                    }
+                  }
+                }
+                buffer.Yield = (dotaout / 100).toString();
+              });
             }
 
             // try {
@@ -177,10 +205,10 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
             // } catch (s) {}
             output.add(buffer);
           } else {
-            P221PRODUCTIONCONFIRMATIONSMgetclass buffer =
-                P221PRODUCTIONCONFIRMATIONSMgetclass();
+            P224PRODUCTIONCONFIRMATIONSMYEgetclass buffer =
+                P224PRODUCTIONCONFIRMATIONSMYEgetclass();
 
-            buffer = (P221PRODUCTIONCONFIRMATIONSMgetclass(
+            buffer = (P224PRODUCTIONCONFIRMATIONSMYEgetclass(
               PROCESS_ORDER:
                   databuff['HEADER_INFO'][i]['PROCESS_ORDER'].toString(),
               ORDER_TYPE: databuff['HEADER_INFO'][i]['ORDER_TYPE'].toString(),
@@ -219,14 +247,14 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
 
             output2.add(buffer);
           }
-          P221PRODUCTIONCONFIRMATIONSMVAR.dataFG = output2;
-          P221PRODUCTIONCONFIRMATIONSMVAR.dataSEMI = output;
+          P224PRODUCTIONCONFIRMATIONSMYEVAR.dataFG = output2;
+          P224PRODUCTIONCONFIRMATIONSMYEVAR.dataSEMI = output;
         }
       }
 
       if (databuff['COMPONENT_INFO'].length > 0) {
         for (var i = 0; i < databuff['COMPONENT_INFO'].length; i++) {
-          output3.add(P221GETDETAILclass(
+          output3.add(P224GETDETAILclass(
             PROCESS_ORDER:
                 databuff['COMPONENT_INFO'][i]['PROCESS_ORDER'].toString(),
             ITEM: databuff['COMPONENT_INFO'][i]['ITEM'].toString(),
@@ -246,51 +274,51 @@ class P221PRODUCTIONCONFIRMATIONSMget_Bloc extends Bloc<
             OPERATION: databuff['COMPONENT_INFO'][i]['OPERATION'].toString(),
           ));
         }
-        P221PRODUCTIONCONFIRMATIONSMVAR.dataCOMPO = output3;
+        P224PRODUCTIONCONFIRMATIONSMYEVAR.dataCOMPO = output3;
       }
     } else {
       print("where is my server");
     }
 
-    Navigator.pop(P221PRODUCTIONCONFIRMATIONSMcontext);
+    Navigator.pop(P224PRODUCTIONCONFIRMATIONSMYEcontext);
 
     emit(output);
   }
 
-  Future<void> _P221PRODUCTIONCONFIRMATIONSMget_GET2(
-      List<P221PRODUCTIONCONFIRMATIONSMgetclass> toAdd,
-      Emitter<List<P221PRODUCTIONCONFIRMATIONSMgetclass>> emit) async {
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> output = [];
+  Future<void> _P224PRODUCTIONCONFIRMATIONSMYEget_GET2(
+      List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> toAdd,
+      Emitter<List<P224PRODUCTIONCONFIRMATIONSMYEgetclass>> emit) async {
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> output = [];
     //-------------------------------------------------------------------------------------
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> datadummy = [];
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> datadummy = [];
 
     //-------------------------------------------------------------------------------------
     output = datadummy;
     emit(output);
   }
 
-  Future<void> _P221PRODUCTIONCONFIRMATIONSMget_GET3(
-      List<P221PRODUCTIONCONFIRMATIONSMgetclass> toAdd,
-      Emitter<List<P221PRODUCTIONCONFIRMATIONSMgetclass>> emit) async {
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> output = [];
+  Future<void> _P224PRODUCTIONCONFIRMATIONSMYEget_GET3(
+      List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> toAdd,
+      Emitter<List<P224PRODUCTIONCONFIRMATIONSMYEgetclass>> emit) async {
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> output = [];
     //-------------------------------------------------------------------------------------
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> datadummy = [];
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> datadummy = [];
 
     //-------------------------------------------------------------------------------------
     output = datadummy;
     emit(output);
   }
 
-  Future<void> _P221PRODUCTIONCONFIRMATIONSMget_FLUSH(
-      List<P221PRODUCTIONCONFIRMATIONSMgetclass> toAdd,
-      Emitter<List<P221PRODUCTIONCONFIRMATIONSMgetclass>> emit) async {
-    List<P221PRODUCTIONCONFIRMATIONSMgetclass> output = [];
+  Future<void> _P224PRODUCTIONCONFIRMATIONSMYEget_FLUSH(
+      List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> toAdd,
+      Emitter<List<P224PRODUCTIONCONFIRMATIONSMYEgetclass>> emit) async {
+    List<P224PRODUCTIONCONFIRMATIONSMYEgetclass> output = [];
     emit(output);
   }
 }
 
-class P221PRODUCTIONCONFIRMATIONSMgetclass {
-  P221PRODUCTIONCONFIRMATIONSMgetclass({
+class P224PRODUCTIONCONFIRMATIONSMYEgetclass {
+  P224PRODUCTIONCONFIRMATIONSMYEgetclass({
     this.PROCESS_ORDER = '',
     this.ORDER_TYPE = '',
     this.ORDER_TYPE_DESC = '',
@@ -347,8 +375,8 @@ class P221PRODUCTIONCONFIRMATIONSMgetclass {
   String Y2;
 }
 
-class P221GETDETAILclass {
-  P221GETDETAILclass({
+class P224GETDETAILclass {
+  P224GETDETAILclass({
     this.PROCESS_ORDER = '',
     this.ITEM = '',
     this.MATERIAL = '',
